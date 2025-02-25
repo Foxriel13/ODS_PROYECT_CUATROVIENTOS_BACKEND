@@ -25,19 +25,12 @@ class METAS
     /**
      * @var Collection<int, METASINICIATIVAS>
      */
-    #[ORM\OneToMany(targetEntity: METASINICIATIVAS::class, mappedBy: 'idOds')]
-    private Collection $metasIniciativasIdOds;
-
-    /**
-     * @var Collection<int, METASINICIATIVAS>
-     */
     #[ORM\OneToMany(targetEntity: METASINICIATIVAS::class, mappedBy: 'idMetas')]
     private Collection $metasIniciativasIdMetas;
 
 
     public function __construct()
     {
-        $this->metasIniciativas = new ArrayCollection();
         $this->metasIniciativasIdMetas = new ArrayCollection();
     }
 
@@ -66,60 +59,6 @@ class METAS
     public function setDescripcion(string $descripcion): static
     {
         $this->descripcion = $descripcion;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, INICIATIVAS>
-     */
-    public function getIniciativas(): Collection
-    {
-        return $this->iniciativas;
-    }
-
-    public function addIniciativa(INICIATIVAS $iniciativa): static
-    {
-        if (!$this->iniciativas->contains($iniciativa)) {
-            $this->iniciativas->add($iniciativa);
-        }
-
-        return $this;
-    }
-
-    public function removeIniciativa(INICIATIVAS $iniciativa): static
-    {
-        $this->iniciativas->removeElement($iniciativa);
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, METASINICIATIVAS>
-     */
-    public function getMetasIniciativas(): Collection
-    {
-        return $this->metasIniciativas;
-    }
-
-    public function addMetasIniciativa(METASINICIATIVAS $metasIniciativa): static
-    {
-        if (!$this->metasIniciativas->contains($metasIniciativa)) {
-            $this->metasIniciativas->add($metasIniciativa);
-            $metasIniciativa->setIdOds($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMetasIniciativa(METASINICIATIVAS $metasIniciativa): static
-    {
-        if ($this->metasIniciativas->removeElement($metasIniciativa)) {
-            // set the owning side to null (unless already changed)
-            if ($metasIniciativa->getIdOds() === $this) {
-                $metasIniciativa->setIdOds(null);
-            }
-        }
 
         return $this;
     }

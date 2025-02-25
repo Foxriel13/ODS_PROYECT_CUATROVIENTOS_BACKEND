@@ -18,14 +18,15 @@ class ODS
     #[ORM\Column(length: 255)]
     private ?string $nombre = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $dimension = null;
 
     /**
      * @var Collection<int, METAS>
      */
     #[ORM\OneToMany(targetEntity: METAS::class, mappedBy: 'idOds')]
     private Collection $metas;
+
+    #[ORM\ManyToOne(inversedBy: 'ods')]
+    private ?DIMENSION $dimension = null;
 
     public function __construct()
     {
@@ -45,18 +46,6 @@ class ODS
     public function setNombre(string $nombre): static
     {
         $this->nombre = $nombre;
-
-        return $this;
-    }
-
-    public function getDimension(): ?string
-    {
-        return $this->dimension;
-    }
-
-    public function setDimension(?string $dimension): static
-    {
-        $this->dimension = $dimension;
 
         return $this;
     }
@@ -87,6 +76,18 @@ class ODS
                 $meta->setIdOds(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDimension(): ?DIMENSION
+    {
+        return $this->dimension;
+    }
+
+    public function setDimension(?DIMENSION $dimension): static
+    {
+        $this->dimension = $dimension;
 
         return $this;
     }

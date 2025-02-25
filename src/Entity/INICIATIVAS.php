@@ -40,10 +40,24 @@ class INICIATIVAS
     #[ORM\OneToMany(targetEntity: METASINICIATIVAS::class, mappedBy: 'codIniciativa')]
     private Collection $metasIniciativas;
 
+    /**
+     * @var Collection<int, INICIATIVASMODULOS>
+     */
+    #[ORM\OneToMany(targetEntity: INICIATIVASMODULOS::class, mappedBy: 'iniciativa')]
+    private Collection $modulos;
+
+    /**
+     * @var Collection<int, ENTIDADESEXTERNASINICIATIVAS>
+     */
+    #[ORM\OneToMany(targetEntity: ENTIDADESEXTERNASINICIATIVAS::class, mappedBy: 'iniciativa')]
+    private Collection $entidadesExternas;
+
 
     public function __construct()
     {
         $this->metasIniciativas = new ArrayCollection();
+        $this->modulos = new ArrayCollection();
+        $this->entidadesExternas = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -174,6 +188,66 @@ class INICIATIVAS
             // set the owning side to null (unless already changed)
             if ($metasIniciativa->getCodIniciativa() === $this) {
                 $metasIniciativa->setCodIniciativa(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, INICIATIVASMODULOS>
+     */
+    public function getModulos(): Collection
+    {
+        return $this->modulos;
+    }
+
+    public function addModulo(INICIATIVASMODULOS $modulo): static
+    {
+        if (!$this->modulos->contains($modulo)) {
+            $this->modulos->add($modulo);
+            $modulo->setIniciativa($this);
+        }
+
+        return $this;
+    }
+
+    public function removeModulo(INICIATIVASMODULOS $modulo): static
+    {
+        if ($this->modulos->removeElement($modulo)) {
+            // set the owning side to null (unless already changed)
+            if ($modulo->getIniciativa() === $this) {
+                $modulo->setIniciativa(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ENTIDADESEXTERNASINICIATIVAS>
+     */
+    public function getEntidadesExternas(): Collection
+    {
+        return $this->entidadesExternas;
+    }
+
+    public function addEntidadesExterna(ENTIDADESEXTERNASINICIATIVAS $entidadesExterna): static
+    {
+        if (!$this->entidadesExternas->contains($entidadesExterna)) {
+            $this->entidadesExternas->add($entidadesExterna);
+            $entidadesExterna->setIniciativa($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEntidadesExterna(ENTIDADESEXTERNASINICIATIVAS $entidadesExterna): static
+    {
+        if ($this->entidadesExternas->removeElement($entidadesExterna)) {
+            // set the owning side to null (unless already changed)
+            if ($entidadesExterna->getIniciativa() === $this) {
+                $entidadesExterna->setIniciativa(null);
             }
         }
 

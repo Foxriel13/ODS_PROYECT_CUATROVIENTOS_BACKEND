@@ -17,10 +17,6 @@ class METASINICIATIVAS
     #[ORM\JoinColumn(nullable: false)]
     private ?INICIATIVAS $codIniciativa = null;
 
-    #[ORM\ManyToOne(inversedBy: 'metasIniciativas')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?METAS $idOds = null;
-
     #[ORM\ManyToOne(inversedBy: 'metasIniciativasIdMetas')]
     #[ORM\JoinColumn(nullable: false)]
     private ?METAS $idMetas = null;
@@ -38,18 +34,6 @@ class METASINICIATIVAS
     public function setCodIniciativa(?INICIATIVAS $codIniciativa): static
     {
         $this->codIniciativa = $codIniciativa;
-
-        return $this;
-    }
-
-    public function getIdOds(): ?METAS
-    {
-        return $this->idOds;
-    }
-
-    public function setIdOds(?METAS $idOds): static
-    {
-        $this->idOds = $idOds;
 
         return $this;
     }

@@ -52,12 +52,22 @@ class INICIATIVAS
     #[ORM\OneToMany(targetEntity: ENTIDADESEXTERNASINICIATIVAS::class, mappedBy: 'iniciativa')]
     private Collection $entidadesExternas;
 
+    /**
+     * @var Collection<int, PROFESORESINICIATIVAS>
+     */
+    #[ORM\OneToMany(targetEntity: PROFESORESINICIATIVAS::class, mappedBy: 'iniciativa')]
+    private Collection $profesores;
+
+    #[ORM\Column]
+    private ?bool $eliminado = null;
+
 
     public function __construct()
     {
         $this->metasIniciativas = new ArrayCollection();
         $this->modulos = new ArrayCollection();
         $this->entidadesExternas = new ArrayCollection();
+        $this->profesores = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -129,6 +139,7 @@ class INICIATIVAS
     {
         return $this->fechaFin;
     }
+
 
     public function setFechaFin(\DateTimeInterface $fechaFin): static
     {
@@ -250,6 +261,48 @@ class INICIATIVAS
                 $entidadesExterna->setIniciativa(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PROFESORESINICIATIVAS>
+     */
+    public function getProfesores(): Collection
+    {
+        return $this->profesores;
+    }
+
+    public function addProfesor(PROFESORESINICIATIVAS $profesor): static
+    {
+        if (!$this->profesor->contains($profesor)) {
+            $this->profesor->add($profesor);
+            $profesor->setIniciativa($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProfesor(PROFESORESINICIATIVAS $profesor): static
+    {
+        if ($this->profesor->removeElement($profesor)) {
+            // set the owning side to null (unless already changed)
+            if ($profesor->getIniciativa() === $this) {
+                $profesor->setIniciativa(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function isEliminado(): ?bool
+    {
+        return $this->eliminado;
+    }
+
+    public function setEliminado(bool $eliminado): static
+    {
+        $this->eliminado = $eliminado;
 
         return $this;
     }

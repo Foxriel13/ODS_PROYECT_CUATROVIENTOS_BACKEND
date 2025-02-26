@@ -14,12 +14,16 @@ class PROFESORESINICIATIVAS
     private ?int $id = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn]
+    #[ORM\Column (nullable: false)]
+
     private ?INICIATIVAS $iniciativa = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?PROFESORES $trabajador = null;
+    #[ORM\JoinColumn]
+    #[ORM\Column (nullable: false)]
+
+    private ?PROFESORES $profesor = null;
 
     public function getId(): ?int
     {
@@ -38,14 +42,14 @@ class PROFESORESINICIATIVAS
         return $this;
     }
 
-    public function getTrabajador(): ?PROFESORES
+    public function getProfesor(): ?PROFESORES
     {
-        return $this->trabajador;
+        return $this->profesor;
     }
 
-    public function setTrabajador(?PROFESORES $trabajador): static
+    public function setProfesor(?PROFESORES $profesor): static
     {
-        $this->trabajador = $trabajador;
+        $this->profesor = $profesor;
 
         return $this;
     }

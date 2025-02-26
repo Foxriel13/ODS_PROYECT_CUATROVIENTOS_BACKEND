@@ -14,9 +14,11 @@ class ENTIDADESEXTERNASINICIATIVAS
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'entidadesExternas')]
+    #[ORM\Column (nullable: true)]
     private ?INICIATIVAS $iniciativa = null;
 
     #[ORM\ManyToOne(inversedBy: 'iniciativa')]
+    #[ORM\Column (nullable: true)]
     private ?ENTIDADESEXTERNAS $entidad = null;
 
     public function getId(): ?int

@@ -14,11 +14,11 @@ class METASINICIATIVAS
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'metasIniciativas')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?INICIATIVAS $codIniciativa = null;
 
     #[ORM\ManyToOne(inversedBy: 'metasIniciativasIdMetas')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?METAS $idMetas = null;
 
     public function getId(): ?int

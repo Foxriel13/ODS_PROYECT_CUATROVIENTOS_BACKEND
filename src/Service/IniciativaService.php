@@ -35,39 +35,26 @@ class IniciativaService
     {
         $iniciativas = $this->iniciativaRepository->findAll();
 
-        if (!$recipes) {
-            return new JsonResponse(['message' => 'No recipes found'], Response::HTTP_NOT_FOUND);
+        if (!$iniciativas) {
+            return new JsonResponse(['message' => 'No iniciatives found'], Response::HTTP_NOT_FOUND);
         }
 
-        $data = array_map(fn($recipe) => $this->formatRecipe($recipe), $recipes);
+        $data = array_map(fn($iniciativa) => $this->formatIniciativa($iniciativa), $iniciativas);
 
         return new JsonResponse($data);
         
     }
-    private function formatRecipe($recipe): array
+    private function formatIniciativa($iniciativa): array
     {
         return [
-            'id' => $recipe->getId(),
-            'title' => $recipe->getTitle(),
-            'servings' => $recipe->getNComensales(),
-            'steps' => array_map(fn($step) => [
-                'id' => $step->getId(),
-                'description' => $step->getDescription()
-            ], $recipe->getSteps()->toArray()),
-            'ingredients' => array_map(fn($ingredient) => [
-                'id' => $ingredient->getId(),
-                'name' => $ingredient->getName(),
-                'quantity' => $ingredient->getQuantity()
-            ], $recipe->getIngredients()->toArray()),
-            'nutrients' => array_map(fn($recipeNutrient) => [
-                'id' => $recipeNutrient->getNutrient()->getId(),
-                'type' => [
-                    'id' => $recipeNutrient->getNutrient()->getNutrientType()->getId(),
-                    'name' => $recipeNutrient->getNutrient()->getNutrientType()->getName(),
-                    'unit' => $recipeNutrient->getNutrient()->getNutrientType()->getUnit(),
-                ],
-                'quantity' => $recipeNutrient->getCantidad()
-            ], $recipe->getRecipeNutrients()->toArray())
+            'id' => $iniciativa->getId(),
+            'accion' => $iniciativa->getAccion(),
+            'horas' => $iniciativa->getHoras(),
+            'nombre' => $iniciativa->getNombre(),
+            'horas' => $iniciativa->getProductoFinal(),
+            'accion' => $iniciativa->getFechaInicio()->format('Y-m-d H:i:s'),
+            'horas' => $iniciativa->getFechaFin()->format('Y-m-d H:i:s'),
+            
         ];
     }
 

@@ -1,0 +1,72 @@
+INSERT INTO dimension (id, nombre) VALUES
+(1, 'Social'),
+(2, 'Económica'),
+(3, 'Ambiental');
+
+INSERT INTO ods (id, nombre, dimension_id) VALUES
+(1, 'Fin de la Pobreza', 1),
+(2, 'Hambre Cero', 1),
+(3, 'Salud y Bienestar', 1),
+(4, 'Educación de Calidad', 1),
+(5, 'Igualdad de Género', 1),
+(6, 'Agua Limpia y Saneamiento', 3),
+(7, 'Energía Asequible y No Contaminante', 3),
+(8, 'Trabajo Decente y Crecimiento Económico', 2),
+(9, 'Industria, Innovación e Infraestructura', 2),
+(10, 'Reducción de las Desigualdades', 1),
+(11, 'Ciudades y Comunidades Sostenibles', 3),
+(12, 'Producción y Consumo Responsables', 3),
+(13, 'Acción por el Clima', 3),
+(14, 'Vida Submarina', 3),
+(15, 'Vida de Ecosistemas Terrestres', 3),
+(16, 'Paz, Justicia e Instituciones Sólidas', 1),
+(17, 'Alianzas para Lograr los Objetivos', 2);
+
+
+INSERT INTO metas (id, id_ods_id, descripcion) VALUES
+(1, 1, 'Fomentar la educación digital'),
+(2, 2, 'Reducir la brecha educativa');
+
+INSERT INTO cursos (id, nombre) VALUES
+(1, 'Curso de Matemáticas'),
+(2, 'Curso de Programación');
+
+INSERT INTO modulos (id, curso_id, nombre) VALUES
+(1, 1, 'Álgebra'),
+(2, 1, 'Cálculo'),
+(3, 2, 'Fundamentos de Programación'),
+(4, 2, 'Estructuras de Datos');
+
+INSERT INTO profesores (id, nombre) VALUES
+(1, 'Juan Pérez'),
+(2, 'María Gómez');
+
+INSERT INTO profesoresmodulos (id, profesor_id, modulos_id) VALUES
+(1, 1, 1),
+(2, 1, 2),
+(3, 2, 3),
+(4, 2, 4);
+
+INSERT INTO entidadesexternas (id, nombre) VALUES
+(1, 'Universidad Nacional'),
+(2, 'Centro de Innovación');
+
+INSERT INTO iniciativas (id, accion, horas, nombre, producto_final, fecha_inicio, fecha_fin) VALUES
+(1, 'Investigación sobre IA', 50, 'IA en educación', 'Informe de IA', '2025-01-01', '2025-06-01'),
+(2, 'Desarrollo de software', 60, 'Plataforma educativa', 'Prototipo funcional', '2025-02-01', '2025-07-01');
+
+INSERT INTO iniciativasmodulos (id, iniciativa_id, modulo_id) VALUES
+(1, 1, 3),
+(2, 2, 4);
+
+INSERT INTO profesoresiniciativas (id, iniciativa_id, trabajador_id) VALUES
+(1, 1, 1),
+(2, 2, 2);
+
+INSERT INTO entidadesexternasiniciativas (id, iniciativa_id, entidad_id) VALUES
+(1, 1, 1),
+(2, 2, 2);
+
+INSERT INTO metasiniciativas (id, cod_iniciativa_id, id_metas_id) VALUES
+(1, 1, 1),
+(2, 2, 2);

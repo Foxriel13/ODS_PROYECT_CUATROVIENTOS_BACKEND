@@ -61,13 +61,15 @@ class IniciativaService
     {
         return [
             'id' => $iniciativa->getId(),
-            'accion' => $iniciativa->getAccion(),
+            'tipo' => $iniciativa->getAccion(),
             'horas' => $iniciativa->getHoras(),
             'nombre' => $iniciativa->getNombre(),
             'producto_final' => $iniciativa->getProductoFinal(),
+            'fecha_registro' => $iniciativa->getFechaRegistro()->format('Y-m-d H:i:s'),
             'fecha_inicio' => $iniciativa->getFechaInicio()->format('Y-m-d H:i:s'),
             'fecha_fin' => $iniciativa->getFechaFin()->format('Y-m-d H:i:s'),
             'eliminado' => (bool) $iniciativa->isEliminado(),
+            'innovador' => (bool) $iniciativa->isInnovador(),
             'imagen' => $iniciativa->getImagen(),
             'metas' => array_map(fn($metaIniciativa) => [
                 'idMeta' => $metaIniciativa->getIdMetas()->getId(),

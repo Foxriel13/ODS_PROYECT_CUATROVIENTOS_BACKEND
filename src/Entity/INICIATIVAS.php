@@ -17,7 +17,7 @@ class INICIATIVAS
     private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $accion = null;
+    private ?string $tipo = null;
 
     #[ORM\Column]
     private ?int $horas = null;
@@ -64,6 +64,12 @@ class INICIATIVAS
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $imagen = null;
 
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $fechaRegistro = null;
+
+    #[ORM\Column]
+    private ?bool $innovador = null;
+
 
     public function __construct()
     {
@@ -78,14 +84,14 @@ class INICIATIVAS
         return $this->id;
     }
 
-    public function getAccion(): ?string
+    public function getTipo(): ?string
     {
-        return $this->accion;
+        return $this->tipo;
     }
 
-    public function setAccion(?string $accion): static
+    public function setTipo(?string $tipo): static
     {
-        $this->accion = $accion;
+        $this->tipo = $tipo;
 
         return $this;
     }
@@ -290,6 +296,30 @@ class INICIATIVAS
     public function setImagen(string $imagen): static
     {
         $this->imagen = $imagen;
+
+        return $this;
+    }
+
+    public function getFechaRegistro(): ?\DateTimeInterface
+    {
+        return $this->fechaRegistro;
+    }
+
+    public function setFechaRegistro(?\DateTimeInterface $fechaRegistro): static
+    {
+        $this->fechaRegistro = $fechaRegistro;
+
+        return $this;
+    }
+
+    public function isInnovador(): ?bool
+    {
+        return $this->innovador;
+    }
+
+    public function setInnovador(bool $innovador): static
+    {
+        $this->innovador = $innovador;
 
         return $this;
     }

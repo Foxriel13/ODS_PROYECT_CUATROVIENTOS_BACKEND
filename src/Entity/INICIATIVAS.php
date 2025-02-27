@@ -61,6 +61,9 @@ class INICIATIVAS
     #[ORM\Column]
     private ?bool $eliminado = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $imagen = null;
+
 
     public function __construct()
     {
@@ -275,6 +278,18 @@ class INICIATIVAS
     public function setEliminado(bool $eliminado): static
     {
         $this->eliminado = $eliminado;
+
+        return $this;
+    }
+
+    public function getImagen(): ?string
+    {
+        return $this->imagen;
+    }
+
+    public function setImagen(string $imagen): static
+    {
+        $this->imagen = $imagen;
 
         return $this;
     }

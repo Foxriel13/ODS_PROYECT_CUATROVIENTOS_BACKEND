@@ -600,6 +600,9 @@ components:
         eliminado:
           type: boolean
           example: true
+        imagen:
+          type: string
+          example: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVUGdra5SfyyJUvZ-mWByvoY1gEwp0df8NLA&s'
         metas:
           type: array
           items:

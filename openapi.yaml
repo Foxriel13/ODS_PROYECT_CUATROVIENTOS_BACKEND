@@ -597,6 +597,9 @@ components:
           type: string
           format: date
           example: '2025-06-01'
+        eliminado:
+          type: boolean
+          example: true
         metas:
           type: array
           items:

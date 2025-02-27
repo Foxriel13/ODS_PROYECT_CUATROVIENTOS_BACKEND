@@ -55,6 +55,7 @@ class IniciativaService
             'producto_final' => $iniciativa->getProductoFinal(),
             'fecha_inicio' => $iniciativa->getFechaInicio()->format('Y-m-d H:i:s'),
             'fecha_fin' => $iniciativa->getFechaFin()->format('Y-m-d H:i:s'),
+            'eliminado' => (bool) $iniciativa->isEliminado(),
             'metas' => array_map(fn($metaIniciativa) => [
                 'idMeta' => $metaIniciativa->getIdMetas()->getId(),
                 'descripcion' => $metaIniciativa->getIdMetas()->getDescripcion(),

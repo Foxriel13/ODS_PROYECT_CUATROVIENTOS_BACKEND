@@ -2,7 +2,6 @@
 
 namespace App\Service;
 
-use App\Repository\RecipeRepository;
 use App\Entity\CURSOS;
 use App\Entity\DIMENSION;
 use App\Entity\ENTIDADESEXTERNAS;
@@ -43,7 +42,6 @@ class IniciativaService
         $data = array_map(fn($iniciativa) => $this->formatIniciativa($iniciativa), $iniciativas);
 
         return new JsonResponse($data);
-        
     }
     private function formatIniciativa($iniciativa): array
     {
@@ -67,7 +65,7 @@ class IniciativaService
                         'nombre' => $metaIniciativa->getIdMetas()->getIdOds()->getDimension()->getNombre(),
 
                     ]
-            ]
+                ]
             ], $iniciativa->getMetasIniciativas()->toArray()),
             'profesores' => array_map(fn($profesorIniciativa) => [
                 'idProfesor' => $profesorIniciativa->getProfesor()->getId(),
@@ -86,6 +84,11 @@ class IniciativaService
                 ],
             ], $iniciativa->getModulos()->toArray()),
 
-    ];
+
+
+
+
+
+        ];
     }
 }

@@ -13,14 +13,12 @@ class PROFESORESINICIATIVAS
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne (targetEntity: INICIATIVAS::class)]
     #[ORM\JoinColumn]
-    #[ORM\Column (nullable: false)]
     private ?INICIATIVAS $iniciativa = null;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne (targetEntity: PROFESORES::class)]
     #[ORM\JoinColumn]
-    #[ORM\Column (nullable: false)]
     private ?PROFESORES $profesor = null;
 
     public function getId(): ?int

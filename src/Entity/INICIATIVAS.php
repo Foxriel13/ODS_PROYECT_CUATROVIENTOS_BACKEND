@@ -147,7 +147,6 @@ class INICIATIVAS
 
         return $this;
     }
-
     /**
      * @return Collection<int, METASINICIATIVAS>
      */
@@ -252,7 +251,7 @@ class INICIATIVAS
             $this->profesores->add($profesor);
             $profesor->setIniciativa($this);
         }
-
+ 
         return $this;
     }
 

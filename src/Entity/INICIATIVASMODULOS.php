@@ -14,11 +14,11 @@ class INICIATIVASMODULOS
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'modulos')]
-    #[ORM\Column (nullable: true)]
+    #[ORM\JoinColumn (nullable: true)]
     private ?INICIATIVAS $iniciativa = null;
 
     #[ORM\ManyToOne(inversedBy: 'iniciativa')]
-    #[ORM\Column (nullable: true)]
+    #[ORM\JoinColumn (nullable: true)]
     private ?MODULOS $modulo = null;
 
     public function getId(): ?int

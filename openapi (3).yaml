@@ -577,7 +577,7 @@ components:
         id:
           type: integer
           example: 1
-        accion:
+        tipo:
           type: string
           example: Investigación sobre IA
         horas:
@@ -598,6 +598,9 @@ components:
           format: date
           example: '2025-06-01'
         eliminado:
+          type: boolean
+          example: true
+        innovador:
           type: boolean
           example: true
         imagen:

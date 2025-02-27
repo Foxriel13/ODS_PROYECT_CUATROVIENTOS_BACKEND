@@ -61,7 +61,7 @@ class IniciativaService
     {
         return [
             'id' => $iniciativa->getId(),
-            'tipo' => $iniciativa->getAccion(),
+            'tipo' => $iniciativa->getTipo(),
             'horas' => $iniciativa->getHoras(),
             'nombre' => $iniciativa->getNombre(),
             'producto_final' => $iniciativa->getProductoFinal(),

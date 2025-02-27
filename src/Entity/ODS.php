@@ -6,6 +6,7 @@ use App\Repository\ODSRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 #[ORM\Entity(repositoryClass: ODSRepository::class)]
 class ODS
@@ -18,11 +19,11 @@ class ODS
     #[ORM\Column(length: 255)]
     private ?string $nombre = null;
 
-
     /**
      * @var Collection<int, METAS>
      */
     #[ORM\OneToMany(targetEntity: METAS::class, mappedBy: 'idOds')]
+    #[IGNORE]
     private Collection $metas;
 
     #[ORM\ManyToOne(inversedBy: 'ods')]

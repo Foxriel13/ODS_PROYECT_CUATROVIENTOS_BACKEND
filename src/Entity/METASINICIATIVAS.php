@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\METASINICIATIVASRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 #[ORM\Entity(repositoryClass: METASINICIATIVASRepository::class)]
 class METASINICIATIVAS
@@ -15,6 +16,7 @@ class METASINICIATIVAS
 
     #[ORM\ManyToOne(inversedBy: 'metasIniciativas')]
     #[ORM\JoinColumn(nullable: true)]
+    #[IGNORE]
     private ?INICIATIVAS $codIniciativa = null;
 
     #[ORM\ManyToOne(inversedBy: 'metasIniciativasIdMetas')]

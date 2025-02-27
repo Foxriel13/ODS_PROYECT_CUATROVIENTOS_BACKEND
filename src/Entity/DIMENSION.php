@@ -6,6 +6,7 @@ use App\Repository\DIMENSIONRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 #[ORM\Entity(repositoryClass: DIMENSIONRepository::class)]
 class DIMENSION
@@ -22,6 +23,7 @@ class DIMENSION
      * @var Collection<int, ODS>
      */
     #[ORM\OneToMany(targetEntity: ODS::class, mappedBy: 'dimension')]
+    #[IGNORE]
     private Collection $ods;
 
     public function __construct()

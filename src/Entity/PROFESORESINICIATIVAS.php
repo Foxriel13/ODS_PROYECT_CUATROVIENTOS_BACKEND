@@ -16,13 +16,11 @@ class PROFESORESINICIATIVAS
     #[ORM\ManyToOne]
     #[ORM\JoinColumn]
     #[ORM\Column (nullable: false)]
-
     private ?INICIATIVAS $iniciativa = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn]
     #[ORM\Column (nullable: false)]
-
     private ?PROFESORES $profesor = null;
 
     public function getId(): ?int

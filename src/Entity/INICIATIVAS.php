@@ -149,33 +149,6 @@ class INICIATIVAS
     }
 
     /**
-     * @return Collection<int, METAS>
-     */
-    public function getMetas(): Collection
-    {
-        return $this->metas;
-    }
-
-    public function addMeta(METAS $meta): static
-    {
-        if (!$this->metas->contains($meta)) {
-            $this->metas->add($meta);
-            $meta->addIniciativa($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMeta(METAS $meta): static
-    {
-        if ($this->metas->removeElement($meta)) {
-            $meta->removeIniciativa($this);
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, METASINICIATIVAS>
      */
     public function getMetasIniciativas(): Collection
@@ -275,8 +248,8 @@ class INICIATIVAS
 
     public function addProfesor(PROFESORESINICIATIVAS $profesor): static
     {
-        if (!$this->profesor->contains($profesor)) {
-            $this->profesor->add($profesor);
+        if (!$this->profesores->contains($profesor)) {
+            $this->profesores->add($profesor);
             $profesor->setIniciativa($this);
         }
 
@@ -285,7 +258,7 @@ class INICIATIVAS
 
     public function removeProfesor(PROFESORESINICIATIVAS $profesor): static
     {
-        if ($this->profesor->removeElement($profesor)) {
+        if ($this->profesores->removeElement($profesor)) {
             // set the owning side to null (unless already changed)
             if ($profesor->getIniciativa() === $this) {
                 $profesor->setIniciativa(null);

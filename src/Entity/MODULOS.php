@@ -6,6 +6,7 @@ use App\Repository\MODULOSRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 #[ORM\Entity(repositoryClass: MODULOSRepository::class)]
 class MODULOS
@@ -25,12 +26,14 @@ class MODULOS
      * @var Collection<int, PROFESORESMODULOS>
      */
     #[ORM\OneToMany(targetEntity: PROFESORESMODULOS::class, mappedBy: 'modulos')]
+    #[IGNORE]
     private Collection $profesores;
 
     /**
      * @var Collection<int, INICIATIVASMODULOS>
      */
     #[ORM\OneToMany(targetEntity: INICIATIVASMODULOS::class, mappedBy: 'modulo')]
+    #[IGNORE]
     private Collection $iniciativa;
 
     public function __construct()

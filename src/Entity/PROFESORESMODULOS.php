@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\PROFESORESMODULOSRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 #[ORM\Entity(repositoryClass: PROFESORESMODULOSRepository::class)]
 class PROFESORESMODULOS
@@ -14,6 +15,7 @@ class PROFESORESMODULOS
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'modulos')]
+    #[IGNORE]
     private ?PROFESORES $profesor = null;
 
     #[ORM\ManyToOne(inversedBy: 'profesores')]

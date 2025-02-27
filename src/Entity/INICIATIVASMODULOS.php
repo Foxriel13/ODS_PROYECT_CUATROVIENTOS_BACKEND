@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\INICIATIVASMODULOSRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 #[ORM\Entity(repositoryClass: INICIATIVASMODULOSRepository::class)]
 class INICIATIVASMODULOS

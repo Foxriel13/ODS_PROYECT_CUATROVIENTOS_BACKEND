@@ -6,6 +6,7 @@ use App\Repository\ENTIDADESEXTERNASRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 #[ORM\Entity(repositoryClass: ENTIDADESEXTERNASRepository::class)]
 class ENTIDADESEXTERNAS
@@ -22,6 +23,7 @@ class ENTIDADESEXTERNAS
      * @var Collection<int, ENTIDADESEXTERNASINICIATIVAS>
      */
     #[ORM\OneToMany(targetEntity: ENTIDADESEXTERNASINICIATIVAS::class, mappedBy: 'entidad')]
+    #[IGNORE]
     private Collection $iniciativa;
 
     public function __construct()

@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20250227105938 extends AbstractMigration
+final class Version20250227132511 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -24,7 +24,7 @@ final class Version20250227105938 extends AbstractMigration
         $this->addSql('CREATE TABLE dimension (id INT AUTO_INCREMENT NOT NULL, nombre VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE entidadesexternas (id INT AUTO_INCREMENT NOT NULL, nombre VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE entidadesexternasiniciativas (id INT AUTO_INCREMENT NOT NULL, iniciativa_id INT DEFAULT NULL, entidad_id INT DEFAULT NULL, INDEX IDX_C681A29CE16D9AB7 (iniciativa_id), INDEX IDX_C681A29C6CA204EF (entidad_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE iniciativas (id INT AUTO_INCREMENT NOT NULL, accion VARCHAR(255) DEFAULT NULL, horas INT NOT NULL, nombre VARCHAR(255) NOT NULL, producto_final VARCHAR(255) DEFAULT NULL, fecha_inicio DATE NOT NULL, fecha_fin DATE NOT NULL, eliminado TINYINT(1) NOT NULL, imagen VARCHAR(255) DEFAULT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE iniciativas (id INT AUTO_INCREMENT NOT NULL, tipo VARCHAR(255) DEFAULT NULL, horas INT NOT NULL, nombre VARCHAR(255) NOT NULL, producto_final VARCHAR(255) DEFAULT NULL, fecha_inicio DATE NOT NULL, fecha_fin DATE NOT NULL, eliminado TINYINT(1) NOT NULL, imagen VARCHAR(255) DEFAULT NULL, fecha_registro DATETIME DEFAULT NULL, innovador TINYINT(1) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE iniciativasmodulos (id INT AUTO_INCREMENT NOT NULL, iniciativa_id INT DEFAULT NULL, modulo_id INT DEFAULT NULL, INDEX IDX_DBF4FF47E16D9AB7 (iniciativa_id), INDEX IDX_DBF4FF47C07F55F5 (modulo_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE metas (id INT AUTO_INCREMENT NOT NULL, id_ods_id INT NOT NULL, descripcion VARCHAR(255) NOT NULL, INDEX IDX_4D6AF93CE26F6B1C (id_ods_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE metasiniciativas (id INT AUTO_INCREMENT NOT NULL, cod_iniciativa_id INT DEFAULT NULL, id_metas_id INT DEFAULT NULL, INDEX IDX_E6045A769FF9454 (cod_iniciativa_id), INDEX IDX_E6045A7673F2E7AE (id_metas_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');

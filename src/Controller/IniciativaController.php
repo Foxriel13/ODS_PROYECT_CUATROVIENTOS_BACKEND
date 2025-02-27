@@ -8,7 +8,7 @@ use App\Service\IniciativaService;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-
+use Symfony\Component\Intl\Data\Bundle\Writer\JsonBundleWriter;
 use Symfony\Component\Routing\Attribute\Route;
 
 final class IniciativaController extends AbstractController
@@ -21,9 +21,18 @@ final class IniciativaController extends AbstractController
     }
 
     #[Route('/iniciativas', methods: ['GET'])]
-    public function searchIniciativas(SerializerInterface $serializer): JsonResponse
+    public function searchIniciativas(Request $request): JsonResponse
     {
-        return $this->iniciativaService->getIniciativas();    
+        $eliminado = $request->query->get('eliminado');
+
+        if ($eliminado == 'true') {
+            return $this->iniciativaService->getIniciativasEliminadas();
+        }elseif ($eliminado == 'false') {
+            return $this->iniciativaService->getIniciativasActivas();
+        }else{
+            return $this->iniciativaService->getIniciativas();    
+        }
+
     }
 
 }

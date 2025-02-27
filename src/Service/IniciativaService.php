@@ -2,19 +2,6 @@
 
 namespace App\Service;
 
-use App\Entity\CURSOS;
-use App\Entity\DIMENSION;
-use App\Entity\ENTIDADESEXTERNAS;
-use App\Entity\ENTIDADESEXTERNASINICIATIVAS;
-use App\Entity\INICIATIVAS;
-use App\Entity\INICIATIVASMODULOS;
-use App\Entity\METAS;
-use App\Entity\METASINICIATIVAS;
-use App\Entity\MODULOS;
-use App\Entity\ODS;
-use App\Entity\PROFESORES;
-use App\Entity\PROFESORESINICIATIVAS;
-use App\Entity\PROFESORESMODULOS;
 use App\Repository\INICIATIVASRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -43,6 +30,33 @@ class IniciativaService
 
         return new JsonResponse($data);
     }
+
+    public function getIniciativasEliminadas(): JsonResponse
+    {
+        $iniciativas = $this->iniciativaRepository->findByEliminado();
+        
+        if (!$iniciativas) {
+            return new JsonResponse(['message' => 'No iniciatives found'], Response::HTTP_NOT_FOUND);
+        }
+
+        $data = array_map(fn($iniciativa) => $this->formatIniciativa($iniciativa), $iniciativas);
+
+        return new JsonResponse($data);
+    }
+
+    public function getIniciativasActivas(): JsonResponse
+    {
+        $iniciativas = $this->iniciativaRepository->findByActivas();
+        
+        if (!$iniciativas) {
+            return new JsonResponse(['message' => 'No iniciatives found'], Response::HTTP_NOT_FOUND);
+        }
+
+        $data = array_map(fn($iniciativa) => $this->formatIniciativa($iniciativa), $iniciativas);
+
+        return new JsonResponse($data);
+    }
+
     private function formatIniciativa($iniciativa): array
     {
         return [
@@ -84,11 +98,6 @@ class IniciativaService
                     'nombre' => $modulosIniciativas->getModulo()->getCurso()->getNombre(),
                 ],
             ], $iniciativa->getModulos()->toArray()),
-
-
-
-
-
 
         ];
     }

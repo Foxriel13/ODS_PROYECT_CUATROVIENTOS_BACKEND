@@ -21,12 +21,4 @@ class DimensionesService{
         return $this->dimensionRepository->findAll();
     }
 
-    public function createDimension(string $nombre):DIMENSION{
-        $dimension = new DIMENSION();
-        $dimension->setNombre($nombre);
-
-        $this->dimensionRepository->flush();
-
-        return $dimension;
-    }
 }

@@ -16,6 +16,16 @@ class INICIATIVASRepository extends ServiceEntityRepository
         parent::__construct($registry, INICIATIVAS::class);
     }
 
+    public function findByEliminado()
+    {
+        return $this->findBy(['eliminado' => true]);
+    }
+
+    public function findByActivas()
+    {
+        return $this->findBy(['eliminado' => false]);
+    }
+
     //    /**
     //     * @return INICIATIVAS[] Returns an array of INICIATIVAS objects
     //     */

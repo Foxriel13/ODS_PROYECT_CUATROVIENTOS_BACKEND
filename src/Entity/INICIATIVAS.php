@@ -70,6 +70,9 @@ class INICIATIVAS
     #[ORM\Column]
     private ?bool $innovador = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $anyoLectivo = null;
+
 
     public function __construct()
     {
@@ -320,6 +323,18 @@ class INICIATIVAS
     public function setInnovador(bool $innovador): static
     {
         $this->innovador = $innovador;
+
+        return $this;
+    }
+
+    public function getAnyoLectivo(): ?string
+    {
+        return $this->anyoLectivo;
+    }
+
+    public function setAnyoLectivo(?string $anyoLectivo): static
+    {
+        $this->anyoLectivo = $anyoLectivo;
 
         return $this;
     }

@@ -70,6 +70,7 @@ class IniciativaService
             'fecha_fin' => $iniciativa->getFechaFin()->format('Y-m-d H:i:s'),
             'eliminado' => (bool) $iniciativa->isEliminado(),
             'innovador' => (bool) $iniciativa->isInnovador(),
+            'anyo_lectivo' => $iniciativa->getAnyoLectivo(),
             'imagen' => $iniciativa->getImagen(),
             'metas' => array_map(fn($metaIniciativa) => [
                 'idMeta' => $metaIniciativa->getIdMetas()->getId(),

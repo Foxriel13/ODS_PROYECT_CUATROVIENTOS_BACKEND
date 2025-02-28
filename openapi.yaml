@@ -603,6 +603,9 @@ components:
         innovador:
           type: boolean
           example: true
+        anyo_lectivo:
+          type: string
+          example: '2024-2025'
         imagen:
           type: string
           example: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVUGdra5SfyyJUvZ-mWByvoY1gEwp0df8NLA&s'

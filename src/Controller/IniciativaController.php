@@ -35,4 +35,40 @@ final class IniciativaController extends AbstractController
 
     }
 
+    #[Route('/iniciativas/{idIniciativa}', methods: ['DELETE'])]
+    public function deleteIniciativa(int $idIniciativa): JsonResponse
+    {
+        $eliminado = $request->query->get('eliminado');
+
+        if ($eliminado == 'true') {
+            return new JsonResponse(['message' => 'La iniciativa {$idIniciativa} ya se encuentra eliminada'], Response::HTTP_BAD_REQUEST);
+        }else{
+            return $this->iniciativaService->deleteIniciativa($idIniciativa);
+        }
+    }
+
+    #[Route('/iniciativas', methods: ['POST'])]
+    public function createIniciativa(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        if (!$data) {
+            return new JsonResponse(['message' => 'Datos inválidos'], Response::HTTP_BAD_REQUEST);
+        }
+
+        return $this->iniciativaService->createIniciativa($data);
+    }
+
+    #[Route('/iniciativas/{idIniciativa}', methods: ['PUT'])]
+    public function updateIniciativa(Request $request, int $id): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+    
+        if (!$data) {
+            return new JsonResponse(['message' => 'Datos inválidos'], Response::HTTP_BAD_REQUEST);
+        }
+    
+        return $this->iniciativaService->updateIniciativa($id, $data);
+    }
+    
 }

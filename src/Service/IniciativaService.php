@@ -18,6 +18,97 @@ class IniciativaService
         $this->iniciativaRepository = $iniciativaRepository;
     }
 
+    public function deleteIniciativa(int $id): JsonResponse
+    {
+        $iniciativa = $this->iniciativaRepository->find($id);
+        
+        if (!$iniciativa) {
+            return new JsonResponse(['message' => 'Iniciativa no encontrada'], Response::HTTP_NOT_FOUND);
+        }
+        
+        $iniciativa->setEliminado(true);
+        
+        $this->entityManager->flush();
+        
+        return new JsonResponse(['message' => 'Iniciativa eliminada exitosamente'], Response::HTTP_OK);
+    }
+
+    public function createIniciativa(array $data): JsonResponse
+    {
+        $iniciativa = new Iniciativa();
+        
+        $iniciativa->setTipo($data['tipo'] ?? null);
+        $iniciativa->setHoras($data['horas'] ?? null);
+        $iniciativa->setNombre($data['nombre'] ?? null);
+        $iniciativa->setProductoFinal($data['producto_final'] ?? null);
+        
+        if (isset($data['fecha_registro'])) {
+            $iniciativa->setFechaRegistro(new \DateTime($data['fecha_registro']));
+        }
+        if (isset($data['fecha_inicio'])) {
+            $iniciativa->setFechaInicio(new \DateTime($data['fecha_inicio']));
+        }
+        if (isset($data['fecha_fin'])) {
+            $iniciativa->setFechaFin(new \DateTime($data['fecha_fin']));
+        }
+        
+        $iniciativa->setEliminado(false);
+        $iniciativa->setInnovador($data['innovador'] ?? false);
+        $iniciativa->setAnyoLectivo($data['anyo_lectivo'] ?? null);
+        $iniciativa->setImagen($data['imagen'] ?? null);
+
+        $this->entityManager->persist($iniciativa);
+        $this->entityManager->flush();
+
+        return new JsonResponse(['message' => 'Iniciativa creada correctamente'], Response::HTTP_CREATED);
+    }
+
+    public function updateIniciativa(int $id, array $data): JsonResponse
+    {
+        $iniciativa = $this->iniciativaRepository->find($id);
+        if (!$iniciativa) {
+            return new JsonResponse(['message' => 'Iniciativa no encontrada'], Response::HTTP_NOT_FOUND);
+        }
+
+        if (isset($data['tipo'])) {
+            $iniciativa->setTipo($data['tipo']);
+        }
+        if (isset($data['horas'])) {
+            $iniciativa->setHoras($data['horas']);
+        }
+        if (isset($data['nombre'])) {
+            $iniciativa->setNombre($data['nombre']);
+        }
+        if (isset($data['producto_final'])) {
+            $iniciativa->setProductoFinal($data['producto_final']);
+        }
+        if (isset($data['fecha_registro'])) {
+            $iniciativa->setFechaRegistro(new \DateTime($data['fecha_registro']));
+        }
+        if (isset($data['fecha_inicio'])) {
+            $iniciativa->setFechaInicio(new \DateTime($data['fecha_inicio']));
+        }
+        if (isset($data['fecha_fin'])) {
+            $iniciativa->setFechaFin(new \DateTime($data['fecha_fin']));
+        }
+        if (isset($data['eliminado'])) {
+            $iniciativa->setEliminado($data['eliminado']);
+        }
+        if (isset($data['innovador'])) {
+            $iniciativa->setInnovador($data['innovador']);
+        }
+        if (isset($data['anyo_lectivo'])) {
+            $iniciativa->setAnyoLectivo($data['anyo_lectivo']);
+        }
+        if (isset($data['imagen'])) {
+            $iniciativa->setImagen($data['imagen']);
+        }
+        
+        $this->entityManager->flush();
+
+        return new JsonResponse(['message' => 'Iniciativa actualizada correctamente'], Response::HTTP_OK);
+    }
+
     public function getIniciativas(): JsonResponse
     {
         $iniciativas = $this->iniciativaRepository->findAll();
@@ -81,7 +172,6 @@ class IniciativaService
                     'dimension' => [
                         'idDimension' => $metaIniciativa->getIdMetas()->getIdOds()->getDimension()->getId(),
                         'nombre' => $metaIniciativa->getIdMetas()->getIdOds()->getDimension()->getNombre(),
-
                     ]
                 ]
             ], $iniciativa->getMetasIniciativas()->toArray()),
@@ -101,7 +191,7 @@ class IniciativaService
                     'nombre' => $modulosIniciativas->getModulo()->getCurso()->getNombre(),
                 ],
             ], $iniciativa->getModulos()->toArray()),
-
         ];
     }
+
 }

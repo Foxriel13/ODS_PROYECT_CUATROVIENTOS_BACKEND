@@ -2,14 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\DIMENSIONRepository;
+use App\Repository\CURSOSRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Ignore;
 
-#[ORM\Entity(repositoryClass: DIMENSIONRepository::class)]
-class DIMENSION
+#[ORM\Entity(repositoryClass: CURSOSRepository::class)]
+class CURSOS
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -20,15 +20,15 @@ class DIMENSION
     private ?string $nombre = null;
 
     /**
-     * @var Collection<int, ODS>
+     * @var Collection<int, MODULOS>
      */
-    #[ORM\OneToMany(targetEntity: ODS::class, mappedBy: 'dimension')]
+    #[ORM\OneToMany(targetEntity: MODULOS::class, mappedBy: 'curso')]
     #[IGNORE]
-    private Collection $ods;
+    private Collection $modulos;
 
     public function __construct()
     {
-        $this->ods = new ArrayCollection();
+        $this->modulos = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -49,29 +49,29 @@ class DIMENSION
     }
 
     /**
-     * @return Collection<int, ODS>
+     * @return Collection<int, MODULOS>
      */
-    public function getOds(): Collection
+    public function getModulos(): Collection
     {
-        return $this->ods;
+        return $this->modulos;
     }
 
-    public function addOd(ODS $od): static
+    public function addModulo(MODULOS $modulo): static
     {
-        if (!$this->ods->contains($od)) {
-            $this->ods->add($od);
-            $od->setDimension($this);
+        if (!$this->modulos->contains($modulo)) {
+            $this->modulos->add($modulo);
+            $modulo->setCurso($this);
         }
 
         return $this;
     }
 
-    public function removeOd(ODS $od): static
+    public function removeModulo(MODULOS $modulo): static
     {
-        if ($this->ods->removeElement($od)) {
+        if ($this->modulos->removeElement($modulo)) {
             // set the owning side to null (unless already changed)
-            if ($od->getDimension() === $this) {
-                $od->setDimension(null);
+            if ($modulo->getCurso() === $this) {
+                $modulo->setCurso(null);
             }
         }
 

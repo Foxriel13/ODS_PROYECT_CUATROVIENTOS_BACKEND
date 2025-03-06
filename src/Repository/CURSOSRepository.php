@@ -2,22 +2,22 @@
 
 namespace App\Repository;
 
-use App\Entity\Curso;
+use App\Entity\CURSOS;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Curso>
+ * @extends ServiceEntityRepository<CURSOS>
  */
-class CursoRepository extends ServiceEntityRepository
+class CURSOSRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Curso::class);
+        parent::__construct($registry, CURSOS::class);
     }
 
     //    /**
-    //     * @return Curso[] Returns an array of Curso objects
+    //     * @return CURSOS[] Returns an array of CURSOS objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -31,7 +31,7 @@ class CursoRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?Curso
+    //    public function findOneBySomeField($value): ?CURSOS
     //    {
     //        return $this->createQueryBuilder('c')
     //            ->andWhere('c.exampleField = :val')

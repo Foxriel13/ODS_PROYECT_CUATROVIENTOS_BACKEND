@@ -2,39 +2,39 @@
 
 namespace App\Repository;
 
-use App\Entity\Profesor;
+use App\Entity\INICIATIVASMODULOS;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Profesor>
+ * @extends ServiceEntityRepository<INICIATIVASMODULOS>
  */
-class ProfesorRepository extends ServiceEntityRepository
+class INICIATIVASMODULOSRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Profesor::class);
+        parent::__construct($registry, INICIATIVASMODULOS::class);
     }
 
     //    /**
-    //     * @return Profesor[] Returns an array of Profesor objects
+    //     * @return INICIATIVASMODULOS[] Returns an array of INICIATIVASMODULOS objects
     //     */
     //    public function findByExampleField($value): array
     //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
+    //        return $this->createQueryBuilder('i')
+    //            ->andWhere('i.exampleField = :val')
     //            ->setParameter('val', $value)
-    //            ->orderBy('p.id', 'ASC')
+    //            ->orderBy('i.id', 'ASC')
     //            ->setMaxResults(10)
     //            ->getQuery()
     //            ->getResult()
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?Profesor
+    //    public function findOneBySomeField($value): ?INICIATIVASMODULOS
     //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
+    //        return $this->createQueryBuilder('i')
+    //            ->andWhere('i.exampleField = :val')
     //            ->setParameter('val', $value)
     //            ->getQuery()
     //            ->getOneOrNullResult()

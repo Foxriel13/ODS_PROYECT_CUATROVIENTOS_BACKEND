@@ -2,13 +2,16 @@
 
 namespace App\Service;
 
-use App\Repository\DimensionRepository;
+use App\Repository\DIMENSIONRepository;
+use App\Entity\DIMENSION;
+use Doctrine\ORM\EntityManagerInterface;
+
 
 class DimensionesService{
 
-    private DimensionRepository $dimensionRepository;
+    private DIMENSIONRepository $dimensionRepository;
 
-    public function __construct(DimensionRepository $dimensionRepository)
+    public function __construct(DIMENSIONRepository $dimensionRepository)
     {
         $this->dimensionRepository = $dimensionRepository;
     }

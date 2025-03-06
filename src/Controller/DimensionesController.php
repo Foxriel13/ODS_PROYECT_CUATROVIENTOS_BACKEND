@@ -16,7 +16,7 @@ class DimensionesController extends AbstractController
         $this->dimensionesService = $dimensionesService;
     }
 
-    #[Route('/dimensiones', name: 'dimensiones', methods: ['GET'])]
+    #[Route('/dimension', name: 'dimension', methods: ['GET'])]
     public function getDimensiones(): JsonResponse
     {
         $dimensiones = $this->dimensionesService->getAllDimensiones();

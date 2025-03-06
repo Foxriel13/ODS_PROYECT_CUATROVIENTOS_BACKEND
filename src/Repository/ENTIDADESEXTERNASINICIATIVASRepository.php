@@ -2,22 +2,22 @@
 
 namespace App\Repository;
 
-use App\Entity\EntidadExternaIniciativa;
+use App\Entity\ENTIDADESEXTERNASINICIATIVAS;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<EntidadExternaIniciativa>
+ * @extends ServiceEntityRepository<ENTIDADESEXTERNASINICIATIVAS>
  */
-class EntidadExternaIniciativaRepository extends ServiceEntityRepository
+class ENTIDADESEXTERNASINICIATIVASRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, EntidadExternaIniciativa::class);
+        parent::__construct($registry, ENTIDADESEXTERNASINICIATIVAS::class);
     }
 
     //    /**
-    //     * @return EntidadExternaIniciativa[] Returns an array of EntidadExternaIniciativa objects
+    //     * @return ENTIDADESEXTERNASINICIATIVAS[] Returns an array of ENTIDADESEXTERNASINICIATIVAS objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -28,11 +28,10 @@ class EntidadExternaIniciativaRepository extends ServiceEntityRepository
     //            ->setMaxResults(10)
     //            ->getQuery()
     //            ->getResult()
-    
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?EntidadExternaIniciativa
+    //    public function findOneBySomeField($value): ?ENTIDADESEXTERNASINICIATIVAS
     //    {
     //        return $this->createQueryBuilder('e')
     //            ->andWhere('e.exampleField = :val')

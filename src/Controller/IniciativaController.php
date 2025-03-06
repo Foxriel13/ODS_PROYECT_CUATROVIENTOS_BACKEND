@@ -36,7 +36,7 @@ final class IniciativaController extends AbstractController
     }
 
     #[Route('/iniciativas/{idIniciativa}', methods: ['DELETE'])]
-    public function deleteIniciativa(Request $request, int $idIniciativa): JsonResponse
+    public function deleteIniciativa(int $idIniciativa): JsonResponse
     {
         $eliminado = $request->query->get('eliminado');
 

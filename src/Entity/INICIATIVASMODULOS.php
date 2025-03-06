@@ -2,49 +2,49 @@
 
 namespace App\Entity;
 
-use App\Repository\IniciativaModuloRepository;
+use App\Repository\INICIATIVASMODULOSRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Ignore;
 
-#[ORM\Entity(repositoryClass: IniciativaModuloRepository::class)]
-class IniciativaModulo
+#[ORM\Entity(repositoryClass: INICIATIVASMODULOSRepository::class)]
+class INICIATIVASMODULOS
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'Modulo')]
+    #[ORM\ManyToOne(inversedBy: 'modulos')]
     #[ORM\JoinColumn (nullable: true)]
-    private ?Iniciativa $iniciativa = null;
+    private ?INICIATIVAS $iniciativa = null;
 
     #[ORM\ManyToOne(inversedBy: 'iniciativa')]
     #[ORM\JoinColumn (nullable: true)]
-    private ?Modulo $modulo = null;
+    private ?MODULOS $modulo = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getIniciativa(): ?Iniciativa
+    public function getIniciativa(): ?INICIATIVAS
     {
         return $this->iniciativa;
     }
 
-    public function setIniciativa(?Iniciativa $iniciativa): static
+    public function setIniciativa(?INICIATIVAS $iniciativa): static
     {
         $this->iniciativa = $iniciativa;
 
         return $this;
     }
 
-    public function getModulo(): ?Modulo
+    public function getModulo(): ?MODULOS
     {
         return $this->modulo;
     }
 
-    public function setModulo(?Modulo $modulo): static
+    public function setModulo(?MODULOS $modulo): static
     {
         $this->modulo = $modulo;
 

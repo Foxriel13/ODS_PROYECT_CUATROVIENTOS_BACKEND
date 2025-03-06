@@ -2,14 +2,14 @@
 
 namespace App\Service;
 
-use App\Repository\EntidadExternaRepository;
+use App\Repository\ENTIDADESEXTERNASRepository;
 
 
 class EntidadesExternasService{
 
-    private EntidadExternaRepository $entidadesExternasRepository;
+    private ENTIDADESEXTERNASRepository $entidadesExternasRepository;
 
-    public function __construct(EntidadExternaRepository $entidadesExternasRepository)
+    public function __construct(ENTIDADESEXTERNASRepository $entidadesExternasRepository)
     {
         $this->entidadesExternasRepository = $entidadesExternasRepository;
     }

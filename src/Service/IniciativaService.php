@@ -2,18 +2,17 @@
 
 namespace App\Service;
 
-use App\Entity\Iniciativa;
-use App\Repository\IniciativaRepository;
+use App\Repository\INICIATIVASRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 class IniciativaService
 {
-    private IniciativaRepository $iniciativaRepository;
+    private INICIATIVASRepository $iniciativaRepository;
     private EntityManagerInterface $entityManager;
 
-    public function __construct(EntityManagerInterface $entityManager, IniciativaRepository $iniciativaRepository)
+    public function __construct(EntityManagerInterface $entityManager, INICIATIVASRepository $iniciativaRepository)
     {
         $this->entityManager = $entityManager;
         $this->iniciativaRepository = $iniciativaRepository;
@@ -40,7 +39,7 @@ class IniciativaService
         
         $iniciativa->setTipo($data['tipo'] ?? null);
         $iniciativa->setHoras($data['horas'] ?? null);
-        $iniciativa->setNombreIniciativa($data['nombre'] ?? null);
+        $iniciativa->setNombre($data['nombre'] ?? null);
         $iniciativa->setProductoFinal($data['producto_final'] ?? null);
         
         if (isset($data['fecha_registro'])) {

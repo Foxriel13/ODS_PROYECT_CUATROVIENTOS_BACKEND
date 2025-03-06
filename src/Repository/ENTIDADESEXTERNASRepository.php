@@ -2,39 +2,39 @@
 
 namespace App\Repository;
 
-use App\Entity\Modulo;
+use App\Entity\ENTIDADESEXTERNAS;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Modulo>
+ * @extends ServiceEntityRepository<ENTIDADESEXTERNAS>
  */
-class ModuloRepository extends ServiceEntityRepository
+class ENTIDADESEXTERNASRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Modulo::class);
+        parent::__construct($registry, ENTIDADESEXTERNAS::class);
     }
 
     //    /**
-    //     * @return Modulo[] Returns an array of Modulo objects
+    //     * @return ENTIDADESEXTERNAS[] Returns an array of ENTIDADESEXTERNAS objects
     //     */
     //    public function findByExampleField($value): array
     //    {
-    //        return $this->createQueryBuilder('m')
-    //            ->andWhere('m.exampleField = :val')
+    //        return $this->createQueryBuilder('e')
+    //            ->andWhere('e.exampleField = :val')
     //            ->setParameter('val', $value)
-    //            ->orderBy('m.id', 'ASC')
+    //            ->orderBy('e.id', 'ASC')
     //            ->setMaxResults(10)
     //            ->getQuery()
     //            ->getResult()
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?Modulo
+    //    public function findOneBySomeField($value): ?ENTIDADESEXTERNAS
     //    {
-    //        return $this->createQueryBuilder('m')
-    //            ->andWhere('m.exampleField = :val')
+    //        return $this->createQueryBuilder('e')
+    //            ->andWhere('e.exampleField = :val')
     //            ->setParameter('val', $value)
     //            ->getQuery()
     //            ->getOneOrNullResult()

@@ -2,39 +2,39 @@
 
 namespace App\Repository;
 
-use App\Entity\Meta;
+use App\Entity\PROFESORESMODULOS;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Meta>
+ * @extends ServiceEntityRepository<PROFESORESMODULOS>
  */
-class MetaRepository extends ServiceEntityRepository
+class PROFESORESMODULOSRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Meta::class);
+        parent::__construct($registry, PROFESORESMODULOS::class);
     }
 
     //    /**
-    //     * @return Meta[] Returns an array of Meta objects
+    //     * @return PROFESORESMODULOS[] Returns an array of PROFESORESMODULOS objects
     //     */
     //    public function findByExampleField($value): array
     //    {
-    //        return $this->createQueryBuilder('m')
-    //            ->andWhere('m.exampleField = :val')
+    //        return $this->createQueryBuilder('p')
+    //            ->andWhere('p.exampleField = :val')
     //            ->setParameter('val', $value)
-    //            ->orderBy('m.id', 'ASC')
+    //            ->orderBy('p.id', 'ASC')
     //            ->setMaxResults(10)
     //            ->getQuery()
     //            ->getResult()
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?Meta
+    //    public function findOneBySomeField($value): ?PROFESORESMODULOS
     //    {
-    //        return $this->createQueryBuilder('m')
-    //            ->andWhere('m.exampleField = :val')
+    //        return $this->createQueryBuilder('p')
+    //            ->andWhere('p.exampleField = :val')
     //            ->setParameter('val', $value)
     //            ->getQuery()
     //            ->getOneOrNullResult()

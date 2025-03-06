@@ -88,7 +88,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ods'
+                  $ref: '#/components/schemas/Ods'
     post:
       tags:
         - ods
@@ -487,61 +487,67 @@ components:
     Dimension:
       type: object
       properties:
-        idDimension:
+        id:
           type: integer
           example: 1
-        nombreDimension:
+        nombre:
           type: string
           example: Social
     Ods:
       type: object
       properties:
-        idOds:
+        id:
           type: integer
           example: 1
-        nombreOds:
+        nombre:
           type: string
           example: Fin de la Pobreza
         dimension:
+          type: object
+          items:
             $ref: '#/components/schemas/Dimension'
     Meta:
       type: object
       properties:
-        idMeta:
+        id:
           type: integer
           example: 1
-        descripcionMeta:
+        descripcion:
           type: string
           example: Fomentar la educación digital
         ods:
-              $ref: '#/components/schemas/Ods'
+          type: object
+          items:
+            $ref: '#/components/schemas/Ods'
     Curso:
       type: object
       properties:
-        idCurso:
+        id:
           type: integer
           example: 1
-        nombreCurso:
+        nombre:
           type: string
           example: Curso de Matemáticas
     Modulo:
       type: object
       properties:
-        idModulo:
+        id:
           type: integer
           example: 1
-        nombreModulo:
+        nombre:
           type: string
           example: Álgebra
         curso:
+          type: object
+          items:
             $ref: '#/components/schemas/Curso'
     Profesor:
       type: object
       properties:
-        idProfesor:
+        id:
           type: integer
           example: 1
-        nombreProfesor:
+        nombre:
           type: string
           example: Juan Pérez
     ProfesorModulo:
@@ -559,16 +565,16 @@ components:
     EntidadExterna:
       type: object
       properties:
-        idEntidadExterna:
+        id:
           type: integer
           example: 1
-        nombreEntidadExterna:
+        nombre:
           type: string
           example: Universidad Nacional
     Iniciativa:
       type: object
       properties:
-        idIniciativa:
+        id:
           type: integer
           example: 1
         tipo:
@@ -577,7 +583,7 @@ components:
         horas:
           type: integer
           example: 50
-        nombreIniciativa:
+        nombre:
           type: string
           example: IA en educación
         producto_final:

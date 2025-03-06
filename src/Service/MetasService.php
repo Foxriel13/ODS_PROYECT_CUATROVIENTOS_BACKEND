@@ -2,14 +2,14 @@
 
 namespace App\Service;
 
-use App\Repository\MetaRepository;
+use App\Repository\METASRepository;
 
 
 class MetasService{
 
-    private MetaRepository $metasRepository;
+    private METASRepository $metasRepository;
 
-    public function __construct(MetaRepository $metasRepository)
+    public function __construct(METASRepository $metasRepository)
     {
         $this->metasRepository = $metasRepository;
     }

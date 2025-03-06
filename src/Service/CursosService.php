@@ -2,14 +2,14 @@
 
 namespace App\Service;
 
-use App\Repository\CursoRepository;
+use App\Repository\CURSOSRepository;
 
 
 class CursosService{
 
-    private CursoRepository $cursoRepository;
+    private CURSOSRepository $cursoRepository;
 
-    public function __construct(CursoRepository $cursoRepository)
+    public function __construct(CursosRepository $cursoRepository)
     {
         $this->cursoRepository = $cursoRepository;
     }

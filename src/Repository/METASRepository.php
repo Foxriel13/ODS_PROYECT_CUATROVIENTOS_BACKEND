@@ -2,39 +2,39 @@
 
 namespace App\Repository;
 
-use App\Entity\DIMENSION;
+use App\Entity\METAS;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<DIMENSION>
+ * @extends ServiceEntityRepository<METAS>
  */
-class DIMENSIONRepository extends ServiceEntityRepository
+class METASRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, DIMENSION::class);
+        parent::__construct($registry, METAS::class);
     }
 
     //    /**
-    //     * @return DIMENSION[] Returns an array of DIMENSION objects
+    //     * @return METAS[] Returns an array of METAS objects
     //     */
     //    public function findByExampleField($value): array
     //    {
-    //        return $this->createQueryBuilder('d')
-    //            ->andWhere('d.exampleField = :val')
+    //        return $this->createQueryBuilder('m')
+    //            ->andWhere('m.exampleField = :val')
     //            ->setParameter('val', $value)
-    //            ->orderBy('d.id', 'ASC')
+    //            ->orderBy('m.id', 'ASC')
     //            ->setMaxResults(10)
     //            ->getQuery()
     //            ->getResult()
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?DIMENSION
+    //    public function findOneBySomeField($value): ?METAS
     //    {
-    //        return $this->createQueryBuilder('d')
-    //            ->andWhere('d.exampleField = :val')
+    //        return $this->createQueryBuilder('m')
+    //            ->andWhere('m.exampleField = :val')
     //            ->setParameter('val', $value)
     //            ->getQuery()
     //            ->getOneOrNullResult()

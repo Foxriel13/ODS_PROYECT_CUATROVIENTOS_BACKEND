@@ -2,39 +2,39 @@
 
 namespace App\Repository;
 
-use App\Entity\PROFESORES;
+use App\Entity\EntidadExterna;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<PROFESORES>
+ * @extends ServiceEntityRepository<EntidadExterna>
  */
-class PROFESORESRepository extends ServiceEntityRepository
+class EntidadExternaRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, PROFESORES::class);
+        parent::__construct($registry, EntidadExterna::class);
     }
 
     //    /**
-    //     * @return PROFESORES[] Returns an array of PROFESORES objects
+    //     * @return EntidadExterna[] Returns an array of EntidadExterna objects
     //     */
     //    public function findByExampleField($value): array
     //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
+    //        return $this->createQueryBuilder('e')
+    //            ->andWhere('e.exampleField = :val')
     //            ->setParameter('val', $value)
-    //            ->orderBy('p.id', 'ASC')
+    //            ->orderBy('e.id', 'ASC')
     //            ->setMaxResults(10)
     //            ->getQuery()
     //            ->getResult()
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?PROFESORES
+    //    public function findOneBySomeField($value): ?EntidadExterna
     //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
+    //        return $this->createQueryBuilder('e')
+    //            ->andWhere('e.exampleField = :val')
     //            ->setParameter('val', $value)
     //            ->getQuery()
     //            ->getOneOrNullResult()

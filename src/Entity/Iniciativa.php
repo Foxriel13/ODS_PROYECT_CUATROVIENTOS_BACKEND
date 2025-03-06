@@ -2,19 +2,19 @@
 
 namespace App\Entity;
 
-use App\Repository\INICIATIVASRepository;
+use App\Repository\IniciativaRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: INICIATIVASRepository::class)]
-class INICIATIVAS
+#[ORM\Entity(repositoryClass: IniciativaRepository::class)]
+class Iniciativa
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    private ?int $idIniciativa = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $tipo = null;
@@ -23,7 +23,7 @@ class INICIATIVAS
     private ?int $horas = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $nombre = null;
+    private ?string $nombreIniciativa = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $productoFinal = null;
@@ -35,28 +35,28 @@ class INICIATIVAS
     private ?\DateTimeInterface $fechaFin = null;
 
     /**
-     * @var Collection<int, METASINICIATIVAS>
+     * @var Collection<int, MetaIniciativa>
      */
-    #[ORM\OneToMany(targetEntity: METASINICIATIVAS::class, mappedBy: 'codIniciativa')]
-    private Collection $metasIniciativas;
+    #[ORM\OneToMany(targetEntity: MetaIniciativa::class, mappedBy: 'codIniciativa')]
+    private Collection $metaIniciativa;
 
     /**
-     * @var Collection<int, INICIATIVASMODULOS>
+     * @var Collection<int, IniciativaModulo>
      */
-    #[ORM\OneToMany(targetEntity: INICIATIVASMODULOS::class, mappedBy: 'iniciativa')]
-    private Collection $modulos;
+    #[ORM\OneToMany(targetEntity: IniciativaModulo::class, mappedBy: 'iniciativa')]
+    private Collection $modulo;
 
     /**
-     * @var Collection<int, ENTIDADESEXTERNASINICIATIVAS>
+     * @var Collection<int, EntidadExternaIniciativa>
      */
-    #[ORM\OneToMany(targetEntity: ENTIDADESEXTERNASINICIATIVAS::class, mappedBy: 'iniciativa')]
-    private Collection $entidadesExternas;
+    #[ORM\OneToMany(targetEntity: EntidadExternaIniciativa::class, mappedBy: 'iniciativa')]
+    private Collection $entidadExterna;
 
     /**
-     * @var Collection<int, PROFESORESINICIATIVAS>
+     * @var Collection<int, ProfesorIniciativa>
      */
-    #[ORM\OneToMany(targetEntity: PROFESORESINICIATIVAS::class, mappedBy: 'iniciativa')]
-    private Collection $profesores;
+    #[ORM\OneToMany(targetEntity: ProfesorIniciativa::class, mappedBy: 'iniciativa')]
+    private Collection $profesor;
 
     #[ORM\Column]
     private ?bool $eliminado = null;
@@ -76,15 +76,15 @@ class INICIATIVAS
 
     public function __construct()
     {
-        $this->metasIniciativas = new ArrayCollection();
-        $this->modulos = new ArrayCollection();
-        $this->entidadesExternas = new ArrayCollection();
-        $this->profesores = new ArrayCollection();
+        $this->metaIniciativa = new ArrayCollection();
+        $this->modulo = new ArrayCollection();
+        $this->entidadExterna = new ArrayCollection();
+        $this->profesor = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getIdIniciativa(): ?int
     {
-        return $this->id;
+        return $this->idIniciativa;
     }
 
     public function getTipo(): ?string
@@ -111,14 +111,14 @@ class INICIATIVAS
         return $this;
     }
 
-    public function getNombre(): ?string
+    public function getNombreIniciativa(): ?string
     {
-        return $this->nombre;
+        return $this->nombreIniciativa;
     }
 
-    public function setNombre(string $nombre): static
+    public function setNombreIniciativa(string $nombre): static
     {
-        $this->nombre = $nombre;
+        $this->nombreIniciativa = $nombre;
 
         return $this;
     }
@@ -160,29 +160,30 @@ class INICIATIVAS
         return $this;
     }
     /**
-     * @return Collection<int, METASINICIATIVAS>
+     * @return Collection<int, MetaIniciativa>
      */
-    public function getMetasIniciativas(): Collection
+    public function getMetaIniciativa(): Collection
     {
-        return $this->metasIniciativas;
+        return $this->metaIniciativa;
     }
 
-    public function addMetasIniciativa(METASINICIATIVAS $metasIniciativa): static
+    public function addMetaIniciativa(MetaIniciativa $metaIniciativa): static
     {
-        if (!$this->metasIniciativas->contains($metasIniciativa)) {
-            $this->metasIniciativas->add($metasIniciativa);
-            $metasIniciativa->setCodIniciativa($this);
+        if (!$this->metaIniciativa->contains($metaIniciativa)) {
+            $this->metaIniciativa->add($metaIniciativa);
+            $metaIniciativa->setidIniciativa($this);
         }
 
         return $this;
+        
     }
 
-    public function removeMetasIniciativa(METASINICIATIVAS $metasIniciativa): static
+    public function removeMetaIniciativa(MetaIniciativa $metaIniciativa): static
     {
-        if ($this->metasIniciativas->removeElement($metasIniciativa)) {
+        if ($this->metaIniciativa->removeElement($metaIniciativa)) {
             // set the owning side to null (unless already changed)
-            if ($metasIniciativa->getCodIniciativa() === $this) {
-                $metasIniciativa->setCodIniciativa(null);
+            if ($metaIniciativa->getidIniciativa() === $this) {
+                $metaIniciativa->setidIniciativa(null);
             }
         }
 
@@ -190,26 +191,26 @@ class INICIATIVAS
     }
 
     /**
-     * @return Collection<int, INICIATIVASMODULOS>
+     * @return Collection<int, IniciativaModulo>
      */
-    public function getModulos(): Collection
+    public function getModulo(): Collection
     {
-        return $this->modulos;
+        return $this->modulo;
     }
 
-    public function addModulo(INICIATIVASMODULOS $modulo): static
+    public function addModulo(IniciativaModulo $modulo): static
     {
-        if (!$this->modulos->contains($modulo)) {
-            $this->modulos->add($modulo);
+        if (!$this->modulo->contains($modulo)) {
+            $this->modulo->add($modulo);
             $modulo->setIniciativa($this);
         }
 
         return $this;
     }
 
-    public function removeModulo(INICIATIVASMODULOS $modulo): static
+    public function removeModulo(IniciativaModulo $modulo): static
     {
-        if ($this->modulos->removeElement($modulo)) {
+        if ($this->modulo->removeElement($modulo)) {
             // set the owning side to null (unless already changed)
             if ($modulo->getIniciativa() === $this) {
                 $modulo->setIniciativa(null);
@@ -220,29 +221,29 @@ class INICIATIVAS
     }
 
     /**
-     * @return Collection<int, ENTIDADESEXTERNASINICIATIVAS>
+     * @return Collection<int, EntidadExternaIniciativa>
      */
-    public function getEntidadesExternas(): Collection
+    public function getEntidadExterna(): Collection
     {
-        return $this->entidadesExternas;
+        return $this->entidadExterna;
     }
 
-    public function addEntidadesExterna(ENTIDADESEXTERNASINICIATIVAS $entidadesExterna): static
+    public function addEntidadExterna(EntidadExternaIniciativa $EntidadExterna): static
     {
-        if (!$this->entidadesExternas->contains($entidadesExterna)) {
-            $this->entidadesExternas->add($entidadesExterna);
-            $entidadesExterna->setIniciativa($this);
+        if (!$this->entidadExterna->contains($EntidadExterna)) {
+            $this->entidadExterna->add($EntidadExterna);
+            $EntidadExterna->setIniciativa($this);
         }
 
         return $this;
     }
 
-    public function removeEntidadesExterna(ENTIDADESEXTERNASINICIATIVAS $entidadesExterna): static
+    public function removeEntidadExterna(EntidadExternaIniciativa $EntidadExterna): static
     {
-        if ($this->entidadesExternas->removeElement($entidadesExterna)) {
+        if ($this->entidadExterna->removeElement($EntidadExterna)) {
             // set the owning side to null (unless already changed)
-            if ($entidadesExterna->getIniciativa() === $this) {
-                $entidadesExterna->setIniciativa(null);
+            if ($EntidadExterna->getIniciativa() === $this) {
+                $EntidadExterna->setIniciativa(null);
             }
         }
 
@@ -250,26 +251,26 @@ class INICIATIVAS
     }
 
     /**
-     * @return Collection<int, PROFESORESINICIATIVAS>
+     * @return Collection<int, ProfesorIniciativa>
      */
-    public function getProfesores(): Collection
+    public function getProfesor(): Collection
     {
-        return $this->profesores;
+        return $this->profesor;
     }
 
-    public function addProfesor(PROFESORESINICIATIVAS $profesor): static
+    public function addProfesor(ProfesorIniciativa $profesor): static
     {
-        if (!$this->profesores->contains($profesor)) {
-            $this->profesores->add($profesor);
+        if (!$this->profesor->contains($profesor)) {
+            $this->profesor->add($profesor);
             $profesor->setIniciativa($this);
         }
  
         return $this;
     }
 
-    public function removeProfesor(PROFESORESINICIATIVAS $profesor): static
+    public function removeProfesor(ProfesorIniciativa $profesor): static
     {
-        if ($this->profesores->removeElement($profesor)) {
+        if ($this->profesor->removeElement($profesor)) {
             // set the owning side to null (unless already changed)
             if ($profesor->getIniciativa() === $this) {
                 $profesor->setIniciativa(null);

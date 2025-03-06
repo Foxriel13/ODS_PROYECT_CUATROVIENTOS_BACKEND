@@ -2,76 +2,76 @@
 
 namespace App\Entity;
 
-use App\Repository\DIMENSIONRepository;
+use App\Repository\DimensionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Ignore;
 
-#[ORM\Entity(repositoryClass: DIMENSIONRepository::class)]
-class DIMENSION
+#[ORM\Entity(repositoryClass: DimensionRepository::class)]
+class Dimension
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    private ?int $idDimension = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $nombre = null;
+    private ?string $nombreDimension = null;
 
     /**
-     * @var Collection<int, ODS>
+     * @var Collection<int, Ods>
      */
-    #[ORM\OneToMany(targetEntity: ODS::class, mappedBy: 'dimension')]
+    #[ORM\OneToMany(targetEntity: Ods::class, mappedBy: 'dimension')]
     #[IGNORE]
-    private Collection $ods;
+    private Collection $Ods;
 
     public function __construct()
     {
-        $this->ods = new ArrayCollection();
+        $this->Ods = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getIdDimension(): ?int
     {
-        return $this->id;
+        return $this->idDimension;
     }
 
-    public function getNombre(): ?string
+    public function getNombreDimension(): ?string
     {
-        return $this->nombre;
+        return $this->nombreDimension;
     }
 
-    public function setNombre(string $nombre): static
+    public function setNombreDimension(string $nombreDimension): static
     {
-        $this->nombre = $nombre;
+        $this->nombreDimension = $nombreDimension;
 
         return $this;
     }
 
     /**
-     * @return Collection<int, ODS>
+     * @return Collection<int, Ods>
      */
     public function getOds(): Collection
     {
-        return $this->ods;
+        return $this->Ods;
     }
 
-    public function addOd(ODS $od): static
+    public function addOds(Ods $ods): static
     {
-        if (!$this->ods->contains($od)) {
-            $this->ods->add($od);
-            $od->setDimension($this);
+        if (!$this->Ods->contains($ods)) {
+            $this->Ods->add($ods);
+            $ods->setDimension($this);
         }
 
         return $this;
     }
 
-    public function removeOd(ODS $od): static
+    public function removeOds(Ods $ods): static
     {
-        if ($this->ods->removeElement($od)) {
+        if ($this->Ods->removeElement($ods)) {
             // set the owning side to null (unless already changed)
-            if ($od->getDimension() === $this) {
-                $od->setDimension(null);
+            if ($ods->getDimension() === $this) {
+                $ods->setDimension(null);
             }
         }
 

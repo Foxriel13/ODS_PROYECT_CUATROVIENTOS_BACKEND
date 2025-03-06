@@ -2,91 +2,91 @@
 
 namespace App\Entity;
 
-use App\Repository\ODSRepository;
+use App\Repository\OdsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Ignore;
 
-#[ORM\Entity(repositoryClass: ODSRepository::class)]
-class ODS
+#[ORM\Entity(repositoryClass: OdsRepository::class)]
+class Ods
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    private ?int $idOds = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $nombre = null;
+    private ?string $nombreOds = null;
 
     /**
-     * @var Collection<int, METAS>
+     * @var Collection<int, Meta>
      */
-    #[ORM\OneToMany(targetEntity: METAS::class, mappedBy: 'idOds')]
+    #[ORM\OneToMany(targetEntity: Meta::class, mappedBy: 'ods')]
     #[IGNORE]
     private Collection $metas;
 
-    #[ORM\ManyToOne(inversedBy: 'ods')]
-    private ?DIMENSION $dimension = null;
+    #[ORM\ManyToOne(inversedBy: 'Ods')]
+    private ?Dimension $dimension = null;
 
     public function __construct()
     {
         $this->metas = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getidOds(): ?int
     {
-        return $this->id;
+        return $this->idOds;
     }
 
-    public function getNombre(): ?string
+    public function getNombreOds(): ?string
     {
-        return $this->nombre;
+        return $this->nombreOds;
     }
 
-    public function setNombre(string $nombre): static
+    public function setNombreOds(string $nombreOds): static
     {
-        $this->nombre = $nombre;
+        $this->nombreOds = $nombreOds;
 
         return $this;
     }
 
     /**
-     * @return Collection<int, METAS>
+     * @return Collection<int, Meta>
      */
     public function getMetas(): Collection
     {
         return $this->metas;
     }
 
-    public function addMeta(METAS $meta): static
+    public function addMeta(Meta $meta): static
     {
         if (!$this->metas->contains($meta)) {
             $this->metas->add($meta);
-            $meta->setIdOds($this);
+            $meta->setidOds($this);
         }
 
         return $this;
     }
 
-    public function removeMeta(METAS $meta): static
+    public function removeMeta(Meta $meta): static
     {
         if ($this->metas->removeElement($meta)) {
-            // set the owning side to null (unless already changed)
-            if ($meta->getIdOds() === $this) {
-                $meta->setIdOds(null);
+            // set the owning sidOdse to null (unless already changed)
+            if ($meta->getidOds() === $this) {
+                $meta->setidOds(null);
             }
         }
 
         return $this;
     }
 
-    public function getDimension(): ?DIMENSION
+    public function getDimension(): ?Dimension
     {
         return $this->dimension;
     }
 
-    public function setDimension(?DIMENSION $dimension): static
+    public function setDimension(?Dimension $dimension): static
     {
         $this->dimension = $dimension;
 

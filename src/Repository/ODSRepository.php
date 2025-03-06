@@ -2,22 +2,22 @@
 
 namespace App\Repository;
 
-use App\Entity\ODS;
+use App\Entity\Ods;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<ODS>
+ * @extends ServiceEntityRepository<Ods>
  */
-class ODSRepository extends ServiceEntityRepository
+class OdsRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, ODS::class);
+        parent::__construct($registry, Ods::class);
     }
 
     //    /**
-    //     * @return ODS[] Returns an array of ODS objects
+    //     * @return Ods[] Returns an array of Ods objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -31,7 +31,7 @@ class ODSRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?ODS
+    //    public function findOneBySomeField($value): ?Ods
     //    {
     //        return $this->createQueryBuilder('o')
     //            ->andWhere('o.exampleField = :val')

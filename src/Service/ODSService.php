@@ -2,14 +2,14 @@
 
 namespace App\Service;
 
-use App\Repository\ODSRepository;
+use App\Repository\OdsRepository;
 
 
 class ODSService{
 
-    private ODSRepository $odsRepository;
+    private OdsRepository $odsRepository;
 
-    public function __construct(ODSRepository $odsRepository)
+    public function __construct(OdsRepository $odsRepository)
     {
         $this->odsRepository = $odsRepository;
     }

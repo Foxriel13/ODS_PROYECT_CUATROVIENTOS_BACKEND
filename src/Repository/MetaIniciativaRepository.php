@@ -2,22 +2,22 @@
 
 namespace App\Repository;
 
-use App\Entity\METASINICIATIVAS;
+use App\Entity\MetaIniciativa;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<METASINICIATIVAS>
+ * @extends ServiceEntityRepository<MetaIniciativa>
  */
-class METASINICIATIVASRepository extends ServiceEntityRepository
+class MetaIniciativaRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, METASINICIATIVAS::class);
+        parent::__construct($registry, MetaIniciativa::class);
     }
 
 //    /**
-//     * @return METASINICIATIVAS[] Returns an array of METASINICIATIVAS objects
+//     * @return MetaIniciativa[] Returns an array of MetaIniciativa objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -31,7 +31,7 @@ class METASINICIATIVASRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?METASINICIATIVAS
+//    public function findOneBySomeField($value): ?MetaIniciativa
 //    {
 //        return $this->createQueryBuilder('m')
 //            ->andWhere('m.exampleField = :val')

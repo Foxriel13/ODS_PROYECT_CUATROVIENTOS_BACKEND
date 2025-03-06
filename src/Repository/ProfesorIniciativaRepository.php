@@ -2,22 +2,22 @@
 
 namespace App\Repository;
 
-use App\Entity\PROFESORESINICIATIVAS;
+use App\Entity\ProfesorIniciativa;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<PROFESORESINICIATIVAS>
+ * @extends ServiceEntityRepository<ProfesorIniciativa>
  */
-class PROFESORESINICIATIVASRepository extends ServiceEntityRepository
+class ProfesorIniciativaRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, PROFESORESINICIATIVAS::class);
+        parent::__construct($registry, ProfesorIniciativa::class);
     }
 
     //    /**
-    //     * @return PROFESORESINICIATIVAS[] Returns an array of PROFESORESINICIATIVAS objects
+    //     * @return ProfesorIniciativa[] Returns an array of ProfesorIniciativa objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -31,7 +31,7 @@ class PROFESORESINICIATIVASRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?PROFESORESINICIATIVAS
+    //    public function findOneBySomeField($value): ?ProfesorIniciativa
     //    {
     //        return $this->createQueryBuilder('p')
     //            ->andWhere('p.exampleField = :val')

@@ -2,22 +2,22 @@
 
 namespace App\Repository;
 
-use App\Entity\DIMENSION;
+use App\Entity\Dimension;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<DIMENSION>
+ * @extends ServiceEntityRepository<Dimension>
  */
-class DIMENSIONRepository extends ServiceEntityRepository
+class DimensionRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, DIMENSION::class);
+        parent::__construct($registry, Dimension::class);
     }
 
     //    /**
-    //     * @return DIMENSION[] Returns an array of DIMENSION objects
+    //     * @return Dimension[] Returns an array of Dimension objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -31,7 +31,7 @@ class DIMENSIONRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?DIMENSION
+    //    public function findOneBySomeField($value): ?Dimension
     //    {
     //        return $this->createQueryBuilder('d')
     //            ->andWhere('d.exampleField = :val')

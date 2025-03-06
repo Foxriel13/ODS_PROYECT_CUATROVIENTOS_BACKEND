@@ -2,18 +2,18 @@
 
 namespace App\Repository;
 
-use App\Entity\INICIATIVAS;
+use App\Entity\Iniciativa;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<INICIATIVAS>
+ * @extends ServiceEntityRepository<Iniciativa>
  */
-class INICIATIVASRepository extends ServiceEntityRepository
+class IniciativaRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, INICIATIVAS::class);
+        parent::__construct($registry, Iniciativa::class);
     }
 
     public function findByEliminado()
@@ -27,7 +27,7 @@ class INICIATIVASRepository extends ServiceEntityRepository
     }
 
     //    /**
-    //     * @return INICIATIVAS[] Returns an array of INICIATIVAS objects
+    //     * @return Iniciativa[] Returns an array of Iniciativa objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -41,7 +41,7 @@ class INICIATIVASRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?INICIATIVAS
+    //    public function findOneBySomeField($value): ?Iniciativa
     //    {
     //        return $this->createQueryBuilder('i')
     //            ->andWhere('i.exampleField = :val')

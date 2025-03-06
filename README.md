@@ -90,7 +90,45 @@ La aplicación expone varios endpoints para gestionar las **iniciativas** y **di
         "fecha_fin": "2023-02-01 18:00:00",
         "innovador": true,
         "anyo_lectivo": "2022-2023",
-        "imagen": "ruta_o_url_de_la_imagen"
+        "imagen": "ruta_o_url_de_la_imagen",
+        "metas": [
+            {
+                "idMeta": 1,
+                "descripcion": "Fomentar la educacion digial",
+                "ods": [
+                    {
+                        "idOds": 1,
+                        "nombre": "Fin de la pobreza",
+                        "dimension": {
+                            "idDimension": 1,
+                            "nombre": "Social"
+                        }
+                    }
+                ]
+            }
+        ],
+        "profesores": [
+            {
+                "idProfesor": 1,
+                "nombre": "Markos Perez"
+            }
+        ],
+        "entidades_externas": [
+            {
+                "idEntidadExterna": 1,
+                "nombre": "Universidad Nacional"
+            }
+        ],
+        "modulos":[
+            {
+                "idModulo": 1,
+                "nombre": "Programación",
+                "curso": {
+                    "idCurso": 1,
+                    "nombre": "DAM"
+                }
+            }
+        ]
     }
     ```
 
@@ -121,57 +159,75 @@ La aplicación expone varios endpoints para gestionar las **iniciativas** y **di
 
 La aplicación también expone varios **GETs** para consultar las entidades asociadas a las iniciativas. A continuación, se describen las relaciones más importantes.
 
-### **1. Cursos** 🎯
+### **1. Metas** 🎯
 
 ```php
     {
-        "nombre": "Nuevo nombre de la iniciativa",
-        "horas": 15
+        "idMeta": 1,
+        "descripcion": "Fomentar la educacion digial",
+        "ods": [
+            {
+                "idOds": 1,
+                "nombre": "Fin de la pobreza",
+                "dimension": {
+                    "idDimension": 1,
+                    "nombre": "Social"
+                }
+            }
+        ]
     }
 ```
 
-### **2. Dimensiones** 🎯
+### **2. ODSs** 🎯
 
 ```php
     {
-        "nombre": "Nuevo nombre de la iniciativa",
-        "horas": 15
+        "idOds": 1,
+        "nombre": "Fin de la pobreza",
+        "dimension": {
+            "idDimension": 1,
+            "nombre": "Social"
+        }
     }
 ```
 
-### **3. Entidades Externas** 🎯
+### **3. Dimensiones** 🎯
 
 ```php
     {
-        "nombre": "Nuevo nombre de la iniciativa",
-        "horas": 15
+        "idDimension": 1,
+        "nombre": "Social"
     }
 ```
 
-### **4. Metas** 🎯
+### **4. Modulos** 🎯
 
 ```php
     {
-        "nombre": "Nuevo nombre de la iniciativa",
-        "horas": 15
+        "idModulo": 1,
+        "nombre": "Programación",
+        "curso": {
+            "idCurso": 1,
+            "nombre": "DAM"
+        }
     }
 ```
 
-### **5. Modulos** 🎯
+### **5. Cursos** 🎯
 
 ```php
     {
-        "nombre": "Nuevo nombre de la iniciativa",
-        "horas": 15
+        "idCurso": 1,
+        "nombre": "DAM"
     }
 ```
 
-### **6. ODSs** 🎯
+### **6. Entidades Externas** 🎯
 
 ```php
     {
-        "nombre": "Nuevo nombre de la iniciativa",
-        "horas": 15
+        "idEntidadExterna": 1,
+        "nombre": "Universidad Nacional"
     }
 ```
 
@@ -179,7 +235,7 @@ La aplicación también expone varios **GETs** para consultar las entidades asoc
 
 ```php
     {
-        "nombre": "Nuevo nombre de la iniciativa",
-        "horas": 15
+        "idProfesor": 1,
+        "nombre": "Markos Perez"
     }
 ```

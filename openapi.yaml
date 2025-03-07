@@ -338,7 +338,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Iniciativa'
+              $ref: '#/components/schemas/NewIniciativa'
       responses:
         '201':
           description: Iniciativa creada
@@ -346,6 +346,55 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Iniciativa'
+  /iniciativas/{idIniciativa}:
+    put:
+      tags:
+        - iniciativas
+      summary: Update an existing iniciative
+      description: Update an existing activity by Id
+      operationId: updateIniciativa
+      parameters:
+        - name: idIniciativa
+          in: path
+          description: Activity id to Update
+          required: true
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        description: Update an existent Activity in the GYM
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewIniciativa'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Iniciativa'
+        '404':
+          description: Activity not found
+    delete:
+      tags:
+        - iniciativas
+      summary: Deletes a iniciativas
+      description: delete a iniciativas
+      operationId: deleteIniciativa
+      parameters:
+        - name: idIniciativa
+          in: path
+          description: Iniciativa id to Delete
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '404':
+          description: Activity not found
+        
   /iniciativasmodulos:
     get:
       tags:
@@ -667,3 +716,66 @@ components:
         id_metas_id:
           type: integer
           example: 1
+    NewIniciativa:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        tipo:
+          type: string
+          example: Investigación sobre IA
+        horas:
+          type: integer
+          example: 50
+        nombre:
+          type: string
+          example: IA en educación
+        producto_final:
+          type: string
+          example: Informe de IA
+        fecha_inicio:
+          type: string
+          format: date
+          example: '2025-01-01'
+        fecha_fin:
+          type: string
+          format: date
+          example: '2025-06-01'
+        eliminado:
+          type: boolean
+          example: true
+        innovador:
+          type: boolean
+          example: true
+        anyo_lectivo:
+          type: string
+          example: '2024-2025'
+        imagen:
+          type: string
+          example: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVUGdra5SfyyJUvZ-mWByvoY1gEwp0df8NLA&s'
+        id_metas:
+          type: array
+          items:
+            type: integer
+            format: int64
+            example: 10
+        id_profesores:
+          type: array
+          items:
+            type: integer
+            format: int64
+            example: 10
+        id_entidadesExternas:
+          type: array
+          items:
+            type: integer
+            format: int64
+            example: 10
+        id_modulos:
+          type: array
+          items:
+            type: integer
+            format: int64
+            example: 10
+      

@@ -649,6 +649,10 @@ components:
         anyo_lectivo:
           type: string
           example: '2024-2025'
+        fecha_registro:
+          type: string
+          format: date
+          example: '2025-01-01'
         imagen:
           type: string
           example: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVUGdra5SfyyJUvZ-mWByvoY1gEwp0df8NLA&s'
@@ -719,9 +723,6 @@ components:
     NewIniciativa:
       type: object
       properties:
-        id:
-          type: integer
-          example: 1
         tipo:
           type: string
           example: Investigación sobre IA
@@ -754,28 +755,4 @@ components:
         imagen:
           type: string
           example: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVUGdra5SfyyJUvZ-mWByvoY1gEwp0df8NLA&s'
-        id_metas:
-          type: array
-          items:
-            type: integer
-            format: int64
-            example: 10
-        id_profesores:
-          type: array
-          items:
-            type: integer
-            format: int64
-            example: 10
-        id_entidadesExternas:
-          type: array
-          items:
-            type: integer
-            format: int64
-            example: 10
-        id_modulos:
-          type: array
-          items:
-            type: integer
-            format: int64
-            example: 10
-      
+        

@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Entity\INICIATIVAS;
 use App\Repository\INICIATIVASRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -35,7 +36,7 @@ class IniciativaService
 
     public function createIniciativa(array $data): JsonResponse
     {
-        $iniciativa = new Iniciativa();
+        $iniciativa = new INICIATIVAS();
         
         $iniciativa->setTipo($data['tipo'] ?? null);
         $iniciativa->setHoras($data['horas'] ?? null);
@@ -81,9 +82,6 @@ class IniciativaService
         }
         if (isset($data['producto_final'])) {
             $iniciativa->setProductoFinal($data['producto_final']);
-        }
-        if (isset($data['fecha_registro'])) {
-            $iniciativa->setFechaRegistro(new \DateTime($data['fecha_registro']));
         }
         if (isset($data['fecha_inicio'])) {
             $iniciativa->setFechaInicio(new \DateTime($data['fecha_inicio']));

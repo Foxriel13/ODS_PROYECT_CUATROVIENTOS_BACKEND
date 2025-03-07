@@ -503,8 +503,6 @@ components:
           type: string
           example: Fin de la Pobreza
         dimension:
-          type: object
-          items:
             $ref: '#/components/schemas/Dimension'
     Meta:
       type: object
@@ -516,8 +514,6 @@ components:
           type: string
           example: Fomentar la educación digital
         ods:
-          type: object
-          items:
             $ref: '#/components/schemas/Ods'
     Curso:
       type: object
@@ -538,8 +534,6 @@ components:
           type: string
           example: Álgebra
         curso:
-          type: object
-          items:
             $ref: '#/components/schemas/Curso'
     Profesor:
       type: object

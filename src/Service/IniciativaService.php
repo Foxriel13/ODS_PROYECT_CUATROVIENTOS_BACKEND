@@ -2,11 +2,21 @@
 
 namespace App\Service;
 
+use App\Entity\ENTIDADESEXTERNAS;
+use App\Entity\ENTIDADESEXTERNASINICIATIVAS;
 use App\Entity\INICIATIVAS;
+use App\Entity\INICIATIVASMODULOS;
+use App\Entity\METAS;
+use App\Entity\METASINICIATIVAS;
+use App\Entity\MODULOS;
+use App\Entity\PROFESORES;
+use App\Entity\PROFESORESINICIATIVAS;
 use App\Repository\INICIATIVASRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Serializer\SerializerInterface;
+
 
 class IniciativaService
 {
@@ -58,10 +68,60 @@ class IniciativaService
         $iniciativa->setAnyoLectivo($data['anyo_lectivo'] ?? null);
         $iniciativa->setImagen($data['imagen'] ?? null);
 
+        if (!empty($data['metas']) && is_array($data['metas'])) {
+            $metasRepo = $this->entityManager->getRepository(METAS::class);
+            foreach ($data['metas'] as $metaId) {
+                $meta = $metasRepo->find($metaId);
+                if ($meta) {
+                    $iniciativaMeta = new METASINICIATIVAS($iniciativa, $meta);
+                    $iniciativa->addMetasIniciativa($iniciativaMeta);
+                    $this->entityManager->persist($iniciativaMeta);
+                }
+            }
+        }
+
+        if (!empty($data['profesores']) && is_array($data['profesores'])) {
+            $profesorRepo = $this->entityManager->getRepository(PROFESORES::class);
+            foreach ($data['profesores'] as $profesorId) {
+                $profesor = $profesorRepo->find($profesorId);
+                if ($profesor) {
+                    $iniciativaProfesor = new PROFESORESINICIATIVAS($iniciativa, $profesor);
+                    $iniciativa->addProfesor($iniciativaProfesor);
+                    $this->entityManager->persist($iniciativaProfesor);
+                }
+            }
+        }
+
+        if (!empty($data['entidades_externas']) && is_array($data['entidades_externas'])) {
+            $entidadesExternasRepo = $this->entityManager->getRepository(ENTIDADESEXTERNAS::class);
+            foreach ($data['entidades_externas'] as $entidadExternaId) {
+                $entidadExterna = $entidadesExternasRepo->find($entidadExternaId);
+                if ($entidadExterna) {
+                    $iniciativaEntidadExterna = new ENTIDADESEXTERNASINICIATIVAS($iniciativa, $entidadExterna);
+                    $iniciativa->addEntidadesExterna($iniciativaEntidadExterna);
+                    $this->entityManager->persist($iniciativaEntidadExterna);
+                }
+            }
+        }
+
+        if (!empty($data['modulos']) && is_array($data['modulos'])) {
+            $modulosRepo = $this->entityManager->getRepository(MODULOS::class);
+            foreach ($data['modulos'] as $moduloId) {
+                $modulo = $modulosRepo->find($moduloId);
+                if ($entidadExterna) {
+                    $iniciativaModulo = new INICIATIVASMODULOS($iniciativa, $modulo);
+                    $iniciativa->addModulo($iniciativaModulo);
+                    $this->entityManager->persist($iniciativaModulo);
+                }
+            }
+        }
+
         $this->entityManager->persist($iniciativa);
         $this->entityManager->flush();
 
-        return new JsonResponse(['message' => 'Iniciativa creada correctamente'], Response::HTTP_CREATED);
+        return new JsonResponse([
+            'message' => 'Iniciativa creada correctamente',
+        ], Response::HTTP_CREATED);
     }
 
     public function updateIniciativa(int $id, array $data): JsonResponse

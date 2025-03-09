@@ -33,7 +33,7 @@ final class IniciativaController extends AbstractController
             return $this->iniciativaService->getIniciativas();    
         }
 
-    }
+    } 
 
     /*#[Route('/iniciativas/{idIniciativa}', methods: ['DELETE'])]
     public function deleteIniciativa(int $idIniciativa): JsonResponse
@@ -52,8 +52,11 @@ final class IniciativaController extends AbstractController
     {
         $data = json_decode($request->getContent(), true);
 
-        if (!$data) {
-            return new JsonResponse(['message' => 'Datos inválidos'], Response::HTTP_BAD_REQUEST);
+        if (!is_array($data)) {
+            return new JsonResponse(
+                ['message' => 'Datos inválidos o formato incorrecto'],
+                Response::HTTP_BAD_REQUEST
+            );
         }
 
         return $this->iniciativaService->createIniciativa($data);

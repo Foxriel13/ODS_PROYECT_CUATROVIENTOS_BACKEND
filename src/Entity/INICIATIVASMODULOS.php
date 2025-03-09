@@ -50,4 +50,9 @@ class INICIATIVASMODULOS
 
         return $this;
     }
+
+    public function __construct(INICIATIVAS $iniciativa, MODULOS $modulo) {
+        $this->iniciativa = $iniciativa;
+        $this->modulo = $modulo;
+    }
 }

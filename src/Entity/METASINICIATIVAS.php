@@ -51,4 +51,9 @@ class METASINICIATIVAS
 
         return $this;
     }
+
+    public function __construct(INICIATIVAS $iniciativa, METAS $meta) {
+        $this->codIniciativa = $iniciativa;
+        $this->idMetas = $meta;
+    }
 }

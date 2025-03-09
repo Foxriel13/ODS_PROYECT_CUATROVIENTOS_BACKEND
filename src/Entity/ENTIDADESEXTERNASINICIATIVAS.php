@@ -49,4 +49,9 @@ class ENTIDADESEXTERNASINICIATIVAS
 
         return $this;
     }
+
+    public function __construct(INICIATIVAS $iniciativa, ENTIDADESEXTERNAS $entidadExterna) {
+        $this->iniciativa = $iniciativa;
+        $this->entidad = $entidadExterna;
+    }
 }

@@ -49,4 +49,9 @@ class PROFESORESINICIATIVAS
 
         return $this;
     }
+
+    public function __construct(INICIATIVAS $iniciativa, PROFESORES $profesor) {
+        $this->iniciativa = $iniciativa;
+        $this->profesor = $profesor;
+    }
 }

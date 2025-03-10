@@ -218,7 +218,7 @@ class IniciativaService
             'tipo' => $iniciativa->getTipo(),
             'horas' => $iniciativa->getHoras(),
             'nombre' => $iniciativa->getNombre(),
-            'producto_final' => $iniciativa->getProductoFinal(),
+            'explicacion' => $iniciativa->getExplicacion(),
             'fecha_registro' => $iniciativa->getFechaRegistro()->format('Y-m-d H:i:s'),
             'fecha_inicio' => $iniciativa->getFechaInicio()->format('Y-m-d H:i:s'),
             'fecha_fin' => $iniciativa->getFechaFin()->format('Y-m-d H:i:s'),

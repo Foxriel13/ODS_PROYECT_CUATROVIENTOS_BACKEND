@@ -5,7 +5,7 @@ namespace App\Service;
 use App\Repository\CLASESRepository;
 
 
-class CursosService{
+class ClasesService{
 
     private CLASESRepository $clasesRepository;
 

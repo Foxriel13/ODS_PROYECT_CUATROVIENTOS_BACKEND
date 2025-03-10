@@ -73,7 +73,7 @@ class INICIATIVAS
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $anyoLectivo = null;
 
-    #[ORM\Column(type: Types::ARRAY)]
+    #[ORM\Column(type: 'json')]
     private array $redesSociales = [];
 
     #[ORM\Column(length: 255)]

@@ -2,24 +2,24 @@
 
 namespace App\Controller;
 
-use App\Service\CursosService;
+use App\Service\ClasesService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 class CursosController extends AbstractController
 {
-    private CursosService $cursosService;
+    private ClasesService $clasesService;
 
-    public function __construct(CursosService $cursosService)
+    public function __construct(ClasesService $clasesService)
     {
-        $this->cursosService = $cursosService;
+        $this->clasesService = $clasesService;
     }
 
     #[Route('/cursos', name: 'cursos', methods: ['GET'])]
     public function getCursos(): JsonResponse
     {
-        $cursos = $this->cursosService->getAllClases();
-        return $this->json($cursos);
+        $clases = $this->clasesService->getAllClases();
+        return $this->json($clases);
     }
 }

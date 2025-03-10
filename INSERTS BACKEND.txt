@@ -46,8 +46,8 @@ INSERT INTO entidadesexternas (id, nombre) VALUES
 (2, 'Centro de Innovación');
 
 INSERT INTO iniciativas (id, tipo, horas, nombre, explicacion, fecha_inicio, fecha_fin, eliminado, imagen, fecha_registro, innovador, anyo_lectivo, mas_comentarios, redes_sociales) VALUES
-(1, 'Investigación sobre IA', 50, 'IA en educación', 'Informe de IA', '2025-01-01', '2025-06-01', 0, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVUGdra5SfyyJUvZ-mWByvoY1gEwp0df8NLA&s', CURRENT_DATE, 1, '2024-2025', 'comentario', ARRAY['redSocial1', 'redSocial2']),
-(2, 'Desarrollo de software', 60, 'Plataforma educativa', 'Prototipo funcional', '2025-02-01', '2025-07-01', 0, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVUGdra5SfyyJUvZ-mWByvoY1gEwp0df8NLA&s', CURRENT_DATE, 1, '2024-2025', 'comentario', ARRAY['redSocial1', 'redSocial2']);
+(1, 'Investigación sobre IA', 50, 'IA en educación', 'Informe de IA', '2025-01-01', '2025-06-01', 0, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVUGdra5SfyyJUvZ-mWByvoY1gEwp0df8NLA&s', CURRENT_DATE, 1, '2024-2025', 'comentario', '["https://twitter.com/proyecto", "https://facebook.com/proyecto"]'),
+(2, 'Desarrollo de software', 60, 'Plataforma educativa', 'Prototipo funcional', '2025-02-01', '2025-07-01', 0, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVUGdra5SfyyJUvZ-mWByvoY1gEwp0df8NLA&s', CURRENT_DATE, 1, '2024-2025', 'comentario', '["https://twitter.com/proyecto", "https://facebook.com/proyecto"]');
 
 INSERT INTO iniciativasmodulos (id, iniciativa_id, modulo_id) VALUES
 (1, 1, 3),

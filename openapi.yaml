@@ -629,7 +629,7 @@ components:
         nombre:
           type: string
           example: IA en educación
-        producto_final:
+        explicacion:
           type: string
           example: Informe de IA
         fecha_inicio:
@@ -656,6 +656,14 @@ components:
         imagen:
           type: string
           example: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVUGdra5SfyyJUvZ-mWByvoY1gEwp0df8NLA&s'
+        mas_comentarios:
+          type: string
+          example: Si
+        redes_sociales:
+          type: array
+          items: 
+            type: string
+          example: linkedin
         metas:
           type: array
           items:
@@ -729,7 +737,7 @@ components:
           type: integer
         nombre:
           type: string
-        producto_final:
+        explicacion:
           type: string
         fecha_inicio:
           type: string
@@ -746,6 +754,12 @@ components:
         imagen:
           type: string
           format: uri
+        mas_comentarios:
+          type: string
+        redes_sociales:
+          type: array
+          items: 
+            type: string
         metas:
           type: array
           items:

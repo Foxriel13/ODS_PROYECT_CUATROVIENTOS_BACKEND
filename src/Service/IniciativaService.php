@@ -15,8 +15,6 @@ use App\Repository\INICIATIVASRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Serializer\SerializerInterface;
-
 
 class IniciativaService
 {
@@ -51,7 +49,7 @@ class IniciativaService
         $iniciativa->setTipo($data['tipo'] ?? null);
         $iniciativa->setHoras($data['horas'] ?? null);
         $iniciativa->setNombre($data['nombre'] ?? null);
-        $iniciativa->setProductoFinal($data['producto_final'] ?? null);
+        $iniciativa->setExplicacion($data['explicacion'] ?? null);
         
         if (isset($data['fecha_registro'])) {
             $iniciativa->setFechaRegistro(new \DateTime($data['fecha_registro']));
@@ -221,6 +219,8 @@ class IniciativaService
             'innovador' => (bool) $iniciativa->isInnovador(),
             'anyo_lectivo' => $iniciativa->getAnyoLectivo(),
             'imagen' => $iniciativa->getImagen(),
+            'mas_comentarios' => $iniciativa->getMasComentarios(),
+            'redes_sociales' => $iniciativa->getRedesSociales(),
             'metas' => array_map(fn($metaIniciativa) => [
                 'idMeta' => $metaIniciativa->getIdMetas()->getId(),
                 'descripcion' => $metaIniciativa->getIdMetas()->getDescripcion(),
@@ -244,9 +244,9 @@ class IniciativaService
             'modulos' => array_map(fn($modulosIniciativas) => [
                 'idModulo' => $modulosIniciativas->getModulo()->getId(),
                 'nombre' => $modulosIniciativas->getModulo()->getNombre(),
-                'curso' => [
-                    'idCurso' => $modulosIniciativas->getModulo()->getCurso()->getId(),
-                    'nombre' => $modulosIniciativas->getModulo()->getCurso()->getNombre(),
+                'clase' => [
+                    'idClase' => $modulosIniciativas->getModulo()->getClase()->getId(),
+                    'nombre' => $modulosIniciativas->getModulo()->getClase()->getNombre(),
                 ],
             ], $iniciativa->getModulos()->toArray()),
         ];

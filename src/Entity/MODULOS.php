@@ -16,8 +16,8 @@ class MODULOS
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'modulos')]
-    private ?CURSOS $curso = null;
+    #[ORM\ManyToOne(targetEntity: CLASES::class, inversedBy: 'modulos')]
+    private ?CLASES $clase = null;
 
     #[ORM\Column(length: 255)]
     private ?string $nombre = null;
@@ -26,14 +26,14 @@ class MODULOS
      * @var Collection<int, PROFESORESMODULOS>
      */
     #[ORM\OneToMany(targetEntity: PROFESORESMODULOS::class, mappedBy: 'modulos')]
-    #[IGNORE]
+    #[Ignore]
     private Collection $profesores;
 
     /**
      * @var Collection<int, INICIATIVASMODULOS>
      */
     #[ORM\OneToMany(targetEntity: INICIATIVASMODULOS::class, mappedBy: 'modulo')]
-    #[IGNORE]
+    #[Ignore]
     private Collection $iniciativa;
 
     public function __construct()
@@ -47,15 +47,14 @@ class MODULOS
         return $this->id;
     }
 
-    public function getCurso(): ?CURSOS
+    public function getClase(): ?CLASES
     {
-        return $this->curso;
+        return $this->clase;
     }
 
-    public function setCurso(?CURSOS $curso): static
+    public function setClase(?CLASES $clase): static
     {
-        $this->curso = $curso;
-
+        $this->clase = $clase;
         return $this;
     }
 
@@ -67,7 +66,6 @@ class MODULOS
     public function setNombre(string $nombre): static
     {
         $this->nombre = $nombre;
-
         return $this;
     }
 
@@ -79,25 +77,22 @@ class MODULOS
         return $this->profesores;
     }
 
-    public function addProfesore(PROFESORESMODULOS $profesore): static
+    public function addProfesores(PROFESORESMODULOS $profesores): static
     {
-        if (!$this->profesores->contains($profesore)) {
-            $this->profesores->add($profesore);
-            $profesore->setModulos($this);
+        if (!$this->profesores->contains($profesores)) {
+            $this->profesores->add($profesores);
+            $profesores->setModulos($this);
         }
-
         return $this;
     }
 
-    public function removeProfesore(PROFESORESMODULOS $profesore): static
+    public function removeProfesores(PROFESORESMODULOS $profesores): static
     {
-        if ($this->profesores->removeElement($profesore)) {
-            // set the owning side to null (unless already changed)
-            if ($profesore->getModulos() === $this) {
-                $profesore->setModulos(null);
+        if ($this->profesores->removeElement($profesores)) {
+            if ($profesores->getModulos() === $this) {
+                $profesores->setModulos(null);
             }
         }
-
         return $this;
     }
 
@@ -115,20 +110,16 @@ class MODULOS
             $this->iniciativa->add($iniciativa);
             $iniciativa->setModulo($this);
         }
-
         return $this;
     }
 
     public function removeIniciativa(INICIATIVASMODULOS $iniciativa): static
     {
         if ($this->iniciativa->removeElement($iniciativa)) {
-            // set the owning side to null (unless already changed)
             if ($iniciativa->getModulo() === $this) {
                 $iniciativa->setModulo(null);
             }
         }
-
         return $this;
     }
-
 }

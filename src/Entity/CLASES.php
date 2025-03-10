@@ -2,14 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\CURSOSRepository;
+use App\Repository\CLASESRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Ignore;
 
-#[ORM\Entity(repositoryClass: CURSOSRepository::class)]
-class CURSOS
+#[ORM\Entity(repositoryClass: CLASESRepository::class)]
+class CLASES
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -22,8 +22,8 @@ class CURSOS
     /**
      * @var Collection<int, MODULOS>
      */
-    #[ORM\OneToMany(targetEntity: MODULOS::class, mappedBy: 'curso')]
-    #[IGNORE]
+    #[ORM\OneToMany(targetEntity: MODULOS::class, mappedBy: 'clase')]
+    #[Ignore]
     private Collection $modulos;
 
     public function __construct()
@@ -41,10 +41,9 @@ class CURSOS
         return $this->nombre;
     }
 
-    public function setNombre(string $nombre): static
+    public function setNombre(string $nombre): self
     {
         $this->nombre = $nombre;
-
         return $this;
     }
 
@@ -56,25 +55,23 @@ class CURSOS
         return $this->modulos;
     }
 
-    public function addModulo(MODULOS $modulo): static
+    public function addModulo(MODULOS $modulo): self
     {
         if (!$this->modulos->contains($modulo)) {
             $this->modulos->add($modulo);
-            $modulo->setCurso($this);
+            $modulo->setClase($this);
         }
-
         return $this;
     }
 
-    public function removeModulo(MODULOS $modulo): static
+    public function removeModulo(MODULOS $modulo): self
     {
         if ($this->modulos->removeElement($modulo)) {
-            // set the owning side to null (unless already changed)
-            if ($modulo->getCurso() === $this) {
-                $modulo->setCurso(null);
+            // Si la relación aún apunta a esta entidad, se la desasigna.
+            if ($modulo->getClase() === $this) {
+                $modulo->setClase(null);
             }
         }
-
         return $this;
     }
 }

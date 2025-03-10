@@ -27,11 +27,11 @@ INSERT INTO metas (id, id_ods_id, descripcion) VALUES
 (1, 1, 'Fomentar la educación digital'),
 (2, 2, 'Reducir la brecha educativa');
 
-INSERT INTO cursos (id, nombre) VALUES
-(1, 'Curso de Matemáticas'),
-(2, 'Curso de Programación');
+INSERT INTO clases (id, nombre) VALUES
+(1, 'Clase de Matemáticas'),
+(2, 'Clase de Programación');
 
-INSERT INTO modulos (id, curso_id, nombre) VALUES
+INSERT INTO modulos (id, clase_id, nombre) VALUES
 (1, 1, 'Álgebra'),
 (2, 1, 'Cálculo'),
 (3, 2, 'Fundamentos de Programación'),
@@ -45,9 +45,9 @@ INSERT INTO entidadesexternas (id, nombre) VALUES
 (1, 'Universidad Nacional'),
 (2, 'Centro de Innovación');
 
-INSERT INTO iniciativas (id, tipo, horas, nombre, producto_final, fecha_inicio, fecha_fin, eliminado, imagen, fecha_registro, innovador, anyo_lectivo) VALUES
-(1, 'Investigación sobre IA', 50, 'IA en educación', 'Informe de IA', '2025-01-01', '2025-06-01', 0, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVUGdra5SfyyJUvZ-mWByvoY1gEwp0df8NLA&s', CURRENT_DATE, 1, '2024-2025'),
-(2, 'Desarrollo de software', 60, 'Plataforma educativa', 'Prototipo funcional', '2025-02-01', '2025-07-01', 0, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVUGdra5SfyyJUvZ-mWByvoY1gEwp0df8NLA&s', CURRENT_DATE, 1, '2024-2025');
+INSERT INTO iniciativas (id, tipo, horas, nombre, explicacion, fecha_inicio, fecha_fin, eliminado, imagen, fecha_registro, innovador, anyo_lectivo, mas_comentarios, redes_sociales) VALUES
+(1, 'Investigación sobre IA', 50, 'IA en educación', 'Informe de IA', '2025-01-01', '2025-06-01', 0, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVUGdra5SfyyJUvZ-mWByvoY1gEwp0df8NLA&s', CURRENT_DATE, 1, '2024-2025', 'comentario', ARRAY['redSocial1', 'redSocial2']),
+(2, 'Desarrollo de software', 60, 'Plataforma educativa', 'Prototipo funcional', '2025-02-01', '2025-07-01', 0, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVUGdra5SfyyJUvZ-mWByvoY1gEwp0df8NLA&s', CURRENT_DATE, 1, '2024-2025', 'comentario', ARRAY['redSocial1', 'redSocial2']);
 
 INSERT INTO iniciativasmodulos (id, iniciativa_id, modulo_id) VALUES
 (1, 1, 3),

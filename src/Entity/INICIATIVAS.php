@@ -26,7 +26,7 @@ class INICIATIVAS
     private ?string $nombre = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $productoFinal = null;
+    private ?string $explicacion = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $fechaInicio = null;
@@ -72,6 +72,12 @@ class INICIATIVAS
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $anyoLectivo = null;
+
+    #[ORM\Column(type: Types::ARRAY)]
+    private array $redesSociales = [];
+
+    #[ORM\Column(length: 255)]
+    private ?string $masComentarios = null;
 
 
     public function __construct()
@@ -123,14 +129,14 @@ class INICIATIVAS
         return $this;
     }
 
-    public function getProductoFinal(): ?string
+    public function getExplicacion(): ?string
     {
-        return $this->productoFinal;
+        return $this->explicacion;
     }
 
-    public function setProductoFinal(?string $productoFinal): static
+    public function setExplicacion(?string $explicacion): static
     {
-        $this->productoFinal = $productoFinal;
+        $this->explicacion = $explicacion;
 
         return $this;
     }
@@ -335,6 +341,30 @@ class INICIATIVAS
     public function setAnyoLectivo(?string $anyoLectivo): static
     {
         $this->anyoLectivo = $anyoLectivo;
+
+        return $this;
+    }
+
+    public function getRedesSociales(): array
+    {
+        return $this->redesSociales;
+    }
+
+    public function setRedesSociales(array $redesSociales): static
+    {
+        $this->redesSociales = $redesSociales;
+
+        return $this;
+    }
+
+    public function getMasComentarios(): ?string
+    {
+        return $this->masComentarios;
+    }
+
+    public function setMasComentarios(string $masComentarios): static
+    {
+        $this->masComentarios = $masComentarios;
 
         return $this;
     }

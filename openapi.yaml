@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: ODS API
   description: |-
-    API Specification for managing dimensions, ODS, metas, cursos, módulos, profesores, profesoresmodulos, entidades externas, iniciativas, iniciativasmodulos, profesoresiniciativas, entidadesexternasiniciativas y metasiniciativas.
+    API Specification for managing dimensions, ODS, metas, clases, módulos, profesores, profesoresmodulos, entidades externas, iniciativas, iniciativasmodulos, profesoresiniciativas, entidadesexternasiniciativas y metasiniciativas.
   termsOfService: http://swagger.io/terms/
   contact:
     email: admin@odsapi.org
@@ -19,8 +19,8 @@ tags:
     description: Operaciones sobre los ODS
   - name: metas
     description: Operaciones sobre las metas
-  - name: cursos
-    description: Operaciones sobre los cursos
+  - name: clases
+    description: Operaciones sobre los clases
   - name: modulos
     description: Operaciones sobre los módulos
   - name: profesores
@@ -44,11 +44,11 @@ paths:
     get:
       tags:
         - dimension
-      summary: Recuperar todas las dimensiones
+      summary: Recuperar todas las dimension
       operationId: getDimensions
       responses:
         '200':
-          description: Lista de dimensiones
+          description: Lista de dimension
           content:
             application/json:
               schema:
@@ -142,15 +142,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Meta'
-  /cursos:
+  /clases:
     get:
       tags:
-        - cursos
-      summary: Recuperar todos los cursos
-      operationId: getCursos
+        - clase
+      summary: Recuperar todos las clases
+      operationId: getClases
       responses:
         '200':
-          description: Lista de cursos
+          description: Lista de clases
           content:
             application/json:
               schema:
@@ -159,7 +159,7 @@ paths:
                   $ref: '#/components/schemas/Curso'
     post:
       tags:
-        - cursos
+        - clases
       summary: Crear un nuevo curso
       operationId: createCurso
       requestBody:
@@ -649,13 +649,13 @@ components:
         anyo_lectivo:
           type: string
           example: '2024-2025'
+        imagen:
+          type: string
+          example: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVUGdra5SfyyJUvZ-mWByvoY1gEwp0df8NLA&s'
         fecha_registro:
           type: string
           format: date
           example: '2025-01-01'
-        imagen:
-          type: string
-          example: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVUGdra5SfyyJUvZ-mWByvoY1gEwp0df8NLA&s'
         mas_comentarios:
           type: string
           example: Si
@@ -754,6 +754,10 @@ components:
         imagen:
           type: string
           format: uri
+        fecha_registro:
+          type: string
+          format: date
+          example: '2025-01-01'
         mas_comentarios:
           type: string
         redes_sociales:

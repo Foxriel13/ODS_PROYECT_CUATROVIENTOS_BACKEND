@@ -22,12 +22,12 @@ class ODS
     /**
      * @var Collection<int, METAS>
      */
-    #[ORM\OneToMany(targetEntity: METAS::class, mappedBy: 'idOds')]
+    #[ORM\OneToMany(targetEntity: Meta::class, mappedBy: 'idOds')]
     #[IGNORE]
     private Collection $metas;
 
     #[ORM\ManyToOne(inversedBy: 'ods')]
-    private ?DIMENSION $dimension = null;
+    private ?Dimension $dimension = null;
 
     public function __construct()
     {
@@ -59,7 +59,7 @@ class ODS
         return $this->metas;
     }
 
-    public function addMeta(METAS $meta): static
+    public function addMeta(Meta $meta): static
     {
         if (!$this->metas->contains($meta)) {
             $this->metas->add($meta);
@@ -69,7 +69,7 @@ class ODS
         return $this;
     }
 
-    public function removeMeta(METAS $meta): static
+    public function removeMeta(Meta $meta): static
     {
         if ($this->metas->removeElement($meta)) {
             // set the owning side to null (unless already changed)
@@ -81,12 +81,12 @@ class ODS
         return $this;
     }
 
-    public function getDimension(): ?DIMENSION
+    public function getDimension(): ?Dimension
     {
         return $this->dimension;
     }
 
-    public function setDimension(?DIMENSION $dimension): static
+    public function setDimension(?Dimension $dimension): static
     {
         $this->dimension = $dimension;
 

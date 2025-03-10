@@ -2,20 +2,20 @@
 
 namespace App\Service;
 
-use App\Repository\ENTIDADESEXTERNASRepository;
+use App\Repository\EntidadExternaRepository;
 
 
 class EntidadesExternasService{
 
-    private ENTIDADESEXTERNASRepository $entidadesExternasRepository;
+    private EntidadExternaRepository $entidadExternaRepository;
 
-    public function __construct(ENTIDADESEXTERNASRepository $entidadesExternasRepository)
+    public function __construct(EntidadExternaRepository $entidadExternaRepository)
     {
-        $this->entidadesExternasRepository = $entidadesExternasRepository;
+        $this->entidadExternaRepository = $entidadExternaRepository;
     }
 
     public function getAllEntidadesExternas(): array
     {
-        return $this->entidadesExternasRepository->findAll();
+        return $this->entidadExternaRepository->findAll();
     }
 }

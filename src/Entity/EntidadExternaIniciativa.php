@@ -2,55 +2,55 @@
 
 namespace App\Entity;
 
-use App\Repository\ENTIDADESEXTERNASINICIATIVASRepository;
+use App\Repository\EntidadExternaIniciativaRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: ENTIDADESEXTERNASINICIATIVASRepository::class)]
-class ENTIDADESEXTERNASINICIATIVAS
+#[ORM\Entity(repositoryClass: EntidadExternaIniciativaRepository::class)]
+class EntidadExternaIniciativa
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'entidadesExternas')]
+    #[ORM\ManyToOne(inversedBy: 'entidadExterna')]
     #[ORM\JoinColumn (nullable: true)]
-    private ?INICIATIVAS $iniciativa = null;
+    private ?Iniciativa $iniciativa = null;
 
     #[ORM\ManyToOne(inversedBy: 'iniciativa')]
     #[ORM\JoinColumn (nullable: true)]
-    private ?ENTIDADESEXTERNAS $entidad = null;
+    private ?EntidadExterna $entidad = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getIniciativa(): ?INICIATIVAS
+    public function getIniciativa(): ?Iniciativa
     {
         return $this->iniciativa;
     }
 
-    public function setIniciativa(?INICIATIVAS $iniciativa): static
+    public function setIniciativa(?Iniciativa $iniciativa): static
     {
         $this->iniciativa = $iniciativa;
 
         return $this;
     }
 
-    public function getEntidad(): ?ENTIDADESEXTERNAS
+    public function getEntidad(): ?EntidadExterna
     {
         return $this->entidad;
     }
 
-    public function setEntidad(?ENTIDADESEXTERNAS $entidad): static
+    public function setEntidad(?EntidadExterna $entidad): static
     {
         $this->entidad = $entidad;
 
         return $this;
     }
 
-    public function __construct(INICIATIVAS $iniciativa, ENTIDADESEXTERNAS $entidadExterna) {
+    public function __construct(Iniciativa $iniciativa, EntidadExterna $entidadExterna) {
         $this->iniciativa = $iniciativa;
         $this->entidad = $entidadExterna;
     }

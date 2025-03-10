@@ -2,12 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\METASINICIATIVASRepository;
+use App\Repository\MetaIniciativaRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Ignore;
 
-#[ORM\Entity(repositoryClass: METASINICIATIVASRepository::class)]
-class METASINICIATIVAS
+#[ORM\Entity(repositoryClass: MetaIniciativaRepository::class)]
+class MetaIniciativa
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -17,42 +17,42 @@ class METASINICIATIVAS
     #[ORM\ManyToOne(inversedBy: 'metasIniciativas')]
     #[ORM\JoinColumn(nullable: true)]
     #[IGNORE]
-    private ?INICIATIVAS $codIniciativa = null;
+    private ?Iniciativa $codIniciativa = null;
 
     #[ORM\ManyToOne(inversedBy: 'metasIniciativasIdMetas')]
     #[ORM\JoinColumn(nullable: true)]
-    private ?METAS $idMetas = null;
+    private ?Meta $idMetas = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getCodIniciativa(): ?INICIATIVAS
+    public function getCodIniciativa(): ?Iniciativa
     {
         return $this->codIniciativa;
     }
 
-    public function setCodIniciativa(?INICIATIVAS $codIniciativa): static
+    public function setCodIniciativa(?Iniciativa $codIniciativa): static
     {
         $this->codIniciativa = $codIniciativa;
 
         return $this;
     }
 
-    public function getIdMetas(): ?METAS
+    public function getIdMetas(): ?Meta
     {
         return $this->idMetas;
     }
 
-    public function setIdMetas(?METAS $idMetas): static
+    public function setIdMetas(?Meta $idMetas): static
     {
         $this->idMetas = $idMetas;
 
         return $this;
     }
 
-    public function __construct(INICIATIVAS $iniciativa, METAS $meta) {
+    public function __construct(Iniciativa $iniciativa, Meta $meta) {
         $this->codIniciativa = $iniciativa;
         $this->idMetas = $meta;
     }

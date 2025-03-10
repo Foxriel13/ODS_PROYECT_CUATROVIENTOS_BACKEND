@@ -2,14 +2,14 @@
 
 namespace App\Service;
 
-use App\Repository\CLASESRepository;
+use App\Repository\ClaseRepository;
 
 
 class ClasesService{
 
-    private CLASESRepository $clasesRepository;
+    private ClaseRepository $clasesRepository;
 
-    public function __construct(CLASESRepository $clasesRepository)
+    public function __construct(ClaseRepository $clasesRepository)
     {
         $this->clasesRepository = $clasesRepository;
     }

@@ -2,13 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\PROFESORESRepository;
+use App\Repository\ClaseRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
-#[ORM\Entity(repositoryClass: PROFESORESRepository::class)]
-class PROFESORES
+#[ORM\Entity(repositoryClass: ClaseRepository::class)]
+class Clase
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -19,16 +20,16 @@ class PROFESORES
     private ?string $nombre = null;
 
     /**
-     * @var Collection<int, PROFESORESMODULOS>
+     * @var Collection<int, MODULOS>
      */
-    #[ORM\OneToMany(targetEntity: PROFESORESMODULOS::class, mappedBy: 'profesor')]
+    #[ORM\OneToMany(targetEntity: Modulo::class, mappedBy: 'clase')]
+    #[Ignore]
     private Collection $modulos;
 
     public function __construct()
     {
         $this->modulos = new ArrayCollection();
     }
-
 
     public function getId(): ?int
     {
@@ -40,41 +41,37 @@ class PROFESORES
         return $this->nombre;
     }
 
-    public function setNombre(string $nombre): static
+    public function setNombre(string $nombre): self
     {
         $this->nombre = $nombre;
-
         return $this;
     }
 
     /**
-     * @return Collection<int, PROFESORESMODULOS>
+     * @return Collection<int, MODULOS>
      */
     public function getModulos(): Collection
     {
         return $this->modulos;
     }
 
-    public function addModulo(PROFESORESMODULOS $modulo): static
+    public function addModulo(Modulo $modulo): self
     {
         if (!$this->modulos->contains($modulo)) {
             $this->modulos->add($modulo);
-            $modulo->setProfesor($this);
+            $modulo->setClase($this);
         }
-
         return $this;
     }
 
-    public function removeModulo(PROFESORESMODULOS $modulo): static
+    public function removeModulo(Modulo $modulo): self
     {
         if ($this->modulos->removeElement($modulo)) {
-            // set the owning side to null (unless already changed)
-            if ($modulo->getProfesor() === $this) {
-                $modulo->setProfesor(null);
+            // Si la relación aún apunta a esta entidad, se la desasigna.
+            if ($modulo->getClase() === $this) {
+                $modulo->setClase(null);
             }
         }
-
         return $this;
     }
-
 }

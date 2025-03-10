@@ -2,18 +2,18 @@
 
 namespace App\Repository;
 
-use App\Entity\ENTIDADESEXTERNASINICIATIVAS;
+use App\Entity\EntidadExternaIniciativa;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @extends ServiceEntityRepository<ENTIDADESEXTERNASINICIATIVAS>
  */
-class ENTIDADESEXTERNASINICIATIVASRepository extends ServiceEntityRepository
+class EntidadExternaIniciativaRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, ENTIDADESEXTERNASINICIATIVAS::class);
+        parent::__construct($registry, EntidadExternaIniciativa::class);
     }
 
     //    /**

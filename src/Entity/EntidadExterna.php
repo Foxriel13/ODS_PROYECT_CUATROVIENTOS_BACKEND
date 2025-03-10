@@ -2,14 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\ENTIDADESEXTERNASRepository;
+use App\Repository\EntidadExternaRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Ignore;
 
-#[ORM\Entity(repositoryClass: ENTIDADESEXTERNASRepository::class)]
-class ENTIDADESEXTERNAS
+#[ORM\Entity(repositoryClass: EntidadExternaRepository::class)]
+class EntidadExterna
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -22,7 +22,7 @@ class ENTIDADESEXTERNAS
     /**
      * @var Collection<int, ENTIDADESEXTERNASINICIATIVAS>
      */
-    #[ORM\OneToMany(targetEntity: ENTIDADESEXTERNASINICIATIVAS::class, mappedBy: 'entidad')]
+    #[ORM\OneToMany(targetEntity: EntidadExternaIniciativa::class, mappedBy: 'entidad')]
     #[IGNORE]
     private Collection $iniciativa;
 
@@ -56,7 +56,7 @@ class ENTIDADESEXTERNAS
         return $this->iniciativa;
     }
 
-    public function addIniciativa(ENTIDADESEXTERNASINICIATIVAS $iniciativa): static
+    public function addIniciativa(EntidadExternaIniciativa $iniciativa): static
     {
         if (!$this->iniciativa->contains($iniciativa)) {
             $this->iniciativa->add($iniciativa);
@@ -66,7 +66,7 @@ class ENTIDADESEXTERNAS
         return $this;
     }
 
-    public function removeIniciativa(ENTIDADESEXTERNASINICIATIVAS $iniciativa): static
+    public function removeIniciativa(EntidadExternaIniciativa $iniciativa): static
     {
         if ($this->iniciativa->removeElement($iniciativa)) {
             // set the owning side to null (unless already changed)

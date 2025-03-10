@@ -2,21 +2,21 @@
 
 namespace App\Entity;
 
-use App\Repository\METASRepository;
+use App\Repository\MetaRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Ignore;
 
-#[ORM\Entity(repositoryClass: METASRepository::class)]
-class METAS
+#[ORM\Entity(repositoryClass: MetaRepository::class)]
+class Meta
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'metas')]
+    #[ORM\ManyToOne(inversedBy: 'meta')]
     #[ORM\JoinColumn(nullable: false)]
     private ?ODS $idOds = null;
 
@@ -26,7 +26,7 @@ class METAS
     /**
      * @var Collection<int, METASINICIATIVAS>
      */
-    #[ORM\OneToMany(targetEntity: METASINICIATIVAS::class, mappedBy: 'idMetas')]
+    #[ORM\OneToMany(targetEntity: MetaIniciativa::class, mappedBy: 'idMetas')]
     #[IGNORE]
     private Collection $metasIniciativasIdMetas;
 
@@ -73,7 +73,7 @@ class METAS
         return $this->metasIniciativasIdMetas;
     }
 
-    public function addMetasIniciativasIdMeta(METASINICIATIVAS $metasIniciativasIdMeta): static
+    public function addMetasIniciativasIdMeta(MetaIniciativa $metasIniciativasIdMeta): static
     {
         if (!$this->metasIniciativasIdMetas->contains($metasIniciativasIdMeta)) {
             $this->metasIniciativasIdMetas->add($metasIniciativasIdMeta);
@@ -83,7 +83,7 @@ class METAS
         return $this;
     }
 
-    public function removeMetasIniciativasIdMeta(METASINICIATIVAS $metasIniciativasIdMeta): static
+    public function removeMetasIniciativasIdMeta(MetaIniciativa $metasIniciativasIdMeta): static
     {
         if ($this->metasIniciativasIdMetas->removeElement($metasIniciativasIdMeta)) {
             // set the owning side to null (unless already changed)

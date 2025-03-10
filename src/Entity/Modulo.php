@@ -2,37 +2,37 @@
 
 namespace App\Entity;
 
-use App\Repository\MODULOSRepository;
+use App\Repository\ModuloRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Ignore;
 
-#[ORM\Entity(repositoryClass: MODULOSRepository::class)]
-class MODULOS
+#[ORM\Entity(repositoryClass: ModuloRepository::class)]
+class Modulo
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(targetEntity: CLASES::class, inversedBy: 'modulos')]
-    private ?CLASES $clase = null;
+    #[ORM\ManyToOne(targetEntity: Clase::class, inversedBy: 'modulo')]
+    private ?Clase $clase = null;
 
     #[ORM\Column(length: 255)]
     private ?string $nombre = null;
 
     /**
-     * @var Collection<int, PROFESORESMODULOS>
+     * @var Collection<int, ProfesorModulo>
      */
-    #[ORM\OneToMany(targetEntity: PROFESORESMODULOS::class, mappedBy: 'modulos')]
+    #[ORM\OneToMany(targetEntity: ProfesorModulo::class, mappedBy: 'modulo')]
     #[Ignore]
     private Collection $profesores;
 
     /**
-     * @var Collection<int, INICIATIVASMODULOS>
+     * @var Collection<int, ProfesorModulo>
      */
-    #[ORM\OneToMany(targetEntity: INICIATIVASMODULOS::class, mappedBy: 'modulo')]
+    #[ORM\OneToMany(targetEntity: ProfesorModulo::class, mappedBy: 'modulo')]
     #[Ignore]
     private Collection $iniciativa;
 
@@ -47,12 +47,12 @@ class MODULOS
         return $this->id;
     }
 
-    public function getClase(): ?CLASES
+    public function getClase(): ?Clase
     {
         return $this->clase;
     }
 
-    public function setClase(?CLASES $clase): static
+    public function setClase(?Clase $clase): static
     {
         $this->clase = $clase;
         return $this;
@@ -70,14 +70,14 @@ class MODULOS
     }
 
     /**
-     * @return Collection<int, PROFESORESMODULOS>
+     * @return Collection<int, PROFESORESModulo>
      */
     public function getProfesores(): Collection
     {
         return $this->profesores;
     }
 
-    public function addProfesores(PROFESORESMODULOS $profesores): static
+    public function addProfesores(ProfesorModulo $profesores): static
     {
         if (!$this->profesores->contains($profesores)) {
             $this->profesores->add($profesores);
@@ -86,7 +86,7 @@ class MODULOS
         return $this;
     }
 
-    public function removeProfesores(PROFESORESMODULOS $profesores): static
+    public function removeProfesores(ProfesorModulo $profesores): static
     {
         if ($this->profesores->removeElement($profesores)) {
             if ($profesores->getModulos() === $this) {
@@ -104,7 +104,7 @@ class MODULOS
         return $this->iniciativa;
     }
 
-    public function addIniciativa(INICIATIVASMODULOS $iniciativa): static
+    public function addIniciativa(IniciativaModulo $iniciativa): static
     {
         if (!$this->iniciativa->contains($iniciativa)) {
             $this->iniciativa->add($iniciativa);
@@ -113,7 +113,7 @@ class MODULOS
         return $this;
     }
 
-    public function removeIniciativa(INICIATIVASMODULOS $iniciativa): static
+    public function removeIniciativa(IniciativaModulo $iniciativa): static
     {
         if ($this->iniciativa->removeElement($iniciativa)) {
             if ($iniciativa->getModulo() === $this) {

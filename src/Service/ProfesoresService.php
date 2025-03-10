@@ -2,14 +2,14 @@
 
 namespace App\Service;
 
-use App\Repository\PROFESORESRepository;
+use App\Repository\ProfesorRepository;
 
 
 class ProfesoresService{
 
-    private PROFESORESRepository $profesoresRepository;
+    private ProfesorRepository $profesoresRepository;
 
-    public function __construct(PROFESORESRepository $profesoresRepository)
+    public function __construct(ProfesorRepository $profesoresRepository)
     {
         $this->profesoresRepository = $profesoresRepository;
     }

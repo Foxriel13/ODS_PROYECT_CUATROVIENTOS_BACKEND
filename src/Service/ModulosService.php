@@ -2,15 +2,15 @@
 
 namespace App\Service;
 
-use App\Repository\MODULOSRepository;
+use App\Repository\ModuloRepository;
 
 
 class ModulosService{
 
-    private MODULOSRepository $moduloRepository;
+    private ModuloRepository $moduloRepository;
 
 
-    public function __construct(MODULOSRepository $moduloRepository)
+    public function __construct(ModuloRepository $moduloRepository)
     {
         $this->moduloRepository = $moduloRepository;
     }

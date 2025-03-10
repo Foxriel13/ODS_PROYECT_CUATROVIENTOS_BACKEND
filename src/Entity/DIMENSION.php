@@ -2,14 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\DIMENSIONRepository;
+use App\Repository\DimensionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Ignore;
 
-#[ORM\Entity(repositoryClass: DIMENSIONRepository::class)]
-class DIMENSION
+#[ORM\Entity(repositoryClass: DimensionRepository::class)]
+class Dimension
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

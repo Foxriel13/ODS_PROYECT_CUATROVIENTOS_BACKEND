@@ -2,48 +2,48 @@
 
 namespace App\Entity;
 
-use App\Repository\PROFESORESMODULOSRepository;
+use App\Repository\ProfesorModuloRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Ignore;
 
-#[ORM\Entity(repositoryClass: PROFESORESMODULOSRepository::class)]
-class PROFESORESMODULOS
+#[ORM\Entity(repositoryClass: ProfesorModuloRepository::class)]
+class ProfesorModulo
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'modulos')]
+    #[ORM\ManyToOne(inversedBy: 'modulo')]
     #[IGNORE]
-    private ?PROFESORES $profesor = null;
+    private ?Profesor $profesor = null;
 
     #[ORM\ManyToOne(inversedBy: 'profesores')]
-    private ?MODULOS $modulos = null;
+    private ?Modulo $modulos = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getProfesor(): ?PROFESORES
+    public function getProfesor(): ?Profesor
     {
         return $this->profesor;
     }
 
-    public function setProfesor(?PROFESORES $profesor): static
+    public function setProfesor(?Profesor $profesor): static
     {
         $this->profesor = $profesor;
 
         return $this;
     }
 
-    public function getModulos(): ?MODULOS
+    public function getModulos(): ?Modulo
     {
         return $this->modulos;
     }
 
-    public function setModulos(?MODULOS $modulos): static
+    public function setModulos(?Modulo $modulos): static
     {
         $this->modulos = $modulos;
 

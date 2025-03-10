@@ -159,6 +159,13 @@ class IniciativaService
         if (isset($data['imagen'])) {
             $iniciativa->setImagen($data['imagen']);
         }
+        if (isset($data['mas_comentarios'])) {
+            $iniciativa->setMasComentarios($data['mas_comentarios']);
+        }
+        if (isset($data['redes_sociales'])) {
+            $iniciativa->setRedesSociales($data['redes_sociales']);
+        }
+
         
         $this->entityManager->flush();
 

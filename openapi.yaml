@@ -725,34 +725,40 @@ components:
       properties:
         tipo:
           type: string
-          example: Investigación sobre IA
         horas:
           type: integer
-          example: 50
         nombre:
           type: string
-          example: IA en educación
         producto_final:
           type: string
-          example: Informe de IA
         fecha_inicio:
           type: string
           format: date
-          example: '2025-01-01'
         fecha_fin:
           type: string
           format: date
-          example: '2025-06-01'
         eliminado:
           type: boolean
-          example: true
         innovador:
           type: boolean
-          example: true
         anyo_lectivo:
           type: string
-          example: '2024-2025'
         imagen:
           type: string
-          example: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVUGdra5SfyyJUvZ-mWByvoY1gEwp0df8NLA&s'
-        
+          format: uri
+        metas:
+          type: array
+          items:
+            type: integer
+        profesores:
+          type: array
+          items:
+            type: integer
+        entidades_externas:
+          type: array
+          items:
+            type: integer
+        modulos:
+          type: array
+          items:
+            type: integer

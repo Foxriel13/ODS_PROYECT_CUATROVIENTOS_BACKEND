@@ -156,26 +156,26 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Curso'
+                  $ref: '#/components/schemas/Clase'
     post:
       tags:
         - clases
-      summary: Crear un nuevo curso
-      operationId: createCurso
+      summary: Crear un nuevo clase
+      operationId: createClase
       requestBody:
-        description: Datos del nuevo curso
+        description: Datos del nuevo clase
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Curso'
+              $ref: '#/components/schemas/Clase'
       responses:
         '201':
-          description: Curso creado
+          description: Clase creada
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Curso'
+                $ref: '#/components/schemas/Clase'
   /modulos:
     get:
       tags:
@@ -564,7 +564,7 @@ components:
           example: Fomentar la educación digital
         ods:
             $ref: '#/components/schemas/Ods'
-    Curso:
+    Clase:
       type: object
       properties:
         id:
@@ -572,7 +572,7 @@ components:
           example: 1
         nombre:
           type: string
-          example: Curso de Matemáticas
+          example: Clase de Matemáticas
     Modulo:
       type: object
       properties:
@@ -582,8 +582,8 @@ components:
         nombre:
           type: string
           example: Álgebra
-        curso:
-            $ref: '#/components/schemas/Curso'
+        clase:
+            $ref: '#/components/schemas/Clase'
     Profesor:
       type: object
       properties:

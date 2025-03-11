@@ -20,6 +20,7 @@ final class IniciativaController extends AbstractController
         $this->iniciativaService = $iniciativaService;
     }
 
+    // Get de las iniciativas
     #[Route('/iniciativas', methods: ['GET'])]
     public function searchIniciativas(Request $request): JsonResponse
     {
@@ -35,18 +36,14 @@ final class IniciativaController extends AbstractController
 
     } 
 
-    /*#[Route('/iniciativas/{idIniciativa}', methods: ['DELETE'])]
-    public function deleteIniciativa(int $idIniciativa): JsonResponse
+    // Marcar como eliminado
+    #[Route('/deleteIniciativas/{idIniciativa}', methods: ['PUT'])]
+    public function deleteIniciativa( int $idIniciativa): JsonResponse
     {
-        $eliminado = $request->query->get('eliminado');
-
-        if ($eliminado == 'true') {
-            return new JsonResponse(['message' => 'La iniciativa {$idIniciativa} ya se encuentra eliminada'], Response::HTTP_BAD_REQUEST);
-        }else{
-            return $this->iniciativaService->deleteIniciativa($idIniciativa);
-        }
-    }*/
-
+        return $this->iniciativaService->deleteIniciativa($idIniciativa);
+    }
+    
+    // Crear iniciativa
     #[Route('/iniciativas', methods: ['POST'])]
     public function createIniciativa(Request $request): JsonResponse
     {
@@ -62,6 +59,7 @@ final class IniciativaController extends AbstractController
         return $this->iniciativaService->createIniciativa($data);
     }
 
+    // Actualizar iniciativa
     #[Route('/iniciativas/{idIniciativa}', methods: ['PUT'])]
     public function updateIniciativa(Request $request, int $idIniciativa): JsonResponse
     {

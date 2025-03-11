@@ -12,19 +12,32 @@ use App\Entity\Modulo;
 use App\Entity\Profesor;
 use App\Entity\ProfesorIniciativa;
 use App\Repository\IniciativaRepository;
+use App\Repository\MetaRepository;
+use App\Repository\ProfesorRepository;
+use App\Repository\EntidadExternaRepository;
+use App\Repository\ModuloRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class IniciativaService
 {
     private IniciativaRepository $iniciativaRepository;
+    private MetaRepository $metaRepository;
+    private ProfesorRepository $profesorRepository;
+    private ModuloRepository $moduloRepository;
+    private EntidadExternaRepository $entidadExternaRepository;
     private EntityManagerInterface $entityManager;
 
-    public function __construct(EntityManagerInterface $entityManager, IniciativaRepository $iniciativaRepository)
+    public function __construct(EntityManagerInterface $entityManager, IniciativaRepository $iniciativaRepository, MetaRepository $metaRepository, ProfesorRepository $profesorRepository, ModuloRepository $moduloRepository, EntidadExternaRepository $entidadExternaRepository)
     {
         $this->entityManager = $entityManager;
+        $this->metaRepository = $metaRepository;
         $this->iniciativaRepository = $iniciativaRepository;
+        $this->profesorRepository = $profesorRepository;
+        $this->moduloRepository = $moduloRepository;
+        $this->entidadExternaRepository = $entidadExternaRepository;
     }
 
     public function deleteIniciativa(int $id): JsonResponse
@@ -33,6 +46,10 @@ class IniciativaService
         
         if (!$iniciativa) {
             return new JsonResponse(['message' => 'Iniciativa no encontrada'], Response::HTTP_NOT_FOUND);
+        }
+
+        if ($iniciativa->isEliminado() == true) {
+            return new JsonResponse(['message' => 'Iniciativa ya se encontraba eliminada'], Response::HTTP_BAD_REQUEST);
         }
         
         $iniciativa->setEliminado(true);
@@ -178,7 +195,74 @@ class IniciativaService
             $iniciativa->setRedesSociales($data['redes_sociales']);
         }
 
-        
+        // Relacionar Metas
+        $metasRepo = $this->entityManager->getRepository(Meta::class);
+
+        foreach ($iniciativa->getMetasIniciativas() as $metasIniciativas) {
+            $this->entityManager->remove($metasIniciativas);
+        }
+        $this->entityManager->flush(); 
+
+        foreach ($data['metas'] as $metaId) {
+            $meta = $metasRepo->find($metaId);
+            if ($meta) {
+                $iniciativaMeta = new MetaIniciativa($iniciativa, $meta);
+                $iniciativa->addMetasIniciativa($iniciativaMeta);
+                $this->entityManager->persist($iniciativaMeta);
+            }
+        }
+
+        // Relacionar Profesores
+        $profesorRepo = $this->entityManager->getRepository(Profesor::class);
+
+        foreach ($iniciativa->getProfesores() as $profesores) {
+            $this->entityManager->remove($profesores);
+        }
+        $this->entityManager->flush(); 
+
+        foreach ($data['profesores'] as $profesorId) {
+            $profesor = $profesorRepo->find($profesorId);
+            if ($profesor) {
+                $iniciativaProfesor = new ProfesorIniciativa($iniciativa, $profesor);
+                $iniciativa->addProfesor($iniciativaProfesor);
+                $this->entityManager->persist($iniciativaProfesor);
+            }
+        }
+
+        // Relacionar Entidades Externas
+        $entidadesExternasRepo = $this->entityManager->getRepository(EntidadExterna::class);
+
+        foreach ($iniciativa->getEntidadesExternas() as $entidadesExternas) {
+            $this->entityManager->remove($entidadesExternas);
+        }
+        $this->entityManager->flush(); 
+
+        foreach ($data['entidades_externas'] as $entidadExternaId) {
+            $entidadExterna = $entidadesExternasRepo->find($entidadExternaId);
+            if ($entidadExterna) {
+                $iniciativaEntidadExterna = new EntidadExternaIniciativa($iniciativa, $entidadExterna);
+                $iniciativa->addEntidadesExterna($iniciativaEntidadExterna);
+                $this->entityManager->persist($iniciativaEntidadExterna);
+            }
+        }
+
+        // Relacionar Módulos
+        $modulosRepo = $this->entityManager->getRepository(Modulo::class);
+
+        foreach ($iniciativa->getModulos() as $modulos) {
+            $this->entityManager->remove($modulos);
+        }
+        $this->entityManager->flush(); 
+
+        foreach ($data['modulos'] as $moduloId) {
+            $modulo = $modulosRepo->find($moduloId);
+            if ($entidadExterna) {
+                $iniciativaModulo = new IniciativaModulo($iniciativa, $modulo);
+                $iniciativa->addModulo($iniciativaModulo);
+                $this->entityManager->persist($iniciativaModulo);
+            }
+        }
+
         $this->entityManager->flush();
 
         return new JsonResponse(['message' => 'Iniciativa actualizada correctamente'], Response::HTTP_OK);

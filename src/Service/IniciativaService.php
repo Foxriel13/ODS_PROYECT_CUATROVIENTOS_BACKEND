@@ -179,14 +179,9 @@ class IniciativaService
             $iniciativa->setImagen($data['imagen']);
         }
         
-        if (isset($data['fecha_registro'])) {
-            $fechaRegistro = \DateTime::createFromFormat('Y-m-d', $data['fecha_registro']);
-        } else {
-            $fechaRegistro = new \DateTime();
-            $fechaRegistro = \DateTime::createFromFormat('Y-m-d', $fechaRegistro->format('Y-m-d')); // Elimina horas
-        }
-        
+        $fechaRegistro = \DateTime::createFromFormat('Y-m-d', (new \DateTime())->format('Y-m-d'));
         $iniciativa->setFechaRegistro($fechaRegistro);
+
         if (isset($data['mas_comentarios'])) {
             $iniciativa->setMasComentarios($data['mas_comentarios']);
         }

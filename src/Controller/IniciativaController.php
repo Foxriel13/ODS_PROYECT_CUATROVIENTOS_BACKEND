@@ -35,7 +35,7 @@ final class IniciativaController extends AbstractController
     } 
 
     // Marcar como eliminado
-    #[Route('/deleteIniciativas/{idIniciativa}', methods: ['PUT'])]
+    #[Route('/deleteIniciativas/{idIniciativa}', methods: ['DELETE'])]
     public function deleteIniciativa( int $idIniciativa): JsonResponse
     {
         return $this->iniciativaService->deleteIniciativa($idIniciativa);

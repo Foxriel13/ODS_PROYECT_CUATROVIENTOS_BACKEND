@@ -1,11 +1,11 @@
 openapi: 3.0.3
 info:
-  title: ODS API
+  title: Agenda 2030 Cuatrovientos API - OpenAPI 1.0
   description: |-
-    Especificación API para manejo de dimensiones, ODS, metas, clases, módulos, profesores, entidades externas e iniciativas.
+    Especificación API para manejo de la Agenda 2030 de Cuatrovientos CI. Permite gestionar Dimensiones, ODS, Metas, Clases, Módulos, Profesores, Entidades Externas e Iniciativas.
   termsOfService: http://swagger.io/terms/
   contact:
-    email: admin@odsapi.org
+    email: aitorlo057@gmail.com
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
@@ -29,7 +29,6 @@ tags:
     description: Operaciones sobre las entidades externas
   - name: Iniciativa
     description: Operaciones sobre las iniciativas
-
 paths:
   /dimensiones:
     get:
@@ -46,6 +45,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Dimension'
+        '400':
+          description: Any problem in the Server
   /ods:
     get:
       tags:
@@ -61,6 +62,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Ods'
+        '400':
+          description: Any problem in the Server
   /metas:
     get:
       tags:
@@ -76,6 +79,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Meta'
+        '400':
+          description: Any problem in the Server
   /clases:
     get:
       tags:
@@ -91,6 +96,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Clase'
+        '400':
+          description: Any problem in the Server
   /modulos:
     get:
       tags:
@@ -106,6 +113,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Modulo'
+        '400':
+          description: Any problem in the Server
   /profesores:
     get:
       tags:
@@ -121,6 +130,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Profesor'
+        '400':
+          description: Any problem in the Server
   /entidadesexternas:
     get:
       tags:
@@ -136,6 +147,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/EntidadExterna'
+        '400':
+          description: Any problem in the Server
   /iniciativas:
     get:
       tags:
@@ -151,6 +164,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Iniciativa'
+        '400':
+          description: Any problem in the Server
     post:
       tags:
         - Iniciativa
@@ -381,10 +396,6 @@ components:
         imagen:
           type: string
           format: uri
-        fecha_registro:
-          type: string
-          format: date
-          example: '2025-01-01'
         mas_comentarios:
           type: string
         redes_sociales:

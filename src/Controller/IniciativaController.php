@@ -22,7 +22,7 @@ final class IniciativaController extends AbstractController
 
     // Get de las iniciativas
     #[Route('/iniciativas', methods: ['GET'])]
-    public function searchIniciativas(Request $request): JsonResponse
+    public function getIniciativas(Request $request): JsonResponse
     {
         $eliminado = $request->query->get('eliminado');
 

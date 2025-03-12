@@ -17,7 +17,7 @@ class ModulosController extends AbstractController
     }
 
     #[Route('/modulos', name: 'modulos', methods: ['GET'])]
-    public function getCursos(): JsonResponse
+    public function getModulos(): JsonResponse
     {
         $modulos = $this->modulosService->getAllModulos();
         return $this->json($modulos);

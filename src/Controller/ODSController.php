@@ -17,9 +17,9 @@ class ODSController extends AbstractController
     }
 
     #[Route('/ods', name: 'ods', methods: ['GET'])]
-    public function getCursos(): JsonResponse
+    public function getOds(): JsonResponse
     {
-        $cursos = $this->odsService->getAllOds();
-        return $this->json($cursos);
+        $ods = $this->odsService->getAllOds();
+        return $this->json($ods);
     }
 }

@@ -17,7 +17,7 @@ class ProfesoresController extends AbstractController
     }
 
     #[Route('/profesores', name: 'profesores', methods: ['GET'])]
-    public function getCursos(): JsonResponse
+    public function getProfesores(): JsonResponse
     {
         $profesores = $this->profesoresService->getAllProfesores();
         return $this->json($profesores);

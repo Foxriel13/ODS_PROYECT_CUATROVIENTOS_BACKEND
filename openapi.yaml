@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: ODS API
   description: |-
-    API Specification for managing dimensions, ODS, metas, clases, módulos, profesores, profesoresmodulos, entidades externas, iniciativas, iniciativasmodulos, profesoresiniciativas, entidadesexternasiniciativas y metasiniciativas.
+    Especificación API para manejo de dimensiones, ODS, metas, clases, módulos, profesores, entidades externas e iniciativas.
   termsOfService: http://swagger.io/terms/
   contact:
     email: admin@odsapi.org
@@ -25,20 +25,11 @@ tags:
     description: Operaciones sobre los módulos
   - name: profesores
     description: Operaciones sobre los profesores
-  - name: profesoresmodulos
-    description: Operaciones sobre la relación profesores - módulos
   - name: entidadesexternas
     description: Operaciones sobre las entidades externas
   - name: iniciativas
     description: Operaciones sobre las iniciativas
-  - name: iniciativasmodulos
-    description: Operaciones sobre la relación iniciativas - módulos
-  - name: profesoresiniciativas
-    description: Operaciones sobre la relación profesores - iniciativas
-  - name: entidadesexternasiniciativas
-    description: Operaciones sobre la relación entidades externas - iniciativas
-  - name: metasiniciativas
-    description: Operaciones sobre la relación metas - iniciativas
+
 paths:
   /dimension:
     get:
@@ -55,25 +46,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Dimension'
-    post:
-      tags:
-        - dimension
-      summary: Crear una nueva dimensión
-      operationId: createDimension
-      requestBody:
-        description: Datos de la nueva dimensión
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Dimension'
-      responses:
-        '201':
-          description: Dimensión creada
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Dimension'
   /ods:
     get:
       tags:
@@ -89,25 +61,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Ods'
-    post:
-      tags:
-        - ods
-      summary: Crear un nuevo ODS
-      operationId: createOds
-      requestBody:
-        description: Datos del nuevo ODS
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Ods'
-      responses:
-        '201':
-          description: ODS creado
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Ods'
   /metas:
     get:
       tags:
@@ -123,30 +76,11 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Meta'
-    post:
-      tags:
-        - metas
-      summary: Crear una nueva meta
-      operationId: createMeta
-      requestBody:
-        description: Datos de la nueva meta
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Meta'
-      responses:
-        '201':
-          description: Meta creada
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Meta'
   /clases:
     get:
       tags:
-        - clase
-      summary: Recuperar todos las clases
+        - clases
+      summary: Recuperar todas las clasese
       operationId: getClases
       responses:
         '200':
@@ -157,25 +91,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Clase'
-    post:
-      tags:
-        - clases
-      summary: Crear un nuevo clase
-      operationId: createClase
-      requestBody:
-        description: Datos del nuevo clase
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Clase'
-      responses:
-        '201':
-          description: Clase creada
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Clase'
   /modulos:
     get:
       tags:
@@ -191,25 +106,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Modulo'
-    post:
-      tags:
-        - modulos
-      summary: Crear un nuevo módulo
-      operationId: createModulo
-      requestBody:
-        description: Datos del nuevo módulo
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Modulo'
-      responses:
-        '201':
-          description: Módulo creado
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Modulo'
   /profesores:
     get:
       tags:
@@ -225,59 +121,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Profesor'
-    post:
-      tags:
-        - profesores
-      summary: Crear un nuevo profesor
-      operationId: createProfesor
-      requestBody:
-        description: Datos del nuevo profesor
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Profesor'
-      responses:
-        '201':
-          description: Profesor creado
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Profesor'
-  /profesoresmodulos:
-    get:
-      tags:
-        - profesoresmodulos
-      summary: Recuperar todas las relaciones profesor - módulo
-      operationId: getProfesoresModulos
-      responses:
-        '200':
-          description: Lista de relaciones profesor - módulo
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ProfesorModulo'
-    post:
-      tags:
-        - profesoresmodulos
-      summary: Crear una nueva relación profesor - módulo
-      operationId: createProfesorModulo
-      requestBody:
-        description: Datos de la nueva relación profesor - módulo
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ProfesorModulo'
-      responses:
-        '201':
-          description: Relación creada
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ProfesorModulo'
   /entidadesexternas:
     get:
       tags:
@@ -293,25 +136,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/EntidadExterna'
-    post:
-      tags:
-        - entidadesexternas
-      summary: Crear una nueva entidad externa
-      operationId: createEntidadExterna
-      requestBody:
-        description: Datos de la nueva entidad externa
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/EntidadExterna'
-      responses:
-        '201':
-          description: Entidad externa creada
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EntidadExterna'
   /iniciativas:
     get:
       tags:
@@ -394,143 +218,6 @@ paths:
       responses:
         '404':
           description: Activity not found
-        
-  /iniciativasmodulos:
-    get:
-      tags:
-        - iniciativasmodulos
-      summary: Recuperar todas las relaciones iniciativa - módulo
-      operationId: getIniciativasModulos
-      responses:
-        '200':
-          description: Lista de relaciones iniciativa - módulo
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/IniciativaModulo'
-    post:
-      tags:
-        - iniciativasmodulos
-      summary: Crear una nueva relación iniciativa - módulo
-      operationId: createIniciativaModulo
-      requestBody:
-        description: Datos de la nueva relación iniciativa - módulo
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/IniciativaModulo'
-      responses:
-        '201':
-          description: Relación creada
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/IniciativaModulo'
-  /profesoresiniciativas:
-    get:
-      tags:
-        - profesoresiniciativas
-      summary: Recuperar todas las relaciones profesor - iniciativa
-      operationId: getProfesoresIniciativas
-      responses:
-        '200':
-          description: Lista de relaciones profesor - iniciativa
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ProfesorIniciativa'
-    post:
-      tags:
-        - profesoresiniciativas
-      summary: Crear una nueva relación profesor - iniciativa
-      operationId: createProfesorIniciativa
-      requestBody:
-        description: Datos de la nueva relación profesor - iniciativa
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ProfesorIniciativa'
-      responses:
-        '201':
-          description: Relación creada
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ProfesorIniciativa'
-  /entidadesexternasiniciativas:
-    get:
-      tags:
-        - entidadesexternasiniciativas
-      summary: Recuperar todas las relaciones entidad externa - iniciativa
-      operationId: getEntidadesExternasIniciativas
-      responses:
-        '200':
-          description: Lista de relaciones entidad externa - iniciativa
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/EntidadExternaIniciativa'
-    post:
-      tags:
-        - entidadesexternasiniciativas
-      summary: Crear una nueva relación entidad externa - iniciativa
-      operationId: createEntidadExternaIniciativa
-      requestBody:
-        description: Datos de la nueva relación entidad externa - iniciativa
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/EntidadExternaIniciativa'
-      responses:
-        '201':
-          description: Relación creada
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EntidadExternaIniciativa'
-  /metasiniciativas:
-    get:
-      tags:
-        - metasiniciativas
-      summary: Recuperar todas las relaciones meta - iniciativa
-      operationId: getMetasIniciativas
-      responses:
-        '200':
-          description: Lista de relaciones meta - iniciativa
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/MetaIniciativa'
-    post:
-      tags:
-        - metasiniciativas
-      summary: Crear una nueva relación meta - iniciativa
-      operationId: createMetaIniciativa
-      requestBody:
-        description: Datos de la nueva relación meta - iniciativa
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/MetaIniciativa'
-      responses:
-        '201':
-          description: Relación creada
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/MetaIniciativa'
 components:
   schemas:
     Dimension:
@@ -593,18 +280,6 @@ components:
         nombre:
           type: string
           example: Juan Pérez
-    ProfesorModulo:
-      type: object
-      properties:
-        id:
-          type: integer
-          example: 1
-        profesor_id:
-          type: integer
-          example: 1
-        modulos_id:
-          type: integer
-          example: 1
     EntidadExterna:
       type: object
       properties:
@@ -680,54 +355,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Modulo'
-    IniciativaModulo:
-      type: object
-      properties:
-        id:
-          type: integer
-          example: 1
-        iniciativa_id:
-          type: integer
-          example: 1
-        modulo_id:
-          type: integer
-          example: 3
-    ProfesorIniciativa:
-      type: object
-      properties:
-        id:
-          type: integer
-          example: 1
-        iniciativa_id:
-          type: integer
-          example: 1
-        trabajador_id:
-          type: integer
-          example: 1
-    EntidadExternaIniciativa:
-      type: object
-      properties:
-        id:
-          type: integer
-          example: 1
-        iniciativa_id:
-          type: integer
-          example: 1
-        entidad_id:
-          type: integer
-          example: 1
-    MetaIniciativa:
-      type: object
-      properties:
-        id:
-          type: integer
-          example: 1
-        cod_iniciativa_id:
-          type: integer
-          example: 1
-        id_metas_id:
-          type: integer
-          example: 1
     NewIniciativa:
       type: object
       properties:
@@ -780,3 +407,4 @@ components:
           type: array
           items:
             type: integer
+

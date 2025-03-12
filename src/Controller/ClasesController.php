@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
-class CursosController extends AbstractController
+class ClasesController extends AbstractController
 {
     private ClasesService $clasesService;
 
@@ -16,8 +16,8 @@ class CursosController extends AbstractController
         $this->clasesService = $clasesService;
     }
 
-    #[Route('/cursos', name: 'cursos', methods: ['GET'])]
-    public function getCursos(): JsonResponse
+    #[Route('/clases', name: 'clases', methods: ['GET'])]
+    public function getClases(): JsonResponse
     {
         $clases = $this->clasesService->getAllClases();
         return $this->json($clases);

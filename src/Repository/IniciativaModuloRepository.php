@@ -17,7 +17,7 @@ class IniciativaModuloRepository extends ServiceEntityRepository
     }
 
     //    /**
-    //     * @return INICIATIVASMODULOS[] Returns an array of INICIATIVASMODULOS objects
+    //     * @return IniciativaModulo[] Returns an array of IniciativaModulo objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -31,7 +31,7 @@ class IniciativaModuloRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?INICIATIVASMODULOS
+    //    public function findOneBySomeField($value): ?IniciativaModulo
     //    {
     //        return $this->createQueryBuilder('i')
     //            ->andWhere('i.exampleField = :val')

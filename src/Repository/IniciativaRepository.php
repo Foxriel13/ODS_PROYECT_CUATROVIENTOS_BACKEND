@@ -7,7 +7,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<INICIATIVAS>
+ * @extends ServiceEntityRepository<Iniciativa>
  */
 class IniciativaRepository extends ServiceEntityRepository
 {
@@ -27,7 +27,7 @@ class IniciativaRepository extends ServiceEntityRepository
     }
 
     //    /**
-    //     * @return INICIATIVAS[] Returns an array of INICIATIVAS objects
+    //     * @return Iniciativa[] Returns an array of Iniciativa objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -41,7 +41,7 @@ class IniciativaRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?INICIATIVAS
+    //    public function findOneBySomeField($value): ?Iniciativa
     //    {
     //        return $this->createQueryBuilder('i')
     //            ->andWhere('i.exampleField = :val')

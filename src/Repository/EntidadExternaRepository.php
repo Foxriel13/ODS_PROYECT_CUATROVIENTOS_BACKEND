@@ -17,7 +17,7 @@ class EntidadExternaRepository extends ServiceEntityRepository
     }
 
     //    /**
-    //     * @return ENTIDADESEXTERNAS[] Returns an array of ENTIDADESEXTERNAS objects
+    //     * @return EntidadExterna[] Returns an array of EntidadExterna objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -31,7 +31,7 @@ class EntidadExternaRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?ENTIDADESEXTERNAS
+    //    public function findOneBySomeField($value): ?EntidadExterna
     //    {
     //        return $this->createQueryBuilder('e')
     //            ->andWhere('e.exampleField = :val')

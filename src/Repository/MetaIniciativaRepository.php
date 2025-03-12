@@ -17,7 +17,7 @@ class MetaIniciativaRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return METASINICIATIVAS[] Returns an array of METASINICIATIVAS objects
+//     * @return MetaIniciativa[] Returns an array of MetaIniciativa objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -31,7 +31,7 @@ class MetaIniciativaRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?METASINICIATIVAS
+//    public function findOneBySomeField($value): ?MetaIniciativa
 //    {
 //        return $this->createQueryBuilder('m')
 //            ->andWhere('m.exampleField = :val')

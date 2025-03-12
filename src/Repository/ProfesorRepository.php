@@ -7,7 +7,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<PROFESORES>
+ * @extends ServiceEntityRepository<Profesor>
  */
 class ProfesorRepository extends ServiceEntityRepository
 {
@@ -17,7 +17,7 @@ class ProfesorRepository extends ServiceEntityRepository
     }
 
     //    /**
-    //     * @return PROFESORES[] Returns an array of PROFESORES objects
+    //     * @return Profesor[] Returns an array of Profesor objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -31,7 +31,7 @@ class ProfesorRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?PROFESORES
+    //    public function findOneBySomeField($value): ?Profesor
     //    {
     //        return $this->createQueryBuilder('p')
     //            ->andWhere('p.exampleField = :val')

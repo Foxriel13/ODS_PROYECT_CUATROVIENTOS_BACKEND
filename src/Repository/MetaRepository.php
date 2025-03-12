@@ -7,7 +7,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<METAS>
+ * @extends ServiceEntityRepository<Meta>
  */
 class MetaRepository extends ServiceEntityRepository
 {
@@ -17,7 +17,7 @@ class MetaRepository extends ServiceEntityRepository
     }
 
     //    /**
-    //     * @return METAS[] Returns an array of METAS objects
+    //     * @return Meta[] Returns an array of Meta objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -31,7 +31,7 @@ class MetaRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?METAS
+    //    public function findOneBySomeField($value): ?Meta
     //    {
     //        return $this->createQueryBuilder('m')
     //            ->andWhere('m.exampleField = :val')

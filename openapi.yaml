@@ -13,30 +13,30 @@ info:
 servers:
   - url: http://localhost:8000
 tags:
-  - name: dimension
+  - name: Dimension
     description: Operaciones sobre las dimensiones
-  - name: ods
+  - name: Ods
     description: Operaciones sobre los ODS
-  - name: metas
+  - name: Meta
     description: Operaciones sobre las metas
-  - name: clases
+  - name: Clase
     description: Operaciones sobre los clases
-  - name: modulos
+  - name: Modulo
     description: Operaciones sobre los módulos
-  - name: profesores
+  - name: Profesor
     description: Operaciones sobre los profesores
-  - name: entidadesexternas
+  - name: Entidad Externa
     description: Operaciones sobre las entidades externas
-  - name: iniciativas
+  - name: Iniciativa
     description: Operaciones sobre las iniciativas
 
 paths:
-  /dimension:
+  /dimensiones:
     get:
       tags:
-        - dimension
+        - Dimension
       summary: Recuperar todas las dimension
-      operationId: getDimensions
+      operationId: getDimensiones
       responses:
         '200':
           description: Lista de dimension
@@ -49,7 +49,7 @@ paths:
   /ods:
     get:
       tags:
-        - ods
+        - Ods
       summary: Recuperar todos los ODS
       operationId: getOds
       responses:
@@ -64,7 +64,7 @@ paths:
   /metas:
     get:
       tags:
-        - metas
+        - Meta
       summary: Recuperar todas las metas
       operationId: getMetas
       responses:
@@ -79,8 +79,8 @@ paths:
   /clases:
     get:
       tags:
-        - clases
-      summary: Recuperar todas las clasese
+        - Clase
+      summary: Recuperar todas las clases
       operationId: getClases
       responses:
         '200':
@@ -94,7 +94,7 @@ paths:
   /modulos:
     get:
       tags:
-        - modulos
+        - Modulo
       summary: Recuperar todos los módulos
       operationId: getModulos
       responses:
@@ -109,7 +109,7 @@ paths:
   /profesores:
     get:
       tags:
-        - profesores
+        - Profesor
       summary: Recuperar todos los profesores
       operationId: getProfesores
       responses:
@@ -124,7 +124,7 @@ paths:
   /entidadesexternas:
     get:
       tags:
-        - entidadesexternas
+        - Entidad Externa
       summary: Recuperar todas las entidades externas
       operationId: getEntidadesExternas
       responses:
@@ -139,7 +139,7 @@ paths:
   /iniciativas:
     get:
       tags:
-        - iniciativas
+        - Iniciativa
       summary: Recuperar todas las iniciativas
       operationId: getIniciativas
       responses:
@@ -153,7 +153,7 @@ paths:
                   $ref: '#/components/schemas/Iniciativa'
     post:
       tags:
-        - iniciativas
+        - Iniciativa
       summary: Crear una nueva iniciativa
       operationId: createIniciativa
       requestBody:
@@ -173,7 +173,7 @@ paths:
   /iniciativas/{idIniciativa}:
     put:
       tags:
-        - iniciativas
+        - Iniciativa
       summary: Update an existing iniciative
       description: Update an existing activity by Id
       operationId: updateIniciativa
@@ -203,7 +203,7 @@ paths:
           description: Activity not found
     delete:
       tags:
-        - iniciativas
+        - Iniciativa
       summary: Deletes a iniciativas
       description: delete a iniciativas
       operationId: deleteIniciativa
@@ -407,4 +407,3 @@ components:
           type: array
           items:
             type: integer
-

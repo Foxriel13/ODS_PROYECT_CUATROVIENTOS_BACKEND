@@ -3,12 +3,11 @@
 namespace App\Repository;
 
 use App\Entity\Clase;
-use App\Entity\CURSOS;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<CURSOS>
+ * @extends ServiceEntityRepository<Clase>
  */
 class ClaseRepository extends ServiceEntityRepository
 {
@@ -18,7 +17,7 @@ class ClaseRepository extends ServiceEntityRepository
     }
 
     //    /**
-    //     * @return CLASES[] Returns an array of CLASES objects
+    //     * @return Clase[] Returns an array of Clase objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -32,7 +31,7 @@ class ClaseRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?CLASES
+    //    public function findOneBySomeField($value): ?Clase
     //    {
     //        return $this->createQueryBuilder('c')
     //            ->andWhere('c.exampleField = :val')

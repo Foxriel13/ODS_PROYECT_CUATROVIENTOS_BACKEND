@@ -18,18 +18,6 @@ class Profesor
     #[ORM\Column(length: 255)]
     private ?string $nombre = null;
 
-    /**
-     * @var Collection<int, ProfesorModulo>
-     */
-    #[ORM\OneToMany(targetEntity: ProfesorModulo::class, mappedBy: 'profesor')]
-    private Collection $modulos;
-
-    public function __construct()
-    {
-        $this->modulos = new ArrayCollection();
-    }
-
-
     public function getId(): ?int
     {
         return $this->id;
@@ -46,35 +34,5 @@ class Profesor
 
         return $this;
     }
-
-    /**
-     * @return Collection<int, ProfesorModulo>
-     */
-    public function getModulos(): Collection
-    {
-        return $this->modulos;
-    }
-
-    public function addModulo(ProfesorModulo $modulo): static
-    {
-        if (!$this->modulos->contains($modulo)) {
-            $this->modulos->add($modulo);
-            $modulo->setProfesor($this);
-        }
-
-        return $this;
-    }
-
-    public function removeModulo(ProfesorModulo $modulo): static
-    {
-        if ($this->modulos->removeElement($modulo)) {
-            // set the owning side to null (unless already changed)
-            if ($modulo->getProfesor() === $this) {
-                $modulo->setProfesor(null);
-            }
-        }
-
-        return $this;
-    }
-
+    
 }

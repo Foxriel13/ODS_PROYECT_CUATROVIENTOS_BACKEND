@@ -25,20 +25,12 @@ class Modulo
     /**
      * @var Collection<int, ProfesorModulo>
      */
-    #[ORM\OneToMany(targetEntity: ProfesorModulo::class, mappedBy: 'modulo')]
-    #[Ignore]
-    private Collection $profesores;
-
-    /**
-     * @var Collection<int, ProfesorModulo>
-     */
-    #[ORM\OneToMany(targetEntity: ProfesorModulo::class, mappedBy: 'modulo')]
+    #[ORM\OneToMany(targetEntity: IniciativaModulo::class, mappedBy: 'modulo')]
     #[Ignore]
     private Collection $iniciativa;
 
     public function __construct()
     {
-        $this->profesores = new ArrayCollection();
         $this->iniciativa = new ArrayCollection();
     }
 
@@ -66,33 +58,6 @@ class Modulo
     public function setNombre(string $nombre): static
     {
         $this->nombre = $nombre;
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, PROFESORESModulo>
-     */
-    public function getProfesores(): Collection
-    {
-        return $this->profesores;
-    }
-
-    public function addProfesores(ProfesorModulo $profesores): static
-    {
-        if (!$this->profesores->contains($profesores)) {
-            $this->profesores->add($profesores);
-            $profesores->setModulos($this);
-        }
-        return $this;
-    }
-
-    public function removeProfesores(ProfesorModulo $profesores): static
-    {
-        if ($this->profesores->removeElement($profesores)) {
-            if ($profesores->getModulos() === $this) {
-                $profesores->setModulos(null);
-            }
-        }
         return $this;
     }
 

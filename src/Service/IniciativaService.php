@@ -81,9 +81,8 @@ class IniciativaService
         $iniciativa->setMasComentarios($data['mas_comentarios'] ?? null);
         $iniciativa->setRedesSociales($data['redes_sociales'] ?? null);
 
-        if (isset($data['fecha_registro'])) {
-            $iniciativa->setFechaRegistro(new \DateTime($data['fecha_registro']));
-        }
+        $fechaRegistro = \DateTime::createFromFormat('Y-m-d', (new \DateTime())->format('Y-m-d'));
+        $iniciativa->setFechaRegistro($fechaRegistro);
 
         if (!empty($data['metas']) && is_array($data['metas'])) {
             $metasRepo = $this->entityManager->getRepository(Meta::class);

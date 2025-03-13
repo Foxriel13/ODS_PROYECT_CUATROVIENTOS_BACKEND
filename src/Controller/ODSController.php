@@ -9,17 +9,19 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ODSController extends AbstractController
 {
-    private ODSService $odsService;
 
-    public function __construct(ODSService $odsService)
+    // Constructor con el servicio de la entidad ODS
+    public function __construct(private ODSService $odsService)
     {
         $this->odsService = $odsService;
     }
 
+    // Get de las ODS
     #[Route('/ods', name: 'ods', methods: ['GET'])]
     public function getOds(): JsonResponse
     {
         $ods = $this->odsService->getAllOds();
         return $this->json($ods);
     }
+    
 }

@@ -11,53 +11,88 @@ use App\Entity\MetaIniciativa;
 use App\Entity\Modulo;
 use App\Entity\Profesor;
 use App\Entity\ProfesorIniciativa;
-use App\Repository\IniciativaRepository;
-use App\Repository\MetaRepository;
-use App\Repository\ProfesorRepository;
-use App\Repository\EntidadExternaRepository;
-use App\Repository\ModuloRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 class IniciativaService
 {
-    private IniciativaRepository $iniciativaRepository;
-    private MetaRepository $metaRepository;
-    private ProfesorRepository $profesorRepository;
-    private ModuloRepository $moduloRepository;
-    private EntidadExternaRepository $entidadExternaRepository;
-    private EntityManagerInterface $entityManager;
 
-    public function __construct(EntityManagerInterface $entityManager, IniciativaRepository $iniciativaRepository, MetaRepository $metaRepository, ProfesorRepository $profesorRepository, ModuloRepository $moduloRepository, EntidadExternaRepository $entidadExternaRepository)
+    // Constructor con el manejador de entidades
+    public function __construct(private EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
-        $this->metaRepository = $metaRepository;
-        $this->iniciativaRepository = $iniciativaRepository;
-        $this->profesorRepository = $profesorRepository;
-        $this->moduloRepository = $moduloRepository;
-        $this->entidadExternaRepository = $entidadExternaRepository;
+
     }
 
-    public function deleteIniciativa(int $id): JsonResponse
+    // Funcion para obtener todas las iniciativas
+    public function getIniciativas(): JsonResponse
     {
-        $iniciativa = $this->iniciativaRepository->find($id);
-        
-        if (!$iniciativa) {
-            return new JsonResponse(['message' => 'Iniciativa no encontrada'], Response::HTTP_NOT_FOUND);
+        $iniciativas = $this->entityManager->getRepository(Iniciativa::class)->findAll();
+
+        // Si no se encuentra la iniciativa, devuelve mensaje de error
+        if (!$iniciativas) {
+            return new JsonResponse(['message' => 'No se han encontrado iniciativas'], Response::HTTP_NOT_FOUND);
         }
 
+        $data = array_map(fn($iniciativa) => $this->formatIniciativa($iniciativa), $iniciativas);
+
+        return new JsonResponse($data);
+    }
+
+    // Funcion para obtener las iniciativas eliminadas
+    public function getIniciativasEliminadas(): JsonResponse
+    {
+        $iniciativas = $this->entityManager->getRepository(Iniciativa::class)->findByEliminado();
+        
+        // Si no se encuentra la iniciativa, devuelve mensaje de error
+        if (!$iniciativas) {
+            return new JsonResponse(['message' => 'No se han encontrado iniciativas'], Response::HTTP_NOT_FOUND);
+        }
+
+        $data = array_map(fn($iniciativa) => $this->formatIniciativa($iniciativa), $iniciativas);
+
+        return new JsonResponse($data);
+    }
+
+    // Funcion para obtener las iniciativas activas
+    public function getIniciativasActivas(): JsonResponse
+    {
+        $iniciativas = $this->entityManager->getRepository(Iniciativa::class)->findByActivas();
+        
+        // Si no se encuentra la iniciativa, devuelve mensaje de error
+        if (!$iniciativas) {
+            return new JsonResponse(['message' => 'No se han encontrado iniciativas'], Response::HTTP_NOT_FOUND);
+        }
+
+        $data = array_map(fn($iniciativa) => $this->formatIniciativa($iniciativa), $iniciativas);
+
+        return new JsonResponse($data);
+    }
+
+    // Funcion para marcar una iniciativa como eliminada
+    public function deleteIniciativa(int $id): JsonResponse
+    {
+        $iniciativa = $this->entityManager->getRepository(Iniciativa::class)->find($id);
+        
+        // Si no se encuentra la iniciativa, devuelve mensaje de error
+        if (!$iniciativa) {
+            return new JsonResponse(['message' => 'La Iniciativa no encontrada'], Response::HTTP_NOT_FOUND);
+        }
+
+        // Si la iniciativa ya estaba eliminada, devuelve mensaje de error
         if ($iniciativa->isEliminado() == true) {
-            return new JsonResponse(['message' => 'Iniciativa ya se encontraba eliminada'], Response::HTTP_BAD_REQUEST);
+            return new JsonResponse(['message' => 'La Iniciativa ya se encontraba eliminada'], Response::HTTP_BAD_REQUEST);
         }
         
         $iniciativa->setEliminado(true);
         
         $this->entityManager->flush();
         
-        return new JsonResponse(['message' => 'Iniciativa eliminada exitosamente'], Response::HTTP_OK);
+        return new JsonResponse(['message' => 'La Iniciativa eliminada exitosamente'], Response::HTTP_OK);
     }
 
+    // Funcion para crear una iniciativa
     public function createIniciativa(array $data): JsonResponse
     {
         $iniciativa = new Iniciativa();
@@ -140,9 +175,10 @@ class IniciativaService
         ], Response::HTTP_CREATED);
     }
 
+    // Función para actualizar iniciativa
     public function updateIniciativa(int $id, array $data): JsonResponse
     {
-        $iniciativa = $this->iniciativaRepository->find($id);
+        $iniciativa = $this->entityManager->getRepository(Iniciativa::class)->find($id);
         if (!$iniciativa) {
             return new JsonResponse(['message' => 'Iniciativa no encontrada'], Response::HTTP_NOT_FOUND);
         }
@@ -261,45 +297,7 @@ class IniciativaService
         return new JsonResponse(['message' => 'Iniciativa actualizada correctamente'], Response::HTTP_OK);
     }
 
-    public function getIniciativas(): JsonResponse
-    {
-        $iniciativas = $this->iniciativaRepository->findAll();
-
-        if (!$iniciativas) {
-            return new JsonResponse(['message' => 'No iniciatives found'], Response::HTTP_NOT_FOUND);
-        }
-
-        $data = array_map(fn($iniciativa) => $this->formatIniciativa($iniciativa), $iniciativas);
-
-        return new JsonResponse($data);
-    }
-
-    public function getIniciativasEliminadas(): JsonResponse
-    {
-        $iniciativas = $this->iniciativaRepository->findByEliminado();
-        
-        if (!$iniciativas) {
-            return new JsonResponse(['message' => 'No iniciatives found'], Response::HTTP_NOT_FOUND);
-        }
-
-        $data = array_map(fn($iniciativa) => $this->formatIniciativa($iniciativa), $iniciativas);
-
-        return new JsonResponse($data);
-    }
-
-    public function getIniciativasActivas(): JsonResponse
-    {
-        $iniciativas = $this->iniciativaRepository->findByActivas();
-        
-        if (!$iniciativas) {
-            return new JsonResponse(['message' => 'No iniciatives found'], Response::HTTP_NOT_FOUND);
-        }
-
-        $data = array_map(fn($iniciativa) => $this->formatIniciativa($iniciativa), $iniciativas);
-
-        return new JsonResponse($data);
-    }
-
+    // Funcion para formatear la iniciativa con todos sus campos
     private function formatIniciativa($iniciativa): array
     {
         return [
@@ -347,5 +345,4 @@ class IniciativaService
             ], $iniciativa->getModulos()->toArray()),
         ];
     }
-
 }

@@ -2,21 +2,21 @@
 
 namespace App\Service;
 
-use App\Repository\ModuloRepository;
-
+use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\Modulo;
 
 class ModulosService{
 
-    private ModuloRepository $moduloRepository;
-
-
-    public function __construct(ModuloRepository $moduloRepository)
+    // Constructor con el manejador de entidades
+    public function __construct(private EntityManagerInterface $entityManager)
     {
-        $this->moduloRepository = $moduloRepository;
+        $this->entityManager = $entityManager;
+
     }
 
+    // Funcion para obtener todas las modulos
     public function getAllModulos(): array
     {
-        return $this->moduloRepository->findAll();
+        return $this->entityManager->getRepository(Modulo::class)->findAll();
     }
 }

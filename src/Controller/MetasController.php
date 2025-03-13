@@ -9,17 +9,19 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class MetasController extends AbstractController
 {
-    private MetasService $metasService;
 
-    public function __construct(MetasService $metasService)
+    // Constructor con el servicio de la entidad Meta
+    public function __construct(private MetasService $metasService)
     {
         $this->metasService = $metasService;
     }
 
+    // Get de las Metas
     #[Route('/metas', name: 'metas', methods: ['GET'])]
     public function getMetas(): JsonResponse
     {
         $metas = $this->metasService->getAllMetas();
         return $this->json($metas);
     }
+    
 }

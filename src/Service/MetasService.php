@@ -2,20 +2,21 @@
 
 namespace App\Service;
 
-use App\Repository\MetaRepository;
-
+use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\Meta;
 
 class MetasService{
 
-    private MetaRepository $metasRepository;
-
-    public function __construct(MetaRepository $metasRepository)
+    // Constructor con el manejador de entidades
+    public function __construct(private EntityManagerInterface $entityManager)
     {
-        $this->metasRepository = $metasRepository;
+        $this->entityManager = $entityManager;
+
     }
 
+    // Funcion para obtener todas las metas
     public function getAllMetas(): array
     {
-        return $this->metasRepository->findAll();
+        return $this->entityManager->getRepository(Meta::class)->findAll();
     }
 }

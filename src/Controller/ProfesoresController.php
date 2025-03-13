@@ -9,17 +9,19 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ProfesoresController extends AbstractController
 {
-    private ProfesoresService $profesoresService;
 
-    public function __construct(ProfesoresService $profesoresService)
+    // Constructor con el servicio de la entidad Profesor
+    public function __construct(private ProfesoresService $profesoresService)
     {
         $this->profesoresService = $profesoresService;
     }
 
+    // Get de las Profesores
     #[Route('/profesores', name: 'profesores', methods: ['GET'])]
     public function getProfesores(): JsonResponse
     {
         $profesores = $this->profesoresService->getAllProfesores();
         return $this->json($profesores);
     }
+    
 }

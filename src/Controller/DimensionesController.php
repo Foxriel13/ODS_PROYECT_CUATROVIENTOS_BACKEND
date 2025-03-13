@@ -9,13 +9,14 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DimensionesController extends AbstractController
 {
-    private DimensionesService $dimensionesService;
 
-    public function __construct(DimensionesService $dimensionesService)
+    // Constructor con el servicio de la entidad Dimension
+    public function __construct(private DimensionesService $dimensionesService)
     {
         $this->dimensionesService = $dimensionesService;
     }
 
+    // Get de las dimensiones
     #[Route('/dimensiones', name: 'dimensiones', methods: ['GET'])]
     public function getDimensiones(): JsonResponse
     {

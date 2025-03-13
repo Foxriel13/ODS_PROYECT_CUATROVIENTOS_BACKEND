@@ -2,20 +2,21 @@
 
 namespace App\Service;
 
-use App\Repository\EntidadExternaRepository;
-
+use App\Entity\EntidadExterna;
+use Doctrine\ORM\EntityManagerInterface;
 
 class EntidadesExternasService{
 
-    private EntidadExternaRepository $entidadExternaRepository;
-
-    public function __construct(EntidadExternaRepository $entidadExternaRepository)
+    // Constructor con el manejador de entidades
+    public function __construct(private EntityManagerInterface $entityManager)
     {
-        $this->entidadExternaRepository = $entidadExternaRepository;
+        $this->entityManager = $entityManager;
+
     }
 
+    // Funcion para obtener todas las Entidades Externas
     public function getAllEntidadesExternas(): array
     {
-        return $this->entidadExternaRepository->findAll();
+        return $this->entityManager->getRepository(EntidadExterna::class)->findAll();
     }
 }

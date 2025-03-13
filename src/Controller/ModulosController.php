@@ -9,17 +9,19 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ModulosController extends AbstractController
 {
-    private ModulosService $modulosService;
 
-    public function __construct(ModulosService $modulosService)
+    // Constructor con el servicio de la entidad Meta
+    public function __construct(private ModulosService $modulosService)
     {
         $this->modulosService = $modulosService;
     }
 
+    // Get de las Modulos
     #[Route('/modulos', name: 'modulos', methods: ['GET'])]
     public function getModulos(): JsonResponse
     {
         $modulos = $this->modulosService->getAllModulos();
         return $this->json($modulos);
     }
+    
 }

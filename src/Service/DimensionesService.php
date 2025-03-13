@@ -2,20 +2,21 @@
 
 namespace App\Service;
 
-use App\Repository\DimensionRepository;
-
+use App\Entity\Dimension;
+use Doctrine\ORM\EntityManagerInterface;
 class DimensionesService{
 
-    private DimensionRepository $dimensionRepository;
-
-    public function __construct(DimensionRepository $dimensionRepository)
+    // Constructor con el manejador de entidades
+    public function __construct(private EntityManagerInterface $entityManager)
     {
-        $this->dimensionRepository = $dimensionRepository;
+        $this->entityManager = $entityManager;
+
     }
 
+    // Funcion para obtener todas las dimensiones
     public function getAllDimensiones(): array
     {
-        return $this->dimensionRepository->findAll();
+        return $this->entityManager->getRepository(Dimension::class)->findAll();
     }
 
 }

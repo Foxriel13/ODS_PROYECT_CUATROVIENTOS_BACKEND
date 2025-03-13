@@ -2,20 +2,21 @@
 
 namespace App\Service;
 
-use App\Repository\ProfesorRepository;
-
+use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\Profesor;
 
 class ProfesoresService{
 
-    private ProfesorRepository $profesoresRepository;
-
-    public function __construct(ProfesorRepository $profesoresRepository)
+    // Constructor con el manejador de entidades
+    public function __construct(private EntityManagerInterface $entityManager)
     {
-        $this->profesoresRepository = $profesoresRepository;
+        $this->entityManager = $entityManager;
+
     }
 
+    // Funcion para obtener todas las profesores
     public function getAllProfesores(): array
     {
-        return $this->profesoresRepository->findAll();
+        return $this->entityManager->getRepository(Profesor::class)->findAll();
     }
 }

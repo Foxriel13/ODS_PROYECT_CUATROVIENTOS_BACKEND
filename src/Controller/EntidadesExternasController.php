@@ -9,17 +9,19 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class EntidadesExternasController extends AbstractController
 {
-    private EntidadesExternasService $entidadesExternasService;
 
-    public function __construct(EntidadesExternasService $entidadesExternasService)
+    // Constructor con el servicio de la entidad EntidadExterna
+    public function __construct(private EntidadesExternasService $entidadesExternasService)
     {
         $this->entidadesExternasService = $entidadesExternasService;
     }
 
+    // Get de las Entidades Externas
     #[Route('/entidadesexternas', name: 'entidadesExternas', methods: ['GET'])]
     public function getEntidadesExternas(): JsonResponse
     {
         $entidadesExternas = $this->entidadesExternasService->getAllEntidadesExternas();
         return $this->json($entidadesExternas);
     }
+    
 }

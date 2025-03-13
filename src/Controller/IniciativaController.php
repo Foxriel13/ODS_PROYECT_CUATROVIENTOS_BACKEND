@@ -11,9 +11,9 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class IniciativaController extends AbstractController
 {
-    private IniciativaService $iniciativaService;
 
-    public function __construct(IniciativaService $iniciativaService)
+    // Constructor con el servicio de la entidad Iniciativa
+    public function __construct(private IniciativaService $iniciativaService)
     {
         $this->iniciativaService = $iniciativaService;
     }
@@ -24,6 +24,7 @@ final class IniciativaController extends AbstractController
     {
         $eliminado = $request->query->get('eliminado');
 
+        // Si el campo eliminado es true, sacamos las iniciativas eliminadas, si es false las activas y si no las todas
         if ($eliminado == 'true') {
             return $this->iniciativaService->getIniciativasEliminadas();
         }elseif ($eliminado == 'false') {
@@ -31,10 +32,10 @@ final class IniciativaController extends AbstractController
         }else{
             return $this->iniciativaService->getIniciativas();    
         }
-
+        
     } 
 
-    // Marcar como eliminado
+    // Marcar como eliminado una inicitativa
     #[Route('/iniciativas/{idIniciativa}', methods: ['DELETE'])]
     public function deleteIniciativa( int $idIniciativa): JsonResponse
     {
@@ -47,6 +48,7 @@ final class IniciativaController extends AbstractController
     {
         $data = json_decode($request->getContent(), true);
 
+        // Comprobamos que los datos sean correctos
         if (!is_array($data)) {
             return new JsonResponse(
                 ['message' => 'Datos inválidos o formato incorrecto'],

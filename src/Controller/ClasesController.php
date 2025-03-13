@@ -20,8 +20,7 @@ class ClasesController extends AbstractController
     #[Route('/clases', name: 'clases', methods: ['GET'])]
     public function getClases(): JsonResponse
     {
-        $clases = $this->clasesService->getAllClases();
-        return $this->json($clases);
+        return $this->clasesService->getAllClases();
     }
-    
+
 }

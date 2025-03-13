@@ -20,8 +20,7 @@ class DimensionesController extends AbstractController
     #[Route('/dimensiones', name: 'dimensiones', methods: ['GET'])]
     public function getDimensiones(): JsonResponse
     {
-        $dimensiones = $this->dimensionesService->getAllDimensiones();
-        return $this->json($dimensiones);
+        return $this->dimensionesService->getAllDimensiones();
     }
 
 }

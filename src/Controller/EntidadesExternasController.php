@@ -20,8 +20,7 @@ class EntidadesExternasController extends AbstractController
     #[Route('/entidadesexternas', name: 'entidadesExternas', methods: ['GET'])]
     public function getEntidadesExternas(): JsonResponse
     {
-        $entidadesExternas = $this->entidadesExternasService->getAllEntidadesExternas();
-        return $this->json($entidadesExternas);
+        return $this->entidadesExternasService->getAllEntidadesExternas();
     }
     
 }

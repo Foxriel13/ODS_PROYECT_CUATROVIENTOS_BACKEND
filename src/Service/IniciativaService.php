@@ -14,16 +14,16 @@ use App\Entity\ProfesorIniciativa;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-
+use Symfony\Component\Serializer\SerializerInterface;
 class IniciativaService
 {
 
-    // Constructor con el manejador de entidades
-    public function __construct(private EntityManagerInterface $entityManager)
-    {
-        $this->entityManager = $entityManager;
-
-    }
+   // Constructor con el manejador de entidades y el serializador
+   public function __construct(private EntityManagerInterface $entityManager, private SerializerInterface $serializer)
+   {
+       $this->entityManager = $entityManager;
+       $this->serializer = $serializer;
+   }
 
     // Funcion para obtener todas las iniciativas
     public function getIniciativas(): JsonResponse
@@ -35,9 +35,8 @@ class IniciativaService
             return new JsonResponse(['message' => 'No se han encontrado iniciativas'], Response::HTTP_NOT_FOUND);
         }
 
-        $data = array_map(fn($iniciativa) => $this->formatIniciativa($iniciativa), $iniciativas);
-
-        return new JsonResponse($data);
+        $json = $this->serializer->serialize($iniciativas, 'json');
+        return new JsonResponse($json, JsonResponse::HTTP_OK, [], true);
     }
 
     // Funcion para obtener las iniciativas eliminadas
@@ -50,9 +49,8 @@ class IniciativaService
             return new JsonResponse(['message' => 'No se han encontrado iniciativas'], Response::HTTP_NOT_FOUND);
         }
 
-        $data = array_map(fn($iniciativa) => $this->formatIniciativa($iniciativa), $iniciativas);
-
-        return new JsonResponse($data);
+        $json = $this->serializer->serialize($iniciativas, 'json');
+        return new JsonResponse($json, JsonResponse::HTTP_OK, [], true);
     }
 
     // Funcion para obtener las iniciativas activas
@@ -65,9 +63,8 @@ class IniciativaService
             return new JsonResponse(['message' => 'No se han encontrado iniciativas'], Response::HTTP_NOT_FOUND);
         }
 
-        $data = array_map(fn($iniciativa) => $this->formatIniciativa($iniciativa), $iniciativas);
-
-        return new JsonResponse($data);
+        $json = $this->serializer->serialize($iniciativas, 'json');
+        return new JsonResponse($json, JsonResponse::HTTP_OK, [], true);
     }
 
     // Funcion para marcar una iniciativa como eliminada
@@ -297,52 +294,4 @@ class IniciativaService
         return new JsonResponse(['message' => 'Iniciativa actualizada correctamente'], Response::HTTP_OK);
     }
 
-    // Funcion para formatear la iniciativa con todos sus campos
-    private function formatIniciativa($iniciativa): array
-    {
-        return [
-            'id' => $iniciativa->getId(),
-            'tipo' => $iniciativa->getTipo(),
-            'horas' => $iniciativa->getHoras(),
-            'nombre' => $iniciativa->getNombre(),
-            'explicacion' => $iniciativa->getExplicacion(),
-            'fecha_inicio' => $iniciativa->getFechaInicio()->format('Y-m-d H:i:s'),
-            'fecha_fin' => $iniciativa->getFechaFin()->format('Y-m-d H:i:s'),
-            'eliminado' => (bool) $iniciativa->isEliminado(),
-            'innovador' => (bool) $iniciativa->isInnovador(),
-            'anyo_lectivo' => $iniciativa->getAnyoLectivo(),
-            'imagen' => $iniciativa->getImagen(),
-            'fecha_registro' => $iniciativa->getFechaRegistro()->format('Y-m-d H:i:s'),
-            'mas_comentarios' => $iniciativa->getMasComentarios(),
-            'redes_sociales' => $iniciativa->getRedesSociales(),
-            'metas' => array_map(fn($metaIniciativa) => [
-                'idMeta' => $metaIniciativa->getIdMetas()->getId(),
-                'descripcion' => $metaIniciativa->getIdMetas()->getDescripcion(),
-                'ods' => [
-                    'idOds' => $metaIniciativa->getIdMetas()->getIdOds()->getId(),
-                    'nombre' => $metaIniciativa->getIdMetas()->getIdOds()->getNombre(),
-                    'dimension' => [
-                        'idDimension' => $metaIniciativa->getIdMetas()->getIdOds()->getDimension()->getId(),
-                        'nombre' => $metaIniciativa->getIdMetas()->getIdOds()->getDimension()->getNombre(),
-                    ]
-                ]
-            ], $iniciativa->getMetasIniciativas()->toArray()),
-            'profesores' => array_map(fn($profesorIniciativa) => [
-                'idProfesor' => $profesorIniciativa->getProfesor()->getId(),
-                'nombre' => $profesorIniciativa->getProfesor()->getNombre(),
-            ], $iniciativa->getProfesores()->toArray()),
-            'entidades_externas' => array_map(fn($entidadesExternasInciativa) => [
-                'idEntidadExterna' => $entidadesExternasInciativa->getEntidad()->getId(),
-                'nombre' => $entidadesExternasInciativa->getEntidad()->getNombre(),
-            ], $iniciativa->getEntidadesExternas()->toArray()),
-            'modulos' => array_map(fn($modulosIniciativas) => [
-                'idModulo' => $modulosIniciativas->getModulo()->getId(),
-                'nombre' => $modulosIniciativas->getModulo()->getNombre(),
-                'clase' => [
-                    'idClase' => $modulosIniciativas->getModulo()->getClase()->getId(),
-                    'nombre' => $modulosIniciativas->getModulo()->getClase()->getNombre(),
-                ],
-            ], $iniciativa->getModulos()->toArray()),
-        ];
-    }
 }

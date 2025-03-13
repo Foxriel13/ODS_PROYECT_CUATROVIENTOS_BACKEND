@@ -20,8 +20,7 @@ class MetasController extends AbstractController
     #[Route('/metas', name: 'metas', methods: ['GET'])]
     public function getMetas(): JsonResponse
     {
-        $metas = $this->metasService->getAllMetas();
-        return $this->json($metas);
+        return $this->metasService->getAllMetas();
     }
     
 }

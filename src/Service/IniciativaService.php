@@ -254,8 +254,6 @@ class IniciativaService
             return new JsonResponse(['message' => 'Debes de introducir al menos una meta'], Response::HTTP_NOT_FOUND);
         }
 
-       
-
         // Relacionar Profesores
         if (!empty($data['profesores']) && is_array($data['profesores'])) {
             $profesorRepo = $this->entityManager->getRepository(Profesor::class);
@@ -276,8 +274,6 @@ class IniciativaService
         }else{
             return new JsonResponse(['message' => 'Debes de introducir al menos un profesor'], Response::HTTP_NOT_FOUND);
         }
-
-
 
         // Relacionar Entidades Externas
         if (!empty($data['entidades_externas']) && is_array($data['entidades_externas'])) {

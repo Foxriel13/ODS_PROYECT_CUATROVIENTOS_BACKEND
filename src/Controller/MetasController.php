@@ -6,6 +6,8 @@ use App\Service\MetasService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class MetasController extends AbstractController
 {
@@ -21,6 +23,42 @@ class MetasController extends AbstractController
     public function getMetas(): JsonResponse
     {
         return $this->metasService->getAllMetas();
+    }
+    
+    // Crear Meta
+    #[Route('/metas', methods: ['POST'])]
+    public function createMeta(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+    
+        if (!is_array($data)) {
+            return new JsonResponse(
+                ['message' => 'Datos inválidos o formato incorrecto'],
+                Response::HTTP_BAD_REQUEST
+            );
+        }
+    
+        return $this->metasService->createMeta($data);
+    }
+    
+    // Actualizar Meta
+    #[Route('/metas/{idMeta}', methods: ['PUT'])]
+    public function updateMeta(Request $request, int $idMeta): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+    
+        if (!$data) {
+            return new JsonResponse(['message' => 'Datos inválidos'], Response::HTTP_BAD_REQUEST);
+        }
+    
+        return $this->metasService->updateMeta($idMeta, $data);
+    }
+    
+    
+    #[Route('/metas/{id}', name: 'delete_meta', methods: ['DELETE'])]
+    public function deleteMeta(int $id): JsonResponse
+    {
+        return $this->metasService->deleteMeta($id);
     }
     
 }

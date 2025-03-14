@@ -6,6 +6,8 @@ use App\Service\ModulosService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class ModulosController extends AbstractController
 {
@@ -23,4 +25,41 @@ class ModulosController extends AbstractController
         return $this->modulosService->getAllModulos();
     }
     
+   // Crear Modulo
+   #[Route('/modulos', methods: ['POST'])]
+   public function createModulo(Request $request): JsonResponse
+   {
+       $data = json_decode($request->getContent(), true);
+  
+       if (!is_array($data)) {
+           return new JsonResponse(
+               ['message' => 'Datos inválidos o formato incorrecto'],
+               Response::HTTP_BAD_REQUEST
+           );
+       }
+  
+       return $this->modulosService->createModulo($data);
+   }
+
+   // Actualizar Modulo
+   #[Route('/modulos/{idModulo}', methods: ['PUT'])]
+   public function updateMeta(Request $request, int $idModulo): JsonResponse
+   {
+       $data = json_decode($request->getContent(), true);
+  
+       if (!$data) {
+           return new JsonResponse(['message' => 'Datos inválidos'], Response::HTTP_BAD_REQUEST);
+       }
+  
+       return $this->modulosService->updateModulo($idModulo, $data);
+   }
+
+   // Eliminar Modulo
+   #[Route('/modulos/{id}', name: 'delete_modulo', methods: ['DELETE'])]
+   public function deleteModulo(int $id): JsonResponse
+   {
+       return $this->modulosService->deleteModulo($id);
+   }
+
+
 }

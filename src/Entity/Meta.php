@@ -18,7 +18,7 @@ class Meta
 
     #[ORM\ManyToOne(inversedBy: 'meta')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?ODS $idOds = null;
+    private ?ODS $ods = null;
 
     #[ORM\Column(length: 255)]
     private ?string $descripcion = null;
@@ -41,14 +41,14 @@ class Meta
         return $this->id;
     }
 
-    public function getIdOds(): ?ODS
+    public function getOds(): ?ODS
     {
-        return $this->idOds;
+        return $this->ods;
     }
 
-    public function setIdOds(?ODS $idOds): static
+    public function setOds(?ODS $ods): static
     {
-        $this->idOds = $idOds;
+        $this->ods = $ods;
 
         return $this;
     }

@@ -23,7 +23,7 @@ INSERT INTO ods (id, nombre, dimension_id) VALUES
 (17, 'Alianzas para Lograr los Objetivos', 2);
 
 
-INSERT INTO meta (id, id_ods_id, descripcion) VALUES
+INSERT INTO meta (id, ods_id, descripcion) VALUES
 (1, 1, 'Fomentar la educación digital'),
 (2, 2, 'Reducir la brecha educativa');
 

@@ -349,11 +349,11 @@ class IniciativaService
                 'idMeta' => $metaIniciativa->getIdMetas()->getId(),
                 'descripcion' => $metaIniciativa->getIdMetas()->getDescripcion(),
                 'ods' => [
-                    'idOds' => $metaIniciativa->getIdMetas()->getIdOds()->getId(),
-                    'nombre' => $metaIniciativa->getIdMetas()->getIdOds()->getNombre(),
+                    'idOds' => $metaIniciativa->getIdMetas()->getOds()->getId(),
+                    'nombre' => $metaIniciativa->getIdMetas()->getOds()->getNombre(),
                     'dimension' => [
-                        'idDimension' => $metaIniciativa->getIdMetas()->getIdOds()->getDimension()->getId(),
-                        'nombre' => $metaIniciativa->getIdMetas()->getIdOds()->getDimension()->getNombre(),
+                        'idDimension' => $metaIniciativa->getIdMetas()->getOds()->getDimension()->getId(),
+                        'nombre' => $metaIniciativa->getIdMetas()->getOds()->getDimension()->getNombre(),
                     ]
                 ]
             ], $iniciativa->getMetasIniciativas()->toArray()),

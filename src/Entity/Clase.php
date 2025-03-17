@@ -20,7 +20,7 @@ class Clase
     private ?string $nombre = null;
 
     /**
-     * @var Collection<int, MODULOS>
+     * @var Collection<int, Modulo>
      */
     #[ORM\OneToMany(targetEntity: Modulo::class, mappedBy: 'clase')]
     #[Ignore]
@@ -48,7 +48,7 @@ class Clase
     }
 
     /**
-     * @return Collection<int, MODULOS>
+     * @return Collection<int, Modulo>
      */
     public function getModulos(): Collection
     {
@@ -67,7 +67,6 @@ class Clase
     public function removeModulo(Modulo $modulo): self
     {
         if ($this->modulos->removeElement($modulo)) {
-            // Si la relación aún apunta a esta entidad, se la desasigna.
             if ($modulo->getClase() === $this) {
                 $modulo->setClase(null);
             }

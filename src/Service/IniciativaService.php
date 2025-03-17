@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Entity\Clase;
 use App\Entity\EntidadExterna;
 use App\Entity\EntidadExternaIniciativa;
 use App\Entity\Iniciativa;
@@ -9,6 +10,7 @@ use App\Entity\IniciativaModulo;
 use App\Entity\Meta;
 use App\Entity\MetaIniciativa;
 use App\Entity\Modulo;
+use App\Entity\ODS;
 use App\Entity\Profesor;
 use App\Entity\ProfesorIniciativa;
 use Doctrine\ORM\EntityManagerInterface;
@@ -371,4 +373,6 @@ class IniciativaService
             ], $iniciativa->getModulos()->toArray()),
         ];
     }
+
+
 }

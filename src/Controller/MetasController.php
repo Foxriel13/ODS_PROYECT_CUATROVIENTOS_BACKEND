@@ -54,7 +54,6 @@ class MetasController extends AbstractController
         return $this->metasService->updateMeta($idMeta, $data);
     }
     
-    
     #[Route('/metas/{id}', name: 'delete_meta', methods: ['DELETE'])]
     public function deleteMeta(int $id): JsonResponse
     {

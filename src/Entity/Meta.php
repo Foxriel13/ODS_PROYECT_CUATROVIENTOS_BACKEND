@@ -24,7 +24,7 @@ class Meta
     private ?string $descripcion = null;
 
     /**
-     * @var Collection<int, METASINICIATIVAS>
+     * @var Collection<int, MetaIniciativa>
      */
     #[ORM\OneToMany(targetEntity: MetaIniciativa::class, mappedBy: 'idMetas')]
     #[IGNORE]
@@ -66,7 +66,7 @@ class Meta
     }
 
     /**
-     * @return Collection<int, METASINICIATIVAS>
+     * @return Collection<int, MetaIniciativa>
      */
     public function getMetasIniciativasIdMetas(): Collection
     {

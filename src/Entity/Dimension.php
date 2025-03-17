@@ -69,7 +69,6 @@ class Dimension
     public function removeOd(ODS $od): static
     {
         if ($this->ods->removeElement($od)) {
-            // set the owning side to null (unless already changed)
             if ($od->getDimension() === $this) {
                 $od->setDimension(null);
             }

@@ -48,7 +48,6 @@ class ClasesController extends AbstractController
             );
         }
  
- 
         return $this->clasesService->createClase($data);
     }
 

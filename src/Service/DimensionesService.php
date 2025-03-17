@@ -17,71 +17,72 @@ class DimensionesService{
         $this->serializer = $serializer;
     }
 
-    // Funcion para obtener todas las dimensiones
+    // Obtener todas las dimensiones
     public function getAllDimensiones(): JsonResponse
     {
         $dimensiones = $this->entityManager->getRepository(Dimension::class)->findAll();
 
-        if ($dimensiones === null) {
-            return new JsonResponse(['message' => 'No se han encontrado dimensiones'], JsonResponse::HTTP_NOT_FOUND);
+        if (empty($dimensiones)) {
+            return new JsonResponse(['message' => 'No se han encontrado dimensiones'], Response::HTTP_NO_CONTENT);
         }
 
         $json = $this->serializer->serialize($dimensiones, 'json');
-        return new JsonResponse($json, JsonResponse::HTTP_OK, [], true);
+        return new JsonResponse($json, Response::HTTP_OK, [], true);
     }
 
+    // Obtener una dimensión por ID
+    public function getDimensionById(int $id): ?Dimension
+    {
+        return $this->entityManager->getRepository(Dimension::class)->find($id);
+    }
+
+    // Crear una nueva dimensión
     public function createDimension(array $data): JsonResponse
     {
-        $dimension = new Dimension();
-
-        $this->entityManager->persist($dimension);
-        $dimension->setNombre($data['nombre'] ?? null);
-        $this->entityManager->flush();
- 
-        return new JsonResponse([
-            'message' => 'Dimension creada correctamente',
-        ], Response::HTTP_CREATED);
-    }
-    
-    // Función para actualizar una Dimensión
-    public function updateDimension(int $id, array $data): JsonResponse
-    {
-        $dimension = $this->entityManager->getRepository(Dimension::class)->find($id);
-
-        if (!$dimension) {
-            return new JsonResponse([
-                'message' => 'Dimensión no encontrada',
-            ], Response::HTTP_NOT_FOUND);
+        if (!isset($data['nombre'])) {
+            return new JsonResponse(['message' => 'El campo "nombre" es obligatorio'], Response::HTTP_BAD_REQUEST);
         }
 
-        if (isset($data['nombre'])) {
+        $dimension = new Dimension();
+        $dimension->setNombre($data['nombre']);
+
+        $this->entityManager->persist($dimension);
+        $this->entityManager->flush();
+
+        return new JsonResponse(['message' => 'Dimensión creada correctamente'], Response::HTTP_CREATED);
+    }
+
+    // Actualizar una dimensión
+    public function updateDimension(int $id, array $data): JsonResponse
+    {
+        $dimension = $this->getDimensionById($id);
+
+        if (!$dimension) {
+            return new JsonResponse(['message' => 'Dimensión no encontrada'], Response::HTTP_NOT_FOUND);
+        }
+
+        if (!empty($data['nombre'])) {
             $dimension->setNombre($data['nombre']);
         }
 
         $this->entityManager->flush();
 
-        return new JsonResponse([
-            'message' => 'Dimensión actualizada correctamente',
-        ], Response::HTTP_OK);
+        return new JsonResponse(['message' => 'Dimensión actualizada correctamente'], Response::HTTP_OK);
     }
 
-    // Función para eliminar una Dimensión
+    // Eliminar una dimensión
     public function deleteDimension(int $id): JsonResponse
     {
-        $dimension = $this->entityManager->getRepository(Dimension::class)->find($id);
+        $dimension = $this->getDimensionById($id);
 
         if (!$dimension) {
-            return new JsonResponse([
-                'message' => 'Dimensión no encontrada',
-            ], Response::HTTP_NOT_FOUND);
+            return new JsonResponse(['message' => 'Dimensión no encontrada'], Response::HTTP_NOT_FOUND);
         }
 
         $this->entityManager->remove($dimension);
         $this->entityManager->flush();
 
-        return new JsonResponse([
-            'message' => 'Dimensión eliminada correctamente',
-        ], Response::HTTP_OK);
+        return new JsonResponse(null, Response::HTTP_NO_CONTENT);
     }
 
 }

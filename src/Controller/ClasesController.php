@@ -18,13 +18,23 @@ class ClasesController extends AbstractController
         $this->clasesService = $clasesService;
     }
 
-    // Get de las clases
+    // Obtener todas las clases
     #[Route('/clases', name: 'clases', methods: ['GET'])]
     public function getClases(): JsonResponse
     {
-        return $this->clasesService->getAllClases();
+        $clases = $this->clasesService->getAllClases();
+
+        if (empty($clases)) {
+            return new JsonResponse(
+                ['message' => 'No se han encontrado clases'],
+                Response::HTTP_BAD_REQUEST
+            );
+        }
+
+        return $clases;
     }
 
+    // Crear Clase
     #[Route('/clases', methods: ['POST'])]
     public function createClase(Request $request): JsonResponse
     {

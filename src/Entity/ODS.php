@@ -63,7 +63,7 @@ class ODS
     {
         if (!$this->metas->contains($meta)) {
             $this->metas->add($meta);
-            $meta->setIdOds($this);
+            $meta->setOds($this);
         }
 
         return $this;
@@ -73,8 +73,8 @@ class ODS
     {
         if ($this->metas->removeElement($meta)) {
             // set the owning side to null (unless already changed)
-            if ($meta->getIdOds() === $this) {
-                $meta->setIdOds(null);
+            if ($meta->getOds() === $this) {
+                $meta->setOds(null);
             }
         }
 

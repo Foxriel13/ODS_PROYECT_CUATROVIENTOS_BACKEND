@@ -44,18 +44,18 @@ class MetasService{
             return new JsonResponse(['message' => 'La descripción es obligatoria'], Response::HTTP_BAD_REQUEST);
         }
 
-        if (empty($data['ods']) || !is_array($data['ods'])) {
+        if (empty($data['ods'])) {
             return new JsonResponse(['message' => 'Debes de introducir al menos un ODS válido'], Response::HTTP_BAD_REQUEST);
         }
 
         $meta = new Meta();
         $meta->setDescripcion($data['descripcion']);
 
-        foreach ($data['ods'] as $odsId) {
-            $ods = $this->entityManager->getRepository(ODS::class)->find($odsId);
-            if ($ods !== null) {
-                $meta->setOds($ods);
-            }
+        $ods = $this->entityManager->getRepository(ODS::class)->find($data['ods']);
+        if ($ods !== null) {
+            $meta->setOds($ods);
+        }else{
+            return new JsonResponse(['message' => 'Debes de introducir un ODS válido'], Response::HTTP_BAD_REQUEST);
         }
 
         $this->entityManager->persist($meta);
@@ -74,24 +74,15 @@ class MetasService{
         }
 
         if (!isset($data['descripcion'])) {
-            return new JsonResponse(['message' => 'El campo "nombre" es obligatorio'], Response::HTTP_BAD_REQUEST);
+            return new JsonResponse(['message' => 'El campo "descripcion" es obligatorio'], Response::HTTP_BAD_REQUEST);
         }
         $meta->setDescripcion($data['descripcion']);
 
-        if (!empty($data['ods']) && is_array($data['ods'])) {
-            $odsEntities = [];
-            foreach ($data['ods'] as $odsId) {
-                $ods = $this->entityManager->getRepository(ODS::class)->find($odsId);
-                if ($ods !== null) {
-                    $odsEntities[] = $ods;
-                }
-            }
-
-            if (!empty($odsEntities)) {
-                foreach ($odsEntities as $ods) {
-                    $meta->setOds($ods);
-                }
-            } else {
+        if (!empty($data['ods'])) {
+            $ods = $this->entityManager->getRepository(ODS::class)->find($data['ods']);
+            if ($ods !== null) {
+                $meta->setOds($ods);
+            }else {
                 return new JsonResponse(['message' => 'Debes de introducir al menos un ODS válido'], Response::HTTP_BAD_REQUEST);
             }
         }

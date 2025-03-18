@@ -34,20 +34,23 @@ class ModulosService{
     // Función para crear un Módulo
     public function createModulo(array $data): JsonResponse
     {
-        $modulo = new Modulo();
+        if (empty($data['nombre'])) {
+            return new JsonResponse(['message' => 'El nombre es obligatoria'], Response::HTTP_BAD_REQUEST);
+        }
 
+        if (empty($data['clase'])) {
+            return new JsonResponse(['message' => 'Debes de introducir al menos una clase válida'], Response::HTTP_BAD_REQUEST);
+        }
+
+        $modulo = new Modulo();
         $modulo->setNombre($data['nombre'] ?? null);
 
         // Validación de clases
-        if (!empty($data['clase']) && is_array($data['clase'])) {
-            foreach ($data['clase'] as $claseId) {
-                $clase = $this->entityManager->getRepository(Clase::class)->find($claseId);
-                if ($clase !== null) {
-                    $modulo->setClase($clase);
-                }
-            }
-        } else {
-            return new JsonResponse(['message' => 'Debes de introducir al menos una clase'], Response::HTTP_BAD_REQUEST);
+        $clase = $this->entityManager->getRepository(Clase::class)->find($data['clase']);
+        if ($clase !== null) {
+            $modulo->setClase($clase);
+        }else{
+            return new JsonResponse(['message' => 'Debes de introducir una clase válida'], Response::HTTP_BAD_REQUEST);
         }
 
         $this->entityManager->persist($modulo);
@@ -70,19 +73,14 @@ class ModulosService{
         }
 
         // Actualización de clases
-        if (!empty($data['clase']) && is_array($data['clase'])) {
-            $claseEntities = [];
-            foreach ($data['clase'] as $claseId) {
-                $clase = $this->entityManager->getRepository(Clase::class)->find($claseId);
-                if ($clase !== null) {
-                    $claseEntities[] = $clase;
-                }
+        if (!empty($data['clase'])) {
+            $clase = $this->entityManager->getRepository(Clase::class)->find($data['clase']);
+            if ($clase !== null) {
+                $claseEntities[] = $clase;
             }
 
             if (!empty($claseEntities)) {
-                foreach ($claseEntities as $clase) {
-                    $modulo->addClase($clase);
-                }
+                $modulo->addClase($clase);
             } else {
                 return new JsonResponse(['message' => 'Debes de introducir al menos una clase válida'], Response::HTTP_BAD_REQUEST);
             }

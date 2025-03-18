@@ -36,23 +36,25 @@ class ODSService{
     {
         $ods = new ODS();
 
-        // Asignar el nombre
-        $ods->setNombre($data['nombre'] ?? null);
-
-        // Validación de dimensiones
-        if (!empty($data['dimension']) && is_array($data['dimension'])) {
-            foreach ($data['dimension'] as $dimensionId) {
-                $dimension = $this->entityManager->getRepository(Dimension::class)->find($dimensionId);
-                if ($dimension !== null) {
-                    $ods->setDimension($dimension);
-                }else{
-                    return new JsonResponse([
-                        'message' => 'Dimensión no encontrada',
-                    ], Response::HTTP_NOT_FOUND);
-                }
-            }
+        if (empty($data['nombre'])) {
+            return new JsonResponse(['message' => 'El nombre es obligatorio'], Response::HTTP_BAD_REQUEST);
         }
 
+        if (empty($data['ods'])) {
+            return new JsonResponse(['message' => 'La dimension es obligatoria'], Response::HTTP_BAD_REQUEST);
+        }
+
+        $ods->setNombre($data['nombre']);
+
+        $dimension = $this->entityManager->getRepository(Dimension::class)->find($data['dimension']);
+        if ($dimension !== null) {
+            $ods->setDimension($dimension);
+        }else{
+            return new JsonResponse([
+                'message' => 'Dimensión no encontrada',
+            ], Response::HTTP_NOT_FOUND);
+        }
+    
         $this->entityManager->persist($ods);
         $this->entityManager->flush();
     
@@ -76,26 +78,13 @@ class ODSService{
             $ods->setNombre($data['nombre']);
         }
 
-        // Actualización de dimensiones
-        if (!empty($data['dimension']) && is_array($data['dimension'])) {
-            $dimensionEntities = [];
-            foreach ($data['dimension'] as $dimensionId) {
-                $dimension = $this->entityManager->getRepository(Dimension::class)->find($dimensionId);
-                if ($dimension !== null) {
-                    $dimensionEntities[] = $dimension;
-                }
-            }
-
-            if (!empty($dimensionEntities)) {
-                // Si la relación es de muchos a muchos, usar addDimension()
-                foreach ($dimensionEntities as $dimension) {
-                    $ods->addDimension($dimension);
-                }
-            } else {
-                return new JsonResponse([
-                    'message' => 'Debes de introducir al menos una dimensión válida',
-                ], Response::HTTP_BAD_REQUEST);
-            }
+        $dimension = $this->entityManager->getRepository(Dimension::class)->find($id);
+        if ($dimension !== null) {
+            $ods->addDimension($dimension);
+        }else {
+            return new JsonResponse([
+                'message' => 'Dimensión no encontrada',
+            ], Response::HTTP_BAD_REQUEST);
         }
 
         $this->entityManager->flush();

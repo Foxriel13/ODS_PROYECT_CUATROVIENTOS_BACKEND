@@ -59,7 +59,6 @@ class ProfesoresService{
             ], Response::HTTP_NOT_FOUND);
         }
 
-        // Actualizar solo los campos proporcionados
         if (isset($data['nombre'])) {
             $profesor->setNombre($data['nombre']);
         }

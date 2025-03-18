@@ -235,8 +235,8 @@ class IniciativaService
             $iniciativa->setRedesSociales($data['redes_sociales']);
         }
 
+        // Relacionar Metas
         if (!empty($data['metas']) && is_array($data['metas'])) {
-            // Relacionar Metas
             $metasRepo = $this->entityManager->getRepository(Meta::class);
 
             foreach ($iniciativa->getMetasIniciativas() as $metasIniciativas) {
@@ -318,7 +318,6 @@ class IniciativaService
         }else{
             return new JsonResponse(['message' => 'Debes de introducir al menos un módulo'], Response::HTTP_NOT_FOUND);
         }
-
 
         $this->entityManager->flush();
 

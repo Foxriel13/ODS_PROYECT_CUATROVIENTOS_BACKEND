@@ -18,10 +18,10 @@ Esta aplicación está diseñada para gestionar **iniciativas** y sus datos asoc
 
 Sigue estos pasos para poner en marcha el proyecto en tu entorno local:
 
-1. **Clonar el repositorio**
+1. **Clonar el repositorio desde la Entrega 1**
 
     ```bash
-    git clone https://github.com/Foxriel13/ODS_PROYECT_CUATROVIENTOS_BACKEND.git
+    git clone --branch Entrega1 --single-branch https://github.com/Foxriel13/ODS_PROYECT_CUATROVIENTOS_BACKEND.git
     cd ruta-del-repositorio
     ```
 

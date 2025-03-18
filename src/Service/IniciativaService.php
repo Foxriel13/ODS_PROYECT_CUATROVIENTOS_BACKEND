@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Entity\Clase;
 use App\Entity\EntidadExterna;
 use App\Entity\EntidadExternaIniciativa;
 use App\Entity\Iniciativa;
@@ -9,6 +10,7 @@ use App\Entity\IniciativaModulo;
 use App\Entity\Meta;
 use App\Entity\MetaIniciativa;
 use App\Entity\Modulo;
+use App\Entity\ODS;
 use App\Entity\Profesor;
 use App\Entity\ProfesorIniciativa;
 use Doctrine\ORM\EntityManagerInterface;
@@ -233,8 +235,8 @@ class IniciativaService
             $iniciativa->setRedesSociales($data['redes_sociales']);
         }
 
+        // Relacionar Metas
         if (!empty($data['metas']) && is_array($data['metas'])) {
-            // Relacionar Metas
             $metasRepo = $this->entityManager->getRepository(Meta::class);
 
             foreach ($iniciativa->getMetasIniciativas() as $metasIniciativas) {
@@ -253,8 +255,6 @@ class IniciativaService
         }else{
             return new JsonResponse(['message' => 'Debes de introducir al menos una meta'], Response::HTTP_NOT_FOUND);
         }
-
-       
 
         // Relacionar Profesores
         if (!empty($data['profesores']) && is_array($data['profesores'])) {
@@ -276,8 +276,6 @@ class IniciativaService
         }else{
             return new JsonResponse(['message' => 'Debes de introducir al menos un profesor'], Response::HTTP_NOT_FOUND);
         }
-
-
 
         // Relacionar Entidades Externas
         if (!empty($data['entidades_externas']) && is_array($data['entidades_externas'])) {
@@ -320,7 +318,6 @@ class IniciativaService
         }else{
             return new JsonResponse(['message' => 'Debes de introducir al menos un módulo'], Response::HTTP_NOT_FOUND);
         }
-
 
         $this->entityManager->flush();
 
@@ -375,4 +372,6 @@ class IniciativaService
             ], $iniciativa->getModulos()->toArray()),
         ];
     }
+
+
 }

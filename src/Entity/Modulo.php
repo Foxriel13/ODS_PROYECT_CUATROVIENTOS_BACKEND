@@ -62,7 +62,7 @@ class Modulo
     }
 
     /**
-     * @return Collection<int, INICIATIVASMODULOS>
+     * @return Collection<int, IniciativaModulo>
      */
     public function getIniciativa(): Collection
     {

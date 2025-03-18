@@ -6,6 +6,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Meta;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\HttpFoundation\Response;
+use App\Entity\ODS;
 
 class MetasService{
 
@@ -16,16 +18,93 @@ class MetasService{
         $this->serializer = $serializer;
     }
 
-    // Funcion para obtener todas las metas
+    // Función para obtener todas las metas
     public function getAllMetas(): JsonResponse
     {
         $metas = $this->entityManager->getRepository(Meta::class)->findAll();
 
-        if ($metas === null) {
-            return new JsonResponse(['message' => 'No se han encontrado metas'], JsonResponse::HTTP_NOT_FOUND);
+        if (empty($metas)) {
+            return new JsonResponse(['message' => 'No se han encontrado metas'], Response::HTTP_NO_CONTENT);
         }
 
         $json = $this->serializer->serialize($metas, 'json');
-        return new JsonResponse($json, JsonResponse::HTTP_OK, [], true);
+        return new JsonResponse($json, Response::HTTP_OK, [], true);
     }
+
+    // Obtener una meta por ID
+    private function getMetaById(int $id): ?Meta
+    {
+        return $this->entityManager->getRepository(Meta::class)->find($id);
+    }
+
+    // Función para crear una Meta
+    public function createMeta(array $data): JsonResponse
+    {
+        if (empty($data['descripcion'])) {
+            return new JsonResponse(['message' => 'La descripción es obligatoria'], Response::HTTP_BAD_REQUEST);
+        }
+
+        if (empty($data['ods'])) {
+            return new JsonResponse(['message' => 'Debes de introducir al menos un ODS válido'], Response::HTTP_BAD_REQUEST);
+        }
+
+        $meta = new Meta();
+        $meta->setDescripcion($data['descripcion']);
+
+        $ods = $this->entityManager->getRepository(ODS::class)->find($data['ods']);
+        if ($ods !== null) {
+            $meta->setOds($ods);
+        }else{
+            return new JsonResponse(['message' => 'Debes de introducir un ODS válido'], Response::HTTP_BAD_REQUEST);
+        }
+
+        $this->entityManager->persist($meta);
+        $this->entityManager->flush();
+
+        return new JsonResponse(['message' => 'Meta creada correctamente'], Response::HTTP_CREATED);
+    }
+
+    // Función para actualizar una Meta
+    public function updateMeta(int $id, array $data): JsonResponse
+    {
+        $meta = $this->getMetaById($id);
+
+        if (!$meta) {
+            return new JsonResponse(['message' => 'Meta no encontrada'], Response::HTTP_NOT_FOUND);
+        }
+
+        if (!isset($data['descripcion'])) {
+            return new JsonResponse(['message' => 'El campo "descripcion" es obligatorio'], Response::HTTP_BAD_REQUEST);
+        }
+        $meta->setDescripcion($data['descripcion']);
+
+        if (!empty($data['ods'])) {
+            $ods = $this->entityManager->getRepository(ODS::class)->find($data['ods']);
+            if ($ods !== null) {
+                $meta->setOds($ods);
+            }else {
+                return new JsonResponse(['message' => 'Debes de introducir al menos un ODS válido'], Response::HTTP_BAD_REQUEST);
+            }
+        }
+
+        $this->entityManager->flush();
+
+        return new JsonResponse(['message' => 'Meta actualizada correctamente'], Response::HTTP_OK);
+    }
+
+    // Función para eliminar una Meta
+    public function deleteMeta(int $id): JsonResponse
+    {
+        $meta = $this->getMetaById($id);
+
+        if (!$meta) {
+            return new JsonResponse(['message' => 'Meta no encontrada'], Response::HTTP_NOT_FOUND);
+        }
+
+        $this->entityManager->remove($meta);
+        $this->entityManager->flush();
+
+        return new JsonResponse(null, Response::HTTP_NO_CONTENT);
+    }
+
 }

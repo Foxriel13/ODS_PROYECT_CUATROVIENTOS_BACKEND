@@ -7,7 +7,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Serializer\Annotation\Ignore;
 
 #[ORM\Entity(repositoryClass: IniciativaRepository::class)]
 class Iniciativa
@@ -36,25 +35,25 @@ class Iniciativa
     private ?\DateTimeInterface $fechaFin = null;
 
     /**
-     * @var Collection<int, METASINICIATIVAS>
+     * @var Collection<int, MetaIniciativa>
      */
     #[ORM\OneToMany(targetEntity: MetaIniciativa::class, mappedBy: 'codIniciativa')]
     private Collection $metasIniciativas;
 
     /**
-     * @var Collection<int, INICIATIVASMODULOS>
+     * @var Collection<int, IniciativaModulo>
      */
     #[ORM\OneToMany(targetEntity: IniciativaModulo::class, mappedBy: 'iniciativa')]
     private Collection $modulos;
 
     /**
-     * @var Collection<int, ENTIDADESEXTERNASINICIATIVAS>
+     * @var Collection<int, EntidadExternaIniciativa>
      */
     #[ORM\OneToMany(targetEntity: EntidadExternaIniciativa::class, mappedBy: 'iniciativa')]
     private Collection $entidadesExternas;
 
     /**
-     * @var Collection<int, PROFESORESINICIATIVAS>
+     * @var Collection<int, ProfesorIniciativa>
      */
     #[ORM\OneToMany(targetEntity: ProfesorIniciativa::class, mappedBy: 'iniciativa')]
     private Collection $profesores;
@@ -167,7 +166,7 @@ class Iniciativa
         return $this;
     }
     /**
-     * @return Collection<int, METASINICIATIVAS>
+     * @return Collection<int, MetaIniciativa>
      */
     public function getMetasIniciativas(): Collection
     {
@@ -187,7 +186,6 @@ class Iniciativa
     public function removeMetasIniciativa(MetaIniciativa $metasIniciativa): static
     {
         if ($this->metasIniciativas->removeElement($metasIniciativa)) {
-            // set the owning side to null (unless already changed)
             if ($metasIniciativa->getCodIniciativa() === $this) {
                 $metasIniciativa->setCodIniciativa(null);
             }
@@ -197,7 +195,7 @@ class Iniciativa
     }
 
     /**
-     * @return Collection<int, INICIATIVASMODULOS>
+     * @return Collection<int, IniciativaModulo>
      */
     public function getModulos(): Collection
     {
@@ -217,7 +215,6 @@ class Iniciativa
     public function removeModulo(IniciativaModulo $modulo): static
     {
         if ($this->modulos->removeElement($modulo)) {
-            // set the owning side to null (unless already changed)
             if ($modulo->getIniciativa() === $this) {
                 $modulo->setIniciativa(null);
             }
@@ -227,7 +224,7 @@ class Iniciativa
     }
 
     /**
-     * @return Collection<int, ENTIDADESEXTERNASINICIATIVAS>
+     * @return Collection<int, EntidadExternaIniciativa>
      */
     public function getEntidadesExternas(): Collection
     {
@@ -247,7 +244,6 @@ class Iniciativa
     public function removeEntidadesExterna(EntidadExternaIniciativa $entidadesExterna): static
     {
         if ($this->entidadesExternas->removeElement($entidadesExterna)) {
-            // set the owning side to null (unless already changed)
             if ($entidadesExterna->getIniciativa() === $this) {
                 $entidadesExterna->setIniciativa(null);
             }
@@ -257,7 +253,7 @@ class Iniciativa
     }
 
     /**
-     * @return Collection<int, PROFESORESINICIATIVAS>
+     * @return Collection<int, ProfesorInicitiva>
      */
     public function getProfesores(): Collection
     {
@@ -277,7 +273,6 @@ class Iniciativa
     public function removeProfesor(ProfesorIniciativa $profesor): static
     {
         if ($this->profesores->removeElement($profesor)) {
-            // set the owning side to null (unless already changed)
             if ($profesor->getIniciativa() === $this) {
                 $profesor->setIniciativa(null);
             }

@@ -34,11 +34,11 @@ paths:
     get:
       tags:
         - Dimension
-      summary: Recuperar todas las dimension
+      summary: Recuperar todas las dimensiones
       operationId: getDimensiones
       responses:
         '200':
-          description: Lista de dimension
+          description: Lista de Dimensiones
           content:
             application/json:
               schema:
@@ -47,6 +47,73 @@ paths:
                   $ref: '#/components/schemas/Dimension'
         '400':
           description: Any problem in the Server
+    post:
+      tags:
+        - Dimension
+      summary: Crear una nueva dimensión
+      operationId: createDimension
+      requestBody:
+        description: Datos de la nueva Dimension
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewDimension'
+      responses:
+        '201':
+          description: Dimension creada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dimension'
+  /dimensiones/{idDimension}:
+    put:
+      tags:
+        - Dimension
+      summary: Actualizar una Dimension existente
+      description: Actualizar una Dimension existente por Id
+      operationId: updateDimension
+      parameters:
+        - name: idDimension
+          in: path
+          description: Actualizar una Dimension existente por Id
+          required: true
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        description: Actualizar una Dimension existente
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewDimension'
+        required: true
+      responses:
+        '200':
+          description: Operación completada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dimension'
+        '404':
+          description: Dimensión no encontrada
+    delete:
+      tags:
+        - Dimension
+      summary: Elimina una dimension
+      description: elimina a dimension
+      operationId: deleteDimension
+      parameters:
+        - name: idDimension
+          in: path
+          description: Dimension id a Eliminar
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '404':
+          description: Dimension no encontrada
   /ods:
     get:
       tags:
@@ -63,7 +130,75 @@ paths:
                 items:
                   $ref: '#/components/schemas/Ods'
         '400':
-          description: Any problem in the Server
+          description: Algún problema con el servidor
+    post:
+      tags:
+        - Ods
+      summary: Crear un nuevo Ods
+      operationId: createOds
+      requestBody:
+        description: Datos del nuevo ods
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewOds'
+      responses:
+        '201':
+          description: Ods creada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ods'
+  /ods/{idOds}:
+    put:
+      tags:
+        - Ods
+      summary: Actualizar un ODS existente
+      description: Actualizar un ODS existente por Id
+      operationId: updateOds
+      parameters:
+        - name: idOds
+          in: path
+          description: Ods id a Actualizar
+          required: true
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        description: Actualizar un ODS existente
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewOds'
+        required: true
+      responses:
+        '200':
+          description: Operación completada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ods'
+        '404':
+          description: Ods no encontrada
+    delete:
+      tags:
+        - Ods
+      summary: Elimina un Ods
+      description: elimina un Ods
+      operationId: deleteOds
+      parameters:
+        - name: idOds
+          in: path
+          description: Ods id a Eliminar
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '404':
+          description: Ods no encontrado
+  
   /metas:
     get:
       tags:
@@ -80,7 +215,74 @@ paths:
                 items:
                   $ref: '#/components/schemas/Meta'
         '400':
-          description: Any problem in the Server
+          description: Algún problema con el servidor
+    post:
+      tags:
+        - Meta
+      summary: Crear una nueva Meta
+      operationId: createMeta
+      requestBody:
+        description: Datos de la nueva meta
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewMeta'
+      responses:
+        '201':
+          description: Meta creada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Meta'
+  /metas/{idMeta}:
+    put:
+      tags:
+        - Meta
+      summary: Actualizar una meta existente
+      description: Actualizar una meta existente por Id
+      operationId: updateMeta
+      parameters:
+        - name: idMeta
+          in: path
+          description: Actualizar una meta existente
+          required: true
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        description: Actualizar una meta existente
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewMeta'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Meta'
+        '404':
+          description: Meta no encontrada
+    delete:
+      tags:
+        - Meta
+      summary: Eliminar una Meta
+      description: eliminar una Meta
+      operationId: deleteMeta
+      parameters:
+        - name: idMeta
+          in: path
+          description: Meta id a Eliminar
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '404':
+          description: Meta no encontrada
   /clases:
     get:
       tags:
@@ -97,16 +299,83 @@ paths:
                 items:
                   $ref: '#/components/schemas/Clase'
         '400':
-          description: Any problem in the Server
+          description: Algún problema con el servidor
+    post:
+      tags:
+        - Clase
+      summary: Crear una nueva Clase
+      operationId: createClase
+      requestBody:
+        description: Datos de la nueva clase
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewClase'
+      responses:
+        '201':
+          description: Clase creada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Clase'
+  /clases/{idClase}:
+    put:
+      tags:
+        - Clase
+      summary: Actualizar una Clase existente
+      description: Actualizar una Clase existente por Id
+      operationId: updateClase
+      parameters:
+        - name: idClase
+          in: path
+          description: Clase id a Actualizar
+          required: true
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        description: Actualizar una Clase existente
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewClase'
+        required: true
+      responses:
+        '200':
+          description: Operación completada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Clase'
+        '404':
+          description: Meta no encontrada
+    delete:
+      tags:
+        - Clase
+      summary: Elimina un Clase
+      description: elimina un Clase
+      operationId: deleteClase
+      parameters:
+        - name: idClase
+          in: path
+          description: Clase id a Eliminar
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '404':
+          description: Clase no encontrada
   /modulos:
     get:
       tags:
         - Modulo
-      summary: Recuperar todos los módulos
+      summary: Recuperar todos los modulos
       operationId: getModulos
       responses:
         '200':
-          description: Lista de módulos
+          description: Lista de modulos
           content:
             application/json:
               schema:
@@ -114,7 +383,74 @@ paths:
                 items:
                   $ref: '#/components/schemas/Modulo'
         '400':
-          description: Any problem in the Server
+          description: Algún problema con el servidor
+    post:
+      tags:
+        - Modulo
+      summary: Crear una nuevo Modulo
+      operationId: createModulo
+      requestBody:
+        description: Datos del nuevo modulo
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewModulo'
+      responses:
+        '201':
+          description: Modulo creado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Modulo'
+  /modulos/{idModulo}:
+    put:
+      tags:
+        - Modulo
+      summary: Actualiza un Modulo existente
+      description: Actualiza un Modulo existente por Id
+      operationId: updateModulo
+      parameters:
+        - name: idModulo
+          in: path
+          description: Modulo id a Actualizar
+          required: true
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        description: Actualiza un Modulo existente
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewModulo'
+        required: true
+      responses:
+        '200':
+          description: Operación completada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Modulo'
+        '404':
+          description: Modulo no encontrado
+    delete:
+      tags:
+        - Modulo
+      summary: Elimina un Modulo
+      description: elimina un Modulo
+      operationId: deleteModulo
+      parameters:
+        - name: idModulo
+          in: path
+          description: Modulo id a Eliminar
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '404':
+          description: Modulo no encontrado
   /profesores:
     get:
       tags:
@@ -131,7 +467,74 @@ paths:
                 items:
                   $ref: '#/components/schemas/Profesor'
         '400':
-          description: Any problem in the Server
+          description: Algún problema con el servidor
+    post:
+      tags:
+        - Profesor
+      summary: Crear una nuevo Profesor
+      operationId: createProfesor
+      requestBody:
+        description: Datos del nuevo profesor
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewProfesor'
+      responses:
+        '201':
+          description: Profesor creado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Profesor'
+  /profesores/{idProfesor}:
+    put:
+      tags:
+        - Profesor
+      summary: Actualizar un profesor existente
+      description: Actualizar un profesor existente por Id
+      operationId: updateProfesor
+      parameters:
+        - name: idProfesor
+          in: path
+          description: Profesor id a Actualizar
+          required: true
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        description: Profesor id a Actualizar
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewProfesor'
+        required: true
+      responses:
+        '200':
+          description: Operación completada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Profesor'
+        '404':
+          description: Profesor no encontrado
+    delete:
+      tags:
+        - Profesor
+      summary: Elimina un Profesor
+      description: elimina un Profesor
+      operationId: deleteProfesor
+      parameters:
+        - name: idProfesor
+          in: path
+          description: Profesor id a Eliminar
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '404':
+          description: Profesor no encontrado
   /entidadesexternas:
     get:
       tags:
@@ -148,7 +551,74 @@ paths:
                 items:
                   $ref: '#/components/schemas/EntidadExterna'
         '400':
-          description: Any problem in the Server
+          description: Algún problema con el servidor
+    post:
+      tags:
+        - Entidad Externa
+      summary: Crear una nueva Entidad Externa
+      operationId: createEntidadExterna
+      requestBody:
+        description: Datos de la nueva Entidad Externa
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewEntidadExterna'
+      responses:
+        '201':
+          description: Entidad Externa creada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EntidadExterna'
+  /entidadesexternas/{idEntidadExterna}:
+    put:
+      tags:
+        - Entidad Externa
+      summary: Actualiza un Entidad Externa existente
+      description: Actualiza una EntidadExterna existente by Id
+      operationId: updateEntidadExterna
+      parameters:
+        - name: idEntidadExterna
+          in: path
+          description: EntidadExterna id a Actualizar
+          required: true
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        description: EntidadExterna id a Actualizar
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewEntidadExterna'
+        required: true
+      responses:
+        '200':
+          description: Operación completada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EntidadExterna'
+        '404':
+          description: Profesor no econtrado
+    delete:
+      tags:
+        - Entidad Externa
+      summary: Elimina una Entidad Externa
+      description: elimina una Entidad Externa
+      operationId: deleteEntidadExterna
+      parameters:
+        - name: idEntidadExterna
+          in: path
+          description: Entidad Externa id a Eliminar
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '404':
+          description: Entidad Externa no econtrada
   /iniciativas:
     get:
       tags:
@@ -165,7 +635,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/Iniciativa'
         '400':
-          description: Any problem in the Server
+          description: Algún problema con el servidor
     post:
       tags:
         - Iniciativa
@@ -189,19 +659,19 @@ paths:
     put:
       tags:
         - Iniciativa
-      summary: Update an existing iniciative
-      description: Update an existing activity by Id
+      summary: Actualizar una iniciativa existente
+      description: Actualizar una actividad existetne por Id
       operationId: updateIniciativa
       parameters:
         - name: idIniciativa
           in: path
-          description: Activity id to Update
+          description: Activity id a Actualizar
           required: true
           schema:
             type: integer
             format: int32
       requestBody:
-        description: Update an existent Activity in the GYM
+        description: Actualiza una iniciativa existente
         content:
           application/json:
             schema:
@@ -209,30 +679,30 @@ paths:
         required: true
       responses:
         '200':
-          description: Successful operation
+          description: Operación completada
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Iniciativa'
         '404':
-          description: Activity not found
+          description: Actividad no encontrada
     delete:
       tags:
         - Iniciativa
-      summary: Deletes a iniciativas
-      description: delete a iniciativas
+      summary: Elimina una iniciativa
+      description: elimina una iniciativa
       operationId: deleteIniciativa
       parameters:
         - name: idIniciativa
           in: path
-          description: Iniciativa id to Delete
+          description: Iniciativa id a eliminar
           required: true
           schema:
             type: integer
             format: int32
       responses:
         '404':
-          description: Activity not found
+          description: Actividad no encontrada
 components:
   schemas:
     Dimension:
@@ -375,46 +845,122 @@ components:
       properties:
         tipo:
           type: string
+          example: "Educación Sostenible"
         horas:
           type: integer
+          example: 40
         nombre:
           type: string
+          example: "Taller de Energías Renovables"
         explicacion:
           type: string
+          example: "Un programa educativo para concienciar a los estudiantes sobre el uso de energías renovables."
         fecha_inicio:
           type: string
           format: date
+          example: "2025-04-15"
         fecha_fin:
           type: string
           format: date
+          example: "2025-06-30"
         eliminado:
           type: boolean
+          example: false
         innovador:
           type: boolean
+          example: true
         anyo_lectivo:
           type: string
+          example: "2024-2025"
         imagen:
           type: string
           format: uri
+          example: "https://ejemplo.com/imagen_taller.jpg"
         mas_comentarios:
           type: string
+          example: "Se recomienda participación activa y trabajos prácticos."
         redes_sociales:
           type: array
           items: 
             type: string
+          example: 
+            - "https://twitter.com/taller_renovables"
+            - "https://facebook.com/taller_renovables"
         metas:
           type: array
           items:
             type: integer
+          example: [1, 2]
         profesores:
           type: array
           items:
             type: integer
+          example: [1, 2]
         entidades_externas:
           type: array
           items:
             type: integer
+          example: [1, 2]
         modulos:
           type: array
           items:
             type: integer
+          example: [1, 2]
+
+    NewDimension:
+      type: object
+      properties:
+        nombre:
+          type: string
+          example: "Desarrollo Sostenible"
+    
+    NewOds:
+      type: object
+      properties:
+        nombre: 
+          type: string
+          example: "Energía asequible y no contaminante"
+        dimension:
+          type: integer
+          example: 1
+    
+    NewMeta:
+      type: object
+      properties:
+        descripcion:
+          type: string
+          example: "Aumentar la proporción de energía renovable en el consumo energético mundial."
+        ods:
+          type: integer
+          example: 7
+    
+    NewClase:
+      type: object
+      properties:
+        nombre:
+          type: string
+          example: "Cambio Climático y Sostenibilidad"
+    
+    NewModulo:
+      type: object
+      properties:
+        nombre:
+          type: string
+          example: "Energías Renovables"
+        clase:
+          type: integer
+          example: 1
+    
+    NewProfesor:
+      type: object
+      properties:
+        nombre:
+          type: string
+          example: "Dr. Juan Pérez"
+    
+    NewEntidadExterna:
+      type: object
+      properties:
+        nombre:
+          type: string
+          example: "GreenTech International"

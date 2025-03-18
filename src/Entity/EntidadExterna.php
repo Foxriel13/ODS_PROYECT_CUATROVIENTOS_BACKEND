@@ -20,7 +20,7 @@ class EntidadExterna
     private ?string $nombre = null;
 
     /**
-     * @var Collection<int, ENTIDADESEXTERNASINICIATIVAS>
+     * @var Collection<int, EntidadExternaIniciativa>
      */
     #[ORM\OneToMany(targetEntity: EntidadExternaIniciativa::class, mappedBy: 'entidad')]
     #[IGNORE]
@@ -49,7 +49,7 @@ class EntidadExterna
     }
 
     /**
-     * @return Collection<int, ENTIDADESEXTERNASINICIATIVAS>
+     * @return Collection<int, EntidadExternaIniciativa>
      */
     public function getIniciativa(): Collection
     {
@@ -69,7 +69,6 @@ class EntidadExterna
     public function removeIniciativa(EntidadExternaIniciativa $iniciativa): static
     {
         if ($this->iniciativa->removeElement($iniciativa)) {
-            // set the owning side to null (unless already changed)
             if ($iniciativa->getEntidad() === $this) {
                 $iniciativa->setEntidad(null);
             }

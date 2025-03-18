@@ -20,7 +20,7 @@ class ODS
     private ?string $nombre = null;
 
     /**
-     * @var Collection<int, METAS>
+     * @var Collection<int, Meta>
      */
     #[ORM\OneToMany(targetEntity: Meta::class, mappedBy: 'idOds')]
     #[IGNORE]
@@ -52,7 +52,7 @@ class ODS
     }
 
     /**
-     * @return Collection<int, METAS>
+     * @return Collection<int, Meta>
      */
     public function getMetas(): Collection
     {
@@ -72,7 +72,6 @@ class ODS
     public function removeMeta(Meta $meta): static
     {
         if ($this->metas->removeElement($meta)) {
-            // set the owning side to null (unless already changed)
             if ($meta->getOds() === $this) {
                 $meta->setOds(null);
             }

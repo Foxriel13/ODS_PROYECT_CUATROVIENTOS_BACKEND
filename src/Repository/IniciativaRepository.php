@@ -2,7 +2,9 @@
 
 namespace App\Repository;
 
+use App\Entity\Clase;
 use App\Entity\Iniciativa;
+use App\Entity\ODS;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

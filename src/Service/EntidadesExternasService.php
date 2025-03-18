@@ -83,6 +83,6 @@ class EntidadesExternasService{
         $this->entityManager->remove($entidadExterna);
         $this->entityManager->flush();
 
-        return new JsonResponse(null, Response::HTTP_NO_CONTENT);
+        return new JsonResponse(['message' => 'Entidad Externa eliminada correctamente'], Response::HTTP_OK);
     }
 }

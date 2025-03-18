@@ -82,7 +82,7 @@ class DimensionesService{
         $this->entityManager->remove($dimension);
         $this->entityManager->flush();
 
-        return new JsonResponse(null, Response::HTTP_NO_CONTENT);
+        return new JsonResponse(['message' => 'Dimensión eliminada correctamente'], Response::HTTP_OK);
     }
 
 }

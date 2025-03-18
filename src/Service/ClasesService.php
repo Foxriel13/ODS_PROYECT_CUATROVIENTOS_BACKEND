@@ -76,7 +76,7 @@ class ClasesService{
         $this->entityManager->remove($clase);
         $this->entityManager->flush();
 
-        return new JsonResponse(null, Response::HTTP_NO_CONTENT);
+        return new JsonResponse(['message' => 'Clase eliminada correctamente'], Response::HTTP_OK);
     }
  
 }

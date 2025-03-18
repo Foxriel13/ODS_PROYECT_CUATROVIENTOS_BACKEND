@@ -45,6 +45,10 @@ class ODSService{
                 $dimension = $this->entityManager->getRepository(Dimension::class)->find($dimensionId);
                 if ($dimension !== null) {
                     $ods->setDimension($dimension);
+                }else{
+                    return new JsonResponse([
+                        'message' => 'Dimensión no encontrada',
+                    ], Response::HTTP_NOT_FOUND);
                 }
             }
         }

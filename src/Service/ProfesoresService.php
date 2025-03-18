@@ -85,9 +85,7 @@ class ProfesoresService{
         $this->entityManager->remove($profesor);
         $this->entityManager->flush();
 
-        return new JsonResponse([
-            'message' => 'Profesor eliminado correctamente',
-        ], Response::HTTP_OK);
+        return new JsonResponse(['message' => 'Profesor eliminado correctamente'], Response::HTTP_OK);
     }
 
 }

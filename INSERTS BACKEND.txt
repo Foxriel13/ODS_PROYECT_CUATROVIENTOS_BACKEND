@@ -43,7 +43,13 @@ INSERT INTO modulo (id, clase_id, nombre) VALUES
 (9, 1, 'Lenguaje de Marcas'),
 (10, 1, 'Programacion'),
 (11, 1, 'Bases de datos'),
-(12, 1, 'Ingles I');
+(12, 1, 'Ingles I'),
+(13, 1, 'Sistemas informaticos'),
+(14, 1, 'Entornos de desarrollo'),
+(15, 1, 'Fol'),
+(16, 1, 'Digitalización aplicada a los sectores productivos'),
+(17, 1, 'Sostenibilidad aplicada al sistema productivo'),
+(18, 1, 'Itinerario personal para la empleabilidad');
 
 INSERT INTO profesor (id, nombre) VALUES
 (1, 'Maria Martin'),

@@ -28,18 +28,45 @@ INSERT INTO meta (id, ods_id, descripcion) VALUES
 (2, 2, 'Reducir la brecha educativa');
 
 INSERT INTO clase (id, nombre) VALUES
-(1, 'Clase de Matemáticas'),
-(2, 'Clase de Programación');
+(1, '1. DAM'),
+(2, '2. DAM');
 
 INSERT INTO modulo (id, clase_id, nombre) VALUES
-(1, 1, 'Álgebra'),
-(2, 1, 'Cálculo'),
-(3, 2, 'Fundamentos de Programación'),
-(4, 2, 'Estructuras de Datos');
+(1, 2, 'Diseño de Intefaces'),
+(2, 2, 'Sistemas de gestión empresarial'),
+(3, 2, 'Acceso a datos'),
+(4, 2, 'Prog. servicios y procesos'),
+(5, 2, 'Ingles II'),
+(6, 2, 'Prog. Multimedia en dispositivos móviles'),
+(7, 2, 'Empresa e iniciativa emprendedora'),
+(8, 2, 'Desarrollo Web'),
+(9, 1, 'Lenguaje de Marcas'),
+(10, 1, 'Programacion'),
+(11, 1, 'Bases de datos'),
+(12, 1, 'Ingles I');
 
 INSERT INTO profesor (id, nombre) VALUES
-(1, 'Juan Pérez'),
-(2, 'María Gómez');
+(1, 'Maria Martin'),
+(2, 'Miguel Goyena'),
+(3, 'David Noya'),
+(4, 'Iban Sarria'),
+(5, 'Merche Arozarena'),
+(6, 'Arantxa Artuch'),
+(7, 'Abilio Diaz'),
+(8, 'Ana Ramos'),
+(9, 'Silvia Sanz'),
+(10, 'Amaia Ayucar'),
+(11, 'Luis Aguero'),
+(12, 'Kike Arizuren'),
+(13, 'Itziar Ecenarro'),
+(14, 'Elena Huarte'),
+(15, 'Igor Iturralde'),
+(16, 'Juan Carlos Lana'),
+(17, 'Fernando Oscoz'),
+(19, 'Juan Pelaez'),
+(20, 'Iban Zabalza'),
+(21, 'Alberto Aguinaga'),
+(22, 'Daniel Duran');
 
 INSERT INTO entidad_externa (id, nombre) VALUES
 (1, 'Universidad Nacional'),

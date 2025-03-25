@@ -1,26 +1,21 @@
-INSERT INTO dimension (id, nombre) VALUES
-(1, 'Social'),
-(2, 'Económica'),
-(3, 'Ambiental');
-
-INSERT INTO ods (id, nombre, dimension_id) VALUES
-(1, 'Fin de la Pobreza', 1),
-(2, 'Hambre Cero', 1),
-(3, 'Salud y Bienestar', 1),
-(4, 'Educación de Calidad', 1),
-(5, 'Igualdad de Género', 1),
-(6, 'Agua Limpia y Saneamiento', 3),
-(7, 'Energía Asequible y No Contaminante', 3),
-(8, 'Trabajo Decente y Crecimiento Económico', 2),
-(9, 'Industria, Innovación e Infraestructura', 2),
-(10, 'Reducción de las Desigualdades', 1),
-(11, 'Ciudades y Comunidades Sostenibles', 3),
-(12, 'Producción y Consumo Responsables', 3),
-(13, 'Acción por el Clima', 3),
-(14, 'Vida Submarina', 3),
-(15, 'Vida de Ecosistemas Terrestres', 3),
-(16, 'Paz, Justicia e Instituciones Sólidas', 1),
-(17, 'Alianzas para Lograr los Objetivos', 2);
+INSERT INTO ods (id, nombre, dimension) VALUES
+(1, 'Fin de la Pobreza', 'Social'),
+(2, 'Hambre Cero', 'Social'),
+(3, 'Salud y Bienestar', 'Social'),
+(4, 'Educación de Calidad', 'Social'),
+(5, 'Igualdad de Género', 'Social'),
+(6, 'Agua Limpia y Saneamiento', 'Sin asignar'),
+(7, 'Energía Asequible y No Contaminante', 'Ambiental'),
+(8, 'Trabajo Decente y Crecimiento Económico', 'Económica'),
+(9, 'Industria, Innovación e Infraestructura', 'Económica'),
+(10, 'Reducción de las Desigualdades', 'Económica'),
+(11, 'Ciudades y Comunidades Sostenibles', 'Ambiental'),
+(12, 'Producción y Consumo Responsables', 'Ambiental'),
+(13, 'Acción por el Clima', 'Ambiental'),
+(14, 'Vida Submarina', 'Sin asignar'),
+(15, 'Vida de Ecosistemas Terrestres', 'Sin asignar'),
+(16, 'Paz, Justicia e Instituciones Sólidas', 'Económica'),
+(17, 'Alianzas para Lograr los Objetivos', 'Social');
 
 
 INSERT INTO meta (id, ods_id, descripcion) VALUES

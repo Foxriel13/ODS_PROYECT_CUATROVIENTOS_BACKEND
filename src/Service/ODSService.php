@@ -41,20 +41,18 @@ class ODSService{
         }
 
         if (empty($data['ods'])) {
+            return new JsonResponse(['message' => 'El ods es obligatoria'], Response::HTTP_BAD_REQUEST);
+        }
+
+        if (empty($data['dimension'])) {
             return new JsonResponse(['message' => 'La dimension es obligatoria'], Response::HTTP_BAD_REQUEST);
         }
 
         $ods->setNombre($data['nombre']);
 
-        $dimension = $this->entityManager->getRepository(Dimension::class)->find($data['dimension']);
-        if ($dimension !== null) {
-            $ods->setDimension($dimension);
-        }else{
-            return new JsonResponse([
-                'message' => 'Dimensión no encontrada',
-            ], Response::HTTP_NOT_FOUND);
-        }
-    
+        $ods->setDimension($data['dimension']);
+
+
         $this->entityManager->persist($ods);
         $this->entityManager->flush();
     
@@ -78,13 +76,8 @@ class ODSService{
             $ods->setNombre($data['nombre']);
         }
 
-        $dimension = $this->entityManager->getRepository(Dimension::class)->find($id);
-        if ($dimension !== null) {
-            $ods->addDimension($dimension);
-        }else {
-            return new JsonResponse([
-                'message' => 'Dimensión no encontrada',
-            ], Response::HTTP_BAD_REQUEST);
+        if (isset($data['dimension'])) {
+            $ods->setDimension($data['dimension']);
         }
 
         $this->entityManager->flush();

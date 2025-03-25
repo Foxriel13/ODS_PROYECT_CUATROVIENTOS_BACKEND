@@ -6,6 +6,7 @@ use App\Repository\ODSRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Proxies\__CG__\App\Entity\Meta;
 use Symfony\Component\Serializer\Annotation\Ignore;
 
 #[ORM\Entity(repositoryClass: ODSRepository::class)]
@@ -26,8 +27,8 @@ class ODS
     #[IGNORE]
     private Collection $metas;
 
-    #[ORM\ManyToOne(inversedBy: 'ods')]
-    private ?Dimension $dimension = null;
+    #[ORM\Column(length: 255)]
+    private ?string $dimension = null;
 
     public function __construct()
     {
@@ -80,15 +81,16 @@ class ODS
         return $this;
     }
 
-    public function getDimension(): ?Dimension
+    public function getDimension(): ?string
     {
         return $this->dimension;
     }
 
-    public function setDimension(?Dimension $dimension): static
+    public function setDimension(string $dimension): static
     {
         $this->dimension = $dimension;
 
         return $this;
     }
+
 }

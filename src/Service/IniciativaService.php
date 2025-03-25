@@ -7,12 +7,14 @@ use App\Entity\EntidadExterna;
 use App\Entity\EntidadExternaIniciativa;
 use App\Entity\Iniciativa;
 use App\Entity\IniciativaModulo;
+use App\Entity\IniciativaRedesSociales;
 use App\Entity\Meta;
 use App\Entity\MetaIniciativa;
 use App\Entity\Modulo;
 use App\Entity\ODS;
 use App\Entity\Profesor;
 use App\Entity\ProfesorIniciativa;
+use App\Entity\RedesSociales;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,7 +26,6 @@ class IniciativaService
     public function __construct(private EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
-
     }
 
     // Funcion para obtener todas las iniciativas
@@ -46,7 +47,7 @@ class IniciativaService
     public function getIniciativasEliminadas(): JsonResponse
     {
         $iniciativas = $this->entityManager->getRepository(Iniciativa::class)->findByEliminado();
-        
+
         // Si no se encuentra la iniciativa, devuelve mensaje de error
         if (!$iniciativas) {
             return new JsonResponse(['message' => 'No se han encontrado iniciativas'], Response::HTTP_NOT_FOUND);
@@ -61,7 +62,7 @@ class IniciativaService
     public function getIniciativasActivas(): JsonResponse
     {
         $iniciativas = $this->entityManager->getRepository(Iniciativa::class)->findByActivas();
-        
+
         // Si no se encuentra la iniciativa, devuelve mensaje de error
         if (!$iniciativas) {
             return new JsonResponse(['message' => 'No se han encontrado iniciativas'], Response::HTTP_NOT_FOUND);
@@ -76,7 +77,7 @@ class IniciativaService
     public function deleteIniciativa(int $id): JsonResponse
     {
         $iniciativa = $this->entityManager->getRepository(Iniciativa::class)->find($id);
-        
+
         // Si no se encuentra la iniciativa, devuelve mensaje de error
         if (!$iniciativa) {
             return new JsonResponse(['message' => 'La Iniciativa no ha sido encontrada'], Response::HTTP_NOT_FOUND);
@@ -86,11 +87,11 @@ class IniciativaService
         if ($iniciativa->isEliminado() == true) {
             return new JsonResponse(['message' => 'La Iniciativa ya se encontraba eliminada'], Response::HTTP_BAD_REQUEST);
         }
-        
+
         $iniciativa->setEliminado(true);
-        
+
         $this->entityManager->flush();
-        
+
         return new JsonResponse(['message' => 'La Iniciativa eliminada exitosamente'], Response::HTTP_OK);
     }
 
@@ -98,25 +99,24 @@ class IniciativaService
     public function createIniciativa(array $data): JsonResponse
     {
         $iniciativa = new Iniciativa();
-        
+
         $iniciativa->setTipo($data['tipo'] ?? null);
         $iniciativa->setHoras($data['horas'] ?? null);
         $iniciativa->setNombre($data['nombre'] ?? null);
         $iniciativa->setExplicacion($data['explicacion'] ?? null);
-        
+
         if (isset($data['fecha_inicio'])) {
             $iniciativa->setFechaInicio(new \DateTime($data['fecha_inicio']));
         }
         if (isset($data['fecha_fin'])) {
             $iniciativa->setFechaFin(new \DateTime($data['fecha_fin']));
         }
-        
+
         $iniciativa->setEliminado(false);
         $iniciativa->setInnovador($data['innovador'] ?? false);
         $iniciativa->setAnyoLectivo($data['anyo_lectivo'] ?? null);
         $iniciativa->setImagen($data['imagen'] ?? null);
         $iniciativa->setMasComentarios($data['mas_comentarios'] ?? null);
-        $iniciativa->setRedesSociales($data['redes_sociales'] ?? null);
 
         $fechaRegistro = \DateTime::createFromFormat('Y-m-d', (new \DateTime())->format('Y-m-d'));
         $iniciativa->setFechaRegistro($fechaRegistro);
@@ -131,7 +131,7 @@ class IniciativaService
                     $this->entityManager->persist($iniciativaMeta);
                 }
             }
-        }else {
+        } else {
             return new JsonResponse(['message' => 'Debes de introducir al menos'], Response::HTTP_NOT_FOUND);
         }
 
@@ -145,7 +145,7 @@ class IniciativaService
                     $this->entityManager->persist($iniciativaProfesor);
                 }
             }
-        }else{
+        } else {
             return new JsonResponse(['message' => 'Debes de introducir al menos un profesor'], Response::HTTP_NOT_FOUND);
         }
 
@@ -159,7 +159,7 @@ class IniciativaService
                     $this->entityManager->persist($iniciativaEntidadExterna);
                 }
             }
-        }else{
+        } else {
             return new JsonResponse(['message' => 'Debes de introducir al menos una entidad externa'], Response::HTTP_NOT_FOUND);
         }
 
@@ -174,8 +174,24 @@ class IniciativaService
                     $this->entityManager->persist($iniciativaModulo);
                 }
             }
-        }else{
+        } else {
             return new JsonResponse(['message' => 'Debes de introducir al menos un modulo'], Response::HTTP_NOT_FOUND);
+        }
+
+        // Procesamos redes sociales
+        if (!empty($data['redes_sociales']) && is_array($data['redes_sociales'])) {
+            $redesSocialesRepo = $this->entityManager->getRepository(RedesSociales::class);
+            foreach ($data['redes_sociales'] as $redSocialId) {
+                $redSocial = $redesSocialesRepo->find($redSocialId);
+                if ($redSocial) {
+                    $iniciativaRedesSociales = new IniciativaRedesSociales($iniciativa, $redSocial);
+                    // Se asume que Iniciativa tiene un método "addRedesSocial" para agregar la relación
+                    $iniciativa->addIniciativaRedesSociale($iniciativaRedesSociales);
+                    $this->entityManager->persist($iniciativaRedesSociales);
+                }
+            }
+        } else {
+            return new JsonResponse(['message' => 'Debes de introducir al menos una Red Social'], Response::HTTP_NOT_FOUND);
         }
 
         $this->entityManager->persist($iniciativa);
@@ -224,7 +240,7 @@ class IniciativaService
         if (isset($data['imagen'])) {
             $iniciativa->setImagen($data['imagen']);
         }
-        
+
         $fechaRegistro = \DateTime::createFromFormat('Y-m-d', (new \DateTime())->format('Y-m-d'));
         $iniciativa->setFechaRegistro($fechaRegistro);
 
@@ -242,7 +258,7 @@ class IniciativaService
             foreach ($iniciativa->getMetasIniciativas() as $metasIniciativas) {
                 $this->entityManager->remove($metasIniciativas);
             }
-            $this->entityManager->flush(); 
+            $this->entityManager->flush();
 
             foreach ($data['metas'] as $metaId) {
                 $meta = $metasRepo->find($metaId);
@@ -252,7 +268,7 @@ class IniciativaService
                     $this->entityManager->persist($iniciativaMeta);
                 }
             }
-        }else{
+        } else {
             return new JsonResponse(['message' => 'Debes de introducir al menos una meta'], Response::HTTP_NOT_FOUND);
         }
 
@@ -263,8 +279,8 @@ class IniciativaService
             foreach ($iniciativa->getProfesores() as $profesores) {
                 $this->entityManager->remove($profesores);
             }
-            $this->entityManager->flush(); 
-    
+            $this->entityManager->flush();
+
             foreach ($data['profesores'] as $profesorId) {
                 $profesor = $profesorRepo->find($profesorId);
                 if ($profesor) {
@@ -273,7 +289,7 @@ class IniciativaService
                     $this->entityManager->persist($iniciativaProfesor);
                 }
             }
-        }else{
+        } else {
             return new JsonResponse(['message' => 'Debes de introducir al menos un profesor'], Response::HTTP_NOT_FOUND);
         }
 
@@ -284,8 +300,8 @@ class IniciativaService
             foreach ($iniciativa->getEntidadesExternas() as $entidadesExternas) {
                 $this->entityManager->remove($entidadesExternas);
             }
-            $this->entityManager->flush(); 
-    
+            $this->entityManager->flush();
+
             foreach ($data['entidades_externas'] as $entidadExternaId) {
                 $entidadExterna = $entidadesExternasRepo->find($entidadExternaId);
                 if ($entidadExterna) {
@@ -294,7 +310,7 @@ class IniciativaService
                     $this->entityManager->persist($iniciativaEntidadExterna);
                 }
             }
-        }else {
+        } else {
             return new JsonResponse(['message' => 'Debes de introducir al menos una entidad externa'], Response::HTTP_NOT_FOUND);
         }
 
@@ -305,8 +321,8 @@ class IniciativaService
             foreach ($iniciativa->getModulos() as $modulos) {
                 $this->entityManager->remove($modulos);
             }
-            $this->entityManager->flush(); 
-    
+            $this->entityManager->flush();
+
             foreach ($data['modulos'] as $moduloId) {
                 $modulo = $modulosRepo->find($moduloId);
                 if ($entidadExterna) {
@@ -315,7 +331,7 @@ class IniciativaService
                     $this->entityManager->persist($iniciativaModulo);
                 }
             }
-        }else{
+        } else {
             return new JsonResponse(['message' => 'Debes de introducir al menos un módulo'], Response::HTTP_NOT_FOUND);
         }
 
@@ -341,18 +357,14 @@ class IniciativaService
             'imagen' => $iniciativa->getImagen(),
             'fecha_registro' => $iniciativa->getFechaRegistro()->format('Y-m-d H:i:s'),
             'mas_comentarios' => $iniciativa->getMasComentarios(),
-            'redes_sociales' => $iniciativa->getRedesSociales(),
             'metas' => array_map(fn($metaIniciativa) => [
                 'idMeta' => $metaIniciativa->getIdMetas()->getId(),
                 'descripcion' => $metaIniciativa->getIdMetas()->getDescripcion(),
                 'ods' => [
                     'idOds' => $metaIniciativa->getIdMetas()->getOds()->getId(),
                     'nombre' => $metaIniciativa->getIdMetas()->getOds()->getNombre(),
-                    'dimension' => [
-                        'idDimension' => $metaIniciativa->getIdMetas()->getOds()->getDimension()->getId(),
-                        'nombre' => $metaIniciativa->getIdMetas()->getOds()->getDimension()->getNombre(),
-                    ]
-                ]
+                    'dimension' => $metaIniciativa->getIdMetas()->getOds()->getDimension()
+                ],
             ], $iniciativa->getMetasIniciativas()->toArray()),
             'profesores' => array_map(fn($profesorIniciativa) => [
                 'idProfesor' => $profesorIniciativa->getProfesor()->getId(),
@@ -370,8 +382,11 @@ class IniciativaService
                     'nombre' => $modulosIniciativas->getModulo()->getClase()->getNombre(),
                 ],
             ], $iniciativa->getModulos()->toArray()),
+            'redes_sociales' => array_map(fn($iniciativaRedSocial) => [
+                'idRedSocial' => $iniciativaRedSocial->getRedesSociales()->getId(),
+                'nombre' => $iniciativaRedSocial->getRedesSociales()->getNombre(),
+                'enlace' => $iniciativaRedSocial->getRedesSociales()->getEnlace(),
+            ], $iniciativa->getIniciativaRedesSociales()->toArray()),
         ];
     }
-
-
 }

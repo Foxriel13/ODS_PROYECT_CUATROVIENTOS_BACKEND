@@ -73,12 +73,14 @@ class Iniciativa
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $anyoLectivo = null;
 
-    #[ORM\Column(type: 'json')]
-    private array $redesSociales = [];
-
     #[ORM\Column(length: 255)]
     private ?string $masComentarios = null;
 
+    /**
+     * @var Collection<int, IniciativaRedesSociales>
+     */
+    #[ORM\OneToMany(targetEntity: IniciativaRedesSociales::class, mappedBy: 'iniciativa')]
+    private Collection $iniciativaRedesSociales;
 
     public function __construct()
     {
@@ -86,6 +88,7 @@ class Iniciativa
         $this->modulos = new ArrayCollection();
         $this->entidadesExternas = new ArrayCollection();
         $this->profesores = new ArrayCollection();
+        $this->iniciativaRedesSociales = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -341,18 +344,6 @@ class Iniciativa
         return $this;
     }
 
-    public function getRedesSociales(): array
-    {
-        return $this->redesSociales;
-    }
-
-    public function setRedesSociales(array $redesSociales): static
-    {
-        $this->redesSociales = $redesSociales;
-
-        return $this;
-    }
-
     public function getMasComentarios(): ?string
     {
         return $this->masComentarios;
@@ -364,4 +355,35 @@ class Iniciativa
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, IniciativaRedesSociales>
+     */
+    public function getIniciativaRedesSociales(): Collection
+    {
+        return $this->iniciativaRedesSociales;
+    }
+
+    public function addIniciativaRedesSociale(IniciativaRedesSociales $iniciativaRedesSociale): static
+    {
+        if (!$this->iniciativaRedesSociales->contains($iniciativaRedesSociale)) {
+            $this->iniciativaRedesSociales->add($iniciativaRedesSociale);
+            $iniciativaRedesSociale->setIniciativa($this);
+        }
+
+        return $this;
+    }
+
+    public function removeIniciativaRedesSociale(IniciativaRedesSociales $iniciativaRedesSociale): static
+    {
+        if ($this->iniciativaRedesSociales->removeElement($iniciativaRedesSociale)) {
+            // set the owning side to null (unless already changed)
+            if ($iniciativaRedesSociale->getIniciativa() === $this) {
+                $iniciativaRedesSociale->setIniciativa(null);
+            }
+        }
+
+        return $this;
+    }
+    
 }

@@ -80,7 +80,7 @@ class ModulosService{
             }
 
             if (!empty($claseEntities)) {
-                $modulo->addClase($clase);
+                $modulo->setClase($clase);
             } else {
                 return new JsonResponse(['message' => 'Debes de introducir al menos una clase válida'], Response::HTTP_BAD_REQUEST);
             }

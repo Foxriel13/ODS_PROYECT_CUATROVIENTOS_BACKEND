@@ -40,10 +40,6 @@ class ODSService{
             return new JsonResponse(['message' => 'El nombre es obligatorio'], Response::HTTP_BAD_REQUEST);
         }
 
-        if (empty($data['ods'])) {
-            return new JsonResponse(['message' => 'El ods es obligatoria'], Response::HTTP_BAD_REQUEST);
-        }
-
         if (empty($data['dimension'])) {
             return new JsonResponse(['message' => 'La dimension es obligatoria'], Response::HTTP_BAD_REQUEST);
         }

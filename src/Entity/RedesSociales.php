@@ -6,6 +6,8 @@ use App\Repository\RedesSocialesRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Ignore;
+
 
 #[ORM\Entity(repositoryClass: RedesSocialesRepository::class)]
 class RedesSociales
@@ -25,6 +27,7 @@ class RedesSociales
      * @var Collection<int, IniciativaRedesSociales>
      */
     #[ORM\OneToMany(targetEntity: IniciativaRedesSociales::class, mappedBy: 'redesSociales')]
+    #[Ignore]
     private Collection $iniciativaRedesSociales;
 
     public function __construct()

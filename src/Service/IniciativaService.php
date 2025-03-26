@@ -335,15 +335,21 @@ class IniciativaService
         // Procesamos redes sociales
         if (!empty($data['redes_sociales']) && is_array($data['redes_sociales'])) {
             $redesSocialesRepo = $this->entityManager->getRepository(RedesSociales::class);
+            
+            foreach ($iniciativa->getIniciativaRedesSociales() as $redSocial) {
+                $this->entityManager->remove($redSocial);
+            }
+            $this->entityManager->flush();
+
             foreach ($data['redes_sociales'] as $redSocialId) {
                 $redSocial = $redesSocialesRepo->find($redSocialId);
                 if ($redSocial) {
-                    $iniciativaRedesSociales = new IniciativaRedesSociales($iniciativa, $redSocial);
-                    // Se asume que Iniciativa tiene un método "addRedesSocial" para agregar la relación
-                    $iniciativa->addIniciativaRedesSociale($iniciativaRedesSociales);
-                    $this->entityManager->persist($iniciativaRedesSociales);
+                    $redSocialIniciativa = new IniciativaRedesSociales($iniciativa, $redSocial);
+                    $iniciativa->addIniciativaRedesSociale($redSocialIniciativa);
+                    $this->entityManager->persist($redSocialIniciativa);
                 }
             }
+            
         } else {
             return new JsonResponse(['message' => 'Debes de introducir al menos una Red Social'], Response::HTTP_NOT_FOUND);
         }

@@ -16,10 +16,17 @@ class IniciativaRedesSociales
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'iniciativaRedesSociales')]
+    #[ORM\JoinColumn (nullable: true)]
     private ?Iniciativa $iniciativa = null;
 
     #[ORM\ManyToOne(inversedBy: 'iniciativaRedesSociales')]
+    #[ORM\JoinColumn (nullable: true)]
     private ?RedesSociales $redesSociales = null;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
 
     public function getIniciativa(): ?Iniciativa
     {
@@ -43,6 +50,11 @@ class IniciativaRedesSociales
         $this->redesSociales = $redesSociales;
 
         return $this;
+    }
+
+    public function __construct(Iniciativa $iniciativa, RedesSociales $redesSociales) {
+        $this->iniciativa = $iniciativa;
+        $this->redesSociales = $redesSociales;
     }
 
 }

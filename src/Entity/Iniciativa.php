@@ -82,6 +82,7 @@ class Iniciativa
     #[ORM\OneToMany(targetEntity: IniciativaRedesSociales::class, mappedBy: 'iniciativa')]
     private Collection $iniciativaRedesSociales;
 
+
     public function __construct()
     {
         $this->metasIniciativas = new ArrayCollection();

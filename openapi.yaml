@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: Agenda 2030 Cuatrovientos API - OpenAPI 1.0
   description: |-
-    Especificación API para manejo de la Agenda 2030 de Cuatrovientos CI. Permite gestionar Dimensiones, ODS, Metas, Clases, Módulos, Profesores, Entidades Externas, Redes Sociales e Iniciativas.
+    Especificación API para manejo de la Agenda 2030 de Cuatrovientos CI. Permite gestionar Dimensiones, ODS, Metas, Clases, Módulos, Profesores, Entidades Externas e Iniciativas.
   termsOfService: http://swagger.io/terms/
   contact:
     email: aitorlo057@gmail.com
@@ -13,6 +13,8 @@ info:
 servers:
   - url: http://localhost:8000
 tags:
+  - name: Dimension
+    description: Operaciones sobre las dimensiones
   - name: Ods
     description: Operaciones sobre los ODS
   - name: Meta
@@ -25,11 +27,93 @@ tags:
     description: Operaciones sobre los profesores
   - name: Entidad Externa
     description: Operaciones sobre las entidades externas
-  - name: Redes Sociales
-    description: Operaciones sobre las redes sociales
   - name: Iniciativa
     description: Operaciones sobre las iniciativas
 paths:
+  /dimensiones:
+    get:
+      tags:
+        - Dimension
+      summary: Recuperar todas las dimensiones
+      operationId: getDimensiones
+      responses:
+        '200':
+          description: Lista de Dimensiones
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Dimension'
+        '400':
+          description: Any problem in the Server
+    post:
+      tags:
+        - Dimension
+      summary: Crear una nueva dimensión
+      operationId: createDimension
+      requestBody:
+        description: Datos de la nueva Dimension
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewDimension'
+      responses:
+        '201':
+          description: Dimension creada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dimension'
+  /dimensiones/{idDimension}:
+    put:
+      tags:
+        - Dimension
+      summary: Actualizar una Dimension existente
+      description: Actualizar una Dimension existente por Id
+      operationId: updateDimension
+      parameters:
+        - name: idDimension
+          in: path
+          description: Actualizar una Dimension existente por Id
+          required: true
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        description: Actualizar una Dimension existente
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewDimension'
+        required: true
+      responses:
+        '200':
+          description: Operación completada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dimension'
+        '404':
+          description: Dimensión no encontrada
+    delete:
+      tags:
+        - Dimension
+      summary: Elimina una dimension
+      description: elimina a dimension
+      operationId: deleteDimension
+      parameters:
+        - name: idDimension
+          in: path
+          description: Dimension id a Eliminar
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '404':
+          description: Dimension no encontrada
   /ods:
     get:
       tags:
@@ -517,7 +601,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/EntidadExterna'
         '404':
-          description: Entidad Externa no econtrado
+          description: Profesor no econtrado
     delete:
       tags:
         - Entidad Externa
@@ -535,91 +619,6 @@ paths:
       responses:
         '404':
           description: Entidad Externa no econtrada
-      
-  /redes_sociales:
-    get:
-      tags:
-        - Red Social
-      summary: Recuperar todas las redes sociales
-      operationId: getRedesSociales
-      responses:
-        '200':
-          description: Lista de redes sociales
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Redes_sociales'
-        '400':
-          description: Algún problema con el servidor
-    post:
-      tags:
-        - Red Social
-      summary: Crear una nueva Red Social
-      operationId: crearRedSocial
-      requestBody:
-        description: Datos de la nueva Red Social
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/NewRedSocial'
-      responses:
-        '201':
-          description: Red Social creada
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Redes_sociales'
-  /redes_sociales/{idRedsocial}:
-    put:
-      tags:
-        - Red Social
-      summary: Actualiza una Red Social existente
-      description: Actualiza una Red Social existente by Id
-      operationId: updateRedSocial
-      parameters:
-        - name: idRedsocial
-          in: path
-          description: RedSocial id a Actualizar
-          required: true
-          schema:
-            type: integer
-            format: int32
-      requestBody:
-        description: RedSocial id a Actualizar
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/NewRedSocial'
-        required: true
-      responses:
-        '200':
-          description: Operación completada
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Redes_sociales'
-        '404':
-          description: Red Social no econtrada
-    delete:
-      tags:
-        - Red Social
-      summary: Elimina una Red Social
-      description: elimina una Red Social
-      operationId: deleteRedsocial
-      parameters:
-        - name: idRedsocial
-          in: path
-          description: Red Social id a Eliminar
-          required: true
-          schema:
-            type: integer
-            format: int32
-      responses:
-        '404':
-          description: Red Social no econtrada
   /iniciativas:
     get:
       tags:
@@ -725,8 +724,7 @@ components:
           type: string
           example: Fin de la Pobreza
         dimension:
-          type: string
-          example: Social
+            $ref: '#/components/schemas/Dimension'
     Meta:
       type: object
       properties:
@@ -747,19 +745,6 @@ components:
         nombre:
           type: string
           example: Clase de Matemáticas
-          
-    Redes_sociales:
-      type: object
-      properties:
-        id:
-          type: integer
-          example: 1
-        nombre:
-          type: string
-          example: twitter
-        enlace:
-          type: string
-          example: enlace1
     Modulo:
       type: object
       properties:
@@ -834,6 +819,11 @@ components:
         mas_comentarios:
           type: string
           example: Si
+        redes_sociales:
+          type: array
+          items: 
+            type: string
+          example: linkedin
         metas:
           type: array
           items:
@@ -850,11 +840,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Modulo'
-        redes_sociales:
-          type: array
-          items:
-            $ref: '#/components/schemas/Redes_sociales'
-            
     NewIniciativa:
       type: object
       properties:
@@ -894,6 +879,13 @@ components:
         mas_comentarios:
           type: string
           example: "Se recomienda participación activa y trabajos prácticos."
+        redes_sociales:
+          type: array
+          items: 
+            type: string
+          example: 
+            - "https://twitter.com/taller_renovables"
+            - "https://facebook.com/taller_renovables"
         metas:
           type: array
           items:
@@ -914,11 +906,6 @@ components:
           items:
             type: integer
           example: [1, 2]
-        redes_sociales:
-          type: array
-          items:
-            type: integer
-          example: [1, 2]
 
     NewDimension:
       type: object
@@ -934,8 +921,8 @@ components:
           type: string
           example: "Energía asequible y no contaminante"
         dimension:
-          type: string
-          example: social
+          type: integer
+          example: 1
     
     NewMeta:
       type: object
@@ -970,16 +957,6 @@ components:
         nombre:
           type: string
           example: "Dr. Juan Pérez"
-          
-    NewRedSocial:
-      type: object
-      properties:
-        nombre:
-          type: string
-          example: instagram
-        enlace:
-          type: string
-          example: enlace1
     
     NewEntidadExterna:
       type: object
@@ -987,6 +964,3 @@ components:
         nombre:
           type: string
           example: "GreenTech International"
-          
-          
-          

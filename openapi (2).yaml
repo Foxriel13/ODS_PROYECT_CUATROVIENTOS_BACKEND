@@ -29,6 +29,8 @@ tags:
     description: Operaciones sobre las redes sociales
   - name: Iniciativa
     description: Operaciones sobre las iniciativas
+  - name: Indicadores
+    description: Operaciones sobre los indicadores
 paths:
   /ods:
     get:
@@ -704,6 +706,101 @@ paths:
       responses:
         '404':
           description: Actividad no encontrada
+  /indicadores/iniciativasPorCurso/{idCurso}:
+    get:
+      summary: Obtener iniciativas dirigidas a los ODS por curso académico
+      description: Devuelve los nombres de las iniciativas realizadas en un curso específico.
+      parameters:
+        - name: idCurso
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID del curso académico
+      responses:
+        "200":
+          description: Lista de iniciativas
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Iniciativa'
+  /indicadores/cantidadIniciativas:
+    get:
+      tags:
+        - Indicadores
+      summary: Count de Iniciativas
+      operationId: getCantIniciativas
+      responses:
+        '200':
+          description: Lista de iniciativas
+          content:
+            application/json:
+              schema:
+                type: integer
+                items:
+                  $ref: '#/components/schemas/Count'
+        '400':
+          description: Algún problema con el servidor
+  /indicadores/explicacionIniciativas:
+    get:
+      tags:
+        - Indicadores
+      summary: Recuperar la información de que trata cada indicador
+      operationId: getExplicacion
+      responses:
+        '200':
+          description: Lista de iniciativas
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Explicacion'
+        '400':
+          description: Algún problema con el servidor
+            
+  /indicadores/tieneEntidadesExternas/{idIniciativa}:
+    get:
+      summary: Obtener si la iniciativa cuenta con entidades externas
+      description: Devuelve un booleano de si la iniciativa tiene entidades externas
+      parameters:
+        - name: idIniciativa
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID de la iniciativa
+      responses:
+        "200":
+          description: Si tiene Entidades externas
+          content:
+            application/json:
+              schema:
+                type: boolean
+                items:
+                  $ref: '#/components/schemas/HayEntidadesExternas'
+  /indicadores/tieneRRSS/{idIniciativa}:
+    get:
+      summary: Obtener si la iniciativa cuenta con redes sociales
+      description: Devuelve una lista de si la iniciativa tiene redes sociales
+      parameters:
+        - name: idIniciativa
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID de la iniciativa
+      responses:
+        "200":
+          description: Si tiene RRSS
+          content:
+            application/json:
+              schema:
+                type: boolean
+                items:
+                  $ref: '#/components/schemas/Redes_sociales'
 components:
   schemas:
     Dimension:
@@ -854,7 +951,29 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Redes_sociales'
-            
+        
+    Count:
+      type: integer
+      example: 2
+
+    
+    Explicacion:
+      type: object
+      properties:
+        id: 
+          type: integer
+          example: 1
+        explicacion:
+          type: string
+          example: "Explicación para la iniciativa"
+      
+    HayEntidadesExternas:
+      type: boolean
+      example: false
+    
+    
+      
+        
     NewIniciativa:
       type: object
       properties:

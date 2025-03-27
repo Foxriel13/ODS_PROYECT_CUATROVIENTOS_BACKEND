@@ -28,6 +28,19 @@ class IniciativaRepository extends ServiceEntityRepository
         return $this->findBy(['eliminado' => false]);
     }
 
+    public function findByCurso($cursoId)
+    {
+        return $this->createQueryBuilder('i')
+            ->innerJoin('i.modulos', 'im')
+            ->innerJoin('im.modulo', 'm')
+            ->innerJoin('m.clase', 'c')
+            ->andWhere('c.id = :cursoId')
+            ->setParameter('cursoId', $cursoId)
+            ->getQuery()
+            ->getResult();
+    }
+    
+
     //    /**
     //     * @return Iniciativa[] Returns an array of Iniciativa objects
     //     */

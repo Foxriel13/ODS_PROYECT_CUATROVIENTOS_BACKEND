@@ -73,7 +73,7 @@ INSERT INTO entidad_externa (id, nombre) VALUES
 (1, 'Universidad Nacional'),
 (2, 'Centro de Innovación');
 
-INSERT INTO iniciativa (id, tipo, horas, nombre, explicacion, fecha_inicio, fecha_fin, eliminado, imagen, fecha_registro, innovador, anyo_lectivo, redes_sociales, mas_comentarios) 
+INSERT INTO iniciativa (id, tipo, horas, nombre, explicacion, fecha_inicio, fecha_fin, eliminado, imagen, fecha_registro, innovador, anyo_lectivo, mas_comentarios) 
 VALUES 
 (1, 'Investigación sobre IA', 50, 'IA en educación', 'Informe de IA', '2025-01-01', '2025-06-01', 0, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVUGdra5SfyyJUvZ-mWByvoY1gEwp0df8NLA&s', DATE_FORMAT(CURRENT_DATE, '%Y-%m-%d'), 1, '2024-2025', 'comentario'),
 (2, 'Desarrollo de software', 60, 'Plataforma educativa', 'Prototipo funcional', '2025-02-01', '2025-07-01', 0, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVUGdra5SfyyJUvZ-mWByvoY1gEwp0df8NLA&s', DATE_FORMAT(CURRENT_DATE, '%Y-%m-%d'), 1, '2024-2025', 'comentario');

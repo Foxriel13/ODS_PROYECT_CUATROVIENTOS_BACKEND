@@ -801,17 +801,28 @@ paths:
                 type: boolean
                 items:
                   $ref: '#/components/schemas/Redes_sociales'
+  /indicadores/tieneRRSS/{tipo_iniciativa}:
+    get:
+      summary: Obtener si la iniciativa cuenta con redes sociales
+      description: Devuelve una lista de si la iniciativa tiene redes sociales
+      parameters:
+        - name: tipo_iniciativa
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Tipo de la iniciativa
+      responses:
+        "200":
+          description: Que saque info dependiendo del tipo de iniciativa
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Iniciativa'
 components:
   schemas:
-    Dimension:
-      type: object
-      properties:
-        id:
-          type: integer
-          example: 1
-        nombre:
-          type: string
-          example: Social
     Ods:
       type: object
       properties:
@@ -867,6 +878,8 @@ components:
           type: string
           example: Álgebra
         clase:
+          type: array
+          items: 
             $ref: '#/components/schemas/Clase'
     Profesor:
       type: object
@@ -956,9 +969,8 @@ components:
       type: integer
       example: 2
 
-    
     Explicacion:
-      type: object
+      type: string
       properties:
         id: 
           type: integer
@@ -970,9 +982,6 @@ components:
     HayEntidadesExternas:
       type: boolean
       example: false
-    
-    
-      
         
     NewIniciativa:
       type: object

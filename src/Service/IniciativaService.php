@@ -392,13 +392,13 @@ class IniciativaService
                 'idEntidadExterna' => $entidadesExternasInciativa->getEntidad()->getId(),
                 'nombre' => $entidadesExternasInciativa->getEntidad()->getNombre(),
             ], $iniciativa->getEntidadesExternas()->toArray()),
-            'modulos' => array_map(fn($modulosIniciativas) => [
-                'idModulo' => $modulosIniciativas->getModulo()->getId(),
-                'nombre' => $modulosIniciativas->getModulo()->getNombre(),
-                'clase' => [
-                    'idClase' => $modulosIniciativas->getModulo()->getClase()->getId(),
-                    'nombre' => $modulosIniciativas->getModulo()->getClase()->getNombre(),
-                ],
+            'modulos' => array_map(fn($iniciativaModulo) => [
+                'idModulo' => $iniciativaModulo->getModulo()->getId(),
+                'nombre' => $iniciativaModulo->getModulo()->getNombre(),
+                'clases' => array_map(fn($modulosClase) => [
+                    'idClase' => $modulosClase->getClase()->getId(),
+                    'nombre' => $modulosClase->getClase()->getNombre(),
+                ], $iniciativaModulo->getModulo()->getModuloClases()->toArray()),
             ], $iniciativa->getModulos()->toArray()),
             'redes_sociales' => array_map(fn($iniciativaRedSocial) => [
                 'idRedSocial' => $iniciativaRedSocial->getRedesSociales()->getId(),

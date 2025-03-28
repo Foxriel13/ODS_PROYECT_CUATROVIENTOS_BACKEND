@@ -16,9 +16,6 @@ class Modulo
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(targetEntity: Clase::class, inversedBy: 'modulo')]
-    private ?Clase $clase = null;
-
     #[ORM\Column(length: 255)]
     private ?string $nombre = null;
 
@@ -29,25 +26,21 @@ class Modulo
     #[Ignore]
     private Collection $iniciativa;
 
+    /**
+     * @var Collection<int, ModuloClase>
+     */
+    #[ORM\OneToMany(targetEntity: ModuloClase::class, mappedBy: 'modulo')]
+    private Collection $moduloClases;
+
     public function __construct()
     {
         $this->iniciativa = new ArrayCollection();
+        $this->moduloClases = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getClase(): ?Clase
-    {
-        return $this->clase;
-    }
-
-    public function setClase(?Clase $clase): static
-    {
-        $this->clase = $clase;
-        return $this;
     }
 
     public function getNombre(): ?string
@@ -85,6 +78,36 @@ class Modulo
                 $iniciativa->setModulo(null);
             }
         }
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ModuloClase>
+     */
+    public function getModuloClases(): Collection
+    {
+        return $this->moduloClases;
+    }
+
+    public function addModuloClase(ModuloClase $moduloClase): static
+    {
+        if (!$this->moduloClases->contains($moduloClase)) {
+            $this->moduloClases->add($moduloClase);
+            $moduloClase->setModulo($this);
+        }
+
+        return $this;
+    }
+
+    public function removeModuloClase(ModuloClase $moduloClase): static
+    {
+        if ($this->moduloClases->removeElement($moduloClase)) {
+            // set the owning side to null (unless already changed)
+            if ($moduloClase->getModulo() === $this) {
+                $moduloClase->setModulo(null);
+            }
+        }
+
         return $this;
     }
 }

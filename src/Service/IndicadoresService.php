@@ -103,6 +103,26 @@ class IndicadoresService
         return new JsonResponse($data);
     }
 
+    // GET Indicador 8
+    public function getTipo(int $id): JsonResponse
+    {
+        $iniciativa = $this->entityManager->getRepository(Iniciativa::class)->findById($id);
+
+        if (!$iniciativa) {
+            return new JsonResponse(['message' => 'No se han encontrado iniciativas'], Response::HTTP_NOT_FOUND);
+        }
+
+        $redesSociales = $iniciativa->getTipo();
+
+        if (count($redesSociales) == 0) {
+            return new JsonResponse(['message' => "La iniciativa con id $id no tiene Redes Sociales"], Response::HTTP_NOT_FOUND);
+        }else{
+            $data = $redesSociales;
+        }
+
+        return new JsonResponse($data);
+    }
+
     private function formatIniciativa($iniciativa): array
     {
         return [

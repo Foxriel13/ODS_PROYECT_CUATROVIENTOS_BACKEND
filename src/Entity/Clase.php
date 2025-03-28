@@ -26,9 +26,16 @@ class Clase
     #[Ignore]
     private Collection $modulos;
 
+    /**
+     * @var Collection<int, ModuloClase>
+     */
+    #[ORM\OneToMany(targetEntity: ModuloClase::class, mappedBy: 'clase')]
+    private Collection $moduloClases;
+
     public function __construct()
     {
         $this->modulos = new ArrayCollection();
+        $this->moduloClases = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -55,22 +62,33 @@ class Clase
         return $this->modulos;
     }
 
-    public function addModulo(Modulo $modulo): self
+    /**
+     * @return Collection<int, ModuloClase>
+     */
+    public function getModuloClases(): Collection
     {
-        if (!$this->modulos->contains($modulo)) {
-            $this->modulos->add($modulo);
-            $modulo->setClase($this);
+        return $this->moduloClases;
+    }
+
+    public function addModuloClase(ModuloClase $moduloClase): static
+    {
+        if (!$this->moduloClases->contains($moduloClase)) {
+            $this->moduloClases->add($moduloClase);
+            $moduloClase->setClase($this);
         }
+
         return $this;
     }
 
-    public function removeModulo(Modulo $modulo): self
+    public function removeModuloClase(ModuloClase $moduloClase): static
     {
-        if ($this->modulos->removeElement($modulo)) {
-            if ($modulo->getClase() === $this) {
-                $modulo->setClase(null);
+        if ($this->moduloClases->removeElement($moduloClase)) {
+            // set the owning side to null (unless already changed)
+            if ($moduloClase->getClase() === $this) {
+                $moduloClase->setClase(null);
             }
         }
+
         return $this;
     }
 }

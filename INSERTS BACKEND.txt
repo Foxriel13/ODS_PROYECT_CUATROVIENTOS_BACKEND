@@ -1,123 +1,123 @@
-INSERT INTO ods (id, nombre, dimension) VALUES
-(1, 'Fin de la Pobreza', 'Social'),
-(2, 'Hambre Cero', 'Social'),
-(3, 'Salud y Bienestar', 'Social'),
-(4, 'Educación de Calidad', 'Social'),
-(5, 'Igualdad de Género', 'Social'),
-(6, 'Agua Limpia y Saneamiento', 'Sin asignar'),
-(7, 'Energía Asequible y No Contaminante', 'Ambiental'),
-(8, 'Trabajo Decente y Crecimiento Económico', 'Económica'),
-(9, 'Industria, Innovación e Infraestructura', 'Económica'),
-(10, 'Reducción de las Desigualdades', 'Económica'),
-(11, 'Ciudades y Comunidades Sostenibles', 'Ambiental'),
-(12, 'Producción y Consumo Responsables', 'Ambiental'),
-(13, 'Acción por el Clima', 'Ambiental'),
-(14, 'Vida Submarina', 'Sin asignar'),
-(15, 'Vida de Ecosistemas Terrestres', 'Sin asignar'),
-(16, 'Paz, Justicia e Instituciones Sólidas', 'Económica'),
-(17, 'Alianzas para Lograr los Objetivos', 'Social');
+    INSERT INTO ods (id, nombre, dimension) VALUES
+    (1, 'Fin de la Pobreza', 'Social'),
+    (2, 'Hambre Cero', 'Social'),
+    (3, 'Salud y Bienestar', 'Social'),
+    (4, 'Educación de Calidad', 'Social'),
+    (5, 'Igualdad de Género', 'Social'),
+    (6, 'Agua Limpia y Saneamiento', 'Sin asignar'),
+    (7, 'Energía Asequible y No Contaminante', 'Ambiental'),
+    (8, 'Trabajo Decente y Crecimiento Económico', 'Económica'),
+    (9, 'Industria, Innovación e Infraestructura', 'Económica'),
+    (10, 'Reducción de las Desigualdades', 'Económica'),
+    (11, 'Ciudades y Comunidades Sostenibles', 'Ambiental'),
+    (12, 'Producción y Consumo Responsables', 'Ambiental'),
+    (13, 'Acción por el Clima', 'Ambiental'),
+    (14, 'Vida Submarina', 'Sin asignar'),
+    (15, 'Vida de Ecosistemas Terrestres', 'Sin asignar'),
+    (16, 'Paz, Justicia e Instituciones Sólidas', 'Económica'),
+    (17, 'Alianzas para Lograr los Objetivos', 'Social');
 
 
-INSERT INTO meta (id, ods_id, descripcion) VALUES
-(1, 1, 'Fomentar la educación digital'),
-(2, 2, 'Reducir la brecha educativa');
+    INSERT INTO meta (id, ods_id, descripcion) VALUES
+    (1, 1, 'Fomentar la educación digital'),
+    (2, 2, 'Reducir la brecha educativa');
 
-INSERT INTO clase (id, nombre) VALUES
-(1, '1. DAM'),
-(2, '2. DAM');
+    INSERT INTO clase (id, nombre) VALUES
+    (1, '1. DAM'),
+    (2, '2. DAM');
 
-INSERT INTO modulo (id, clase_id, nombre) VALUES
-(1, 'Diseño de Intefaces'),
-(2, 'Sistemas de gestión empresarial'),
-(3, 'Acceso a datos'),
-(4, 'Prog. servicios y procesos'),
-(5, 'Ingles II'),
-(6, 'Prog. Multimedia en dispositivos móviles'),
-(7, 'Empresa e iniciativa emprendedora'),
-(8, 'Desarrollo Web'),
-(9, 'Lenguaje de Marcas'),
-(10, 'Programacion'),
-(11, 'Bases de datos'),
-(12, 'Ingles I'),
-(13, 'Sistemas informaticos'),
-(14, 'Entornos de desarrollo'),
-(15, 'Fol'),
-(16, 'Digitalización aplicada a los sectores productivos'),
-(17, 'Sostenibilidad aplicada al sistema productivo'),
-(18, 'Itinerario personal para la empleabilidad');
+    INSERT INTO modulo (id, nombre) VALUES
+    (1, 'Diseño de Intefaces'),
+    (2, 'Sistemas de gestión empresarial'),
+    (3, 'Acceso a datos'),
+    (4, 'Prog. servicios y procesos'),
+    (5, 'Ingles II'),
+    (6, 'Prog. Multimedia en dispositivos móviles'),
+    (7, 'Empresa e iniciativa emprendedora'),
+    (8, 'Desarrollo Web'),
+    (9, 'Lenguaje de Marcas'),
+    (10, 'Programacion'),
+    (11, 'Bases de datos'),
+    (12, 'Ingles I'),
+    (13, 'Sistemas informaticos'),
+    (14, 'Entornos de desarrollo'),
+    (15, 'Fol'),
+    (16, 'Digitalización aplicada a los sectores productivos'),
+    (17, 'Sostenibilidad aplicada al sistema productivo'),
+    (18, 'Itinerario personal para la empleabilidad');
 
-INSERT INTO profesor (id, nombre) VALUES
-(1, 'Maria Martin'),
-(2, 'Miguel Goyena'),
-(3, 'David Noya'),
-(4, 'Iban Sarria'),
-(5, 'Merche Arozarena'),
-(6, 'Arantxa Artuch'),
-(7, 'Abilio Diaz'),
-(8, 'Ana Ramos'),
-(9, 'Silvia Sanz'),
-(10, 'Amaia Ayucar'),
-(11, 'Luis Aguero'),
-(12, 'Kike Arizuren'),
-(13, 'Itziar Ecenarro'),
-(14, 'Elena Huarte'),
-(15, 'Igor Iturralde'),
-(16, 'Juan Carlos Lana'),
-(17, 'Fernando Oscoz'),
-(19, 'Juan Pelaez'),
-(20, 'Iban Zabalza'),
-(21, 'Alberto Aguinaga'),
-(22, 'Daniel Duran');
+    INSERT INTO profesor (id, nombre) VALUES
+    (1, 'Maria Martin'),
+    (2, 'Miguel Goyena'),
+    (3, 'David Noya'),
+    (4, 'Iban Sarria'),
+    (5, 'Merche Arozarena'),
+    (6, 'Arantxa Artuch'),
+    (7, 'Abilio Diaz'),
+    (8, 'Ana Ramos'),
+    (9, 'Silvia Sanz'),
+    (10, 'Amaia Ayucar'),
+    (11, 'Luis Aguero'),
+    (12, 'Kike Arizuren'),
+    (13, 'Itziar Ecenarro'),
+    (14, 'Elena Huarte'),
+    (15, 'Igor Iturralde'),
+    (16, 'Juan Carlos Lana'),
+    (17, 'Fernando Oscoz'),
+    (19, 'Juan Pelaez'),
+    (20, 'Iban Zabalza'),
+    (21, 'Alberto Aguinaga'),
+    (22, 'Daniel Duran');
 
-INSERT INTO entidad_externa (id, nombre) VALUES
-(1, 'Universidad Nacional'),
-(2, 'Centro de Innovación');
+    INSERT INTO entidad_externa (id, nombre) VALUES
+    (1, 'Universidad Nacional'),
+    (2, 'Centro de Innovación');
 
-INSERT INTO iniciativa (id, tipo, horas, nombre, explicacion, fecha_inicio, fecha_fin, eliminado, imagen, fecha_registro, innovador, anyo_lectivo, mas_comentarios) 
-VALUES 
-(1, 'Investigación sobre IA', 50, 'IA en educación', 'Informe de IA', '2025-01-01', '2025-06-01', 0, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVUGdra5SfyyJUvZ-mWByvoY1gEwp0df8NLA&s', DATE_FORMAT(CURRENT_DATE, '%Y-%m-%d'), 1, '2024-2025', 'comentario'),
-(2, 'Desarrollo de software', 60, 'Plataforma educativa', 'Prototipo funcional', '2025-02-01', '2025-07-01', 0, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVUGdra5SfyyJUvZ-mWByvoY1gEwp0df8NLA&s', DATE_FORMAT(CURRENT_DATE, '%Y-%m-%d'), 1, '2024-2025', 'comentario');
+    INSERT INTO iniciativa (id, tipo, horas, nombre, explicacion, fecha_inicio, fecha_fin, eliminado, imagen, fecha_registro, innovador, anyo_lectivo, mas_comentarios) 
+    VALUES 
+    (1, 'Investigación sobre IA', 50, 'IA en educación', 'Informe de IA', '2025-01-01', '2025-06-01', 0, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVUGdra5SfyyJUvZ-mWByvoY1gEwp0df8NLA&s', DATE_FORMAT(CURRENT_DATE, '%Y-%m-%d'), 1, '2024-2025', 'comentario'),
+    (2, 'Desarrollo de software', 60, 'Plataforma educativa', 'Prototipo funcional', '2025-02-01', '2025-07-01', 0, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVUGdra5SfyyJUvZ-mWByvoY1gEwp0df8NLA&s', DATE_FORMAT(CURRENT_DATE, '%Y-%m-%d'), 1, '2024-2025', 'comentario');
 
-INSERT INTO moduloclase (id, modulo_id, clase_id) VALUES
-(1, 1, 2),
-(2, 2, 2),
-(3, 3, 2),
-(4, 4, 2),
-(5, 5, 2),
-(6, 6, 2),
-(7, 7, 2),
-(8, 8, 2),
-(9, 9, 1),
-(10, 10, 1),
-(11, 11, 1),
-(12, 12, 1),
-(13, 13, 1),
-(14, 14, 1),
-(15, 15, 1),
-(16, 16, 1),
-(17, 17, 1),
-(18, 18, 1);
+    INSERT INTO modulo_clase (id, modulo_id, clase_id) VALUES
+    (1, 1, 2),
+    (2, 2, 2),
+    (3, 3, 2),
+    (4, 4, 2),
+    (5, 5, 2),
+    (6, 6, 2),
+    (7, 7, 2),
+    (8, 8, 2),
+    (9, 9, 1),
+    (10, 10, 1),
+    (11, 11, 1),
+    (12, 12, 1),
+    (13, 13, 1),
+    (14, 14, 1),
+    (15, 15, 1),
+    (16, 16, 1),
+    (17, 17, 1),
+    (18, 18, 1);
 
-INSERT INTO redes_sociales (id, nombre, enlace) VALUES
-(1, 'twitter', 'enlace1'),
-(2, 'facebook', 'enlace2');
+    INSERT INTO redes_sociales (id, nombre, enlace) VALUES
+    (1, 'twitter', 'enlace1'),
+    (2, 'facebook', 'enlace2');
 
-INSERT INTO iniciativa_redes_sociales (id, iniciativa_id, redes_sociales_id) VALUES
-(1, 1, 1),
-(2, 2, 2);
+    INSERT INTO iniciativa_redes_sociales (id, iniciativa_id, redes_sociales_id) VALUES
+    (1, 1, 1),
+    (2, 2, 2);
 
-INSERT INTO iniciativa_modulo (id, iniciativa_id, modulo_id) VALUES
-(1, 1, 3),
-(2, 2, 4);
+    INSERT INTO iniciativa_modulo (id, iniciativa_id, modulo_id) VALUES
+    (1, 1, 3),
+    (2, 2, 4);
 
-INSERT INTO profesor_iniciativa (id, iniciativa_id, profesor_id) VALUES
-(1, 1, 1),
-(2, 2, 2);
+    INSERT INTO profesor_iniciativa (id, iniciativa_id, profesor_id) VALUES
+    (1, 1, 1),
+    (2, 2, 2);
 
-INSERT INTO entidad_externa_iniciativa (id, iniciativa_id, entidad_id) VALUES
-(1, 1, 1),
-(2, 2, 2);
+    INSERT INTO entidad_externa_iniciativa (id, iniciativa_id, entidad_id) VALUES
+    (1, 1, 1),
+    (2, 2, 2);
 
-INSERT INTO meta_iniciativa (id, cod_iniciativa_id, id_metas_id) VALUES
-(1, 1, 1),
-(2, 2, 2);
+    INSERT INTO meta_iniciativa (id, cod_iniciativa_id, id_metas_id) VALUES
+    (1, 1, 1),
+    (2, 2, 2);

@@ -31,14 +31,12 @@ final class IndicadoresController extends AbstractController
         
     } 
 
-
     // GET Indicador 4
     #[Route('/indicadores/explicacionIniciativas', methods: ['GET'])]
     public function getDescripcionIniciativa(): JsonResponse
     {
         return $this->indicadoresService->getDescripcionIniciativa();    
     } 
-
 
     // GET Indicador 6
     #[Route('/indicadores/tieneEntidadesExternas/{id}', methods: ['GET'])]
@@ -47,12 +45,18 @@ final class IndicadoresController extends AbstractController
         return $this->indicadoresService->getHaColaboradoEntidadExterna($id);    
     } 
 
-
     // GET Indicador 7
     #[Route('/indicadores/haColaboradoEntidadExterna/{id}', methods: ['GET'])]
     public function getRedesSociales(int $id): JsonResponse
     {
         return $this->indicadoresService->getRedesSociales($id);    
+    } 
+
+    // GET Indicador 8
+    #[Route('/indicadores/tipo/{id}', methods: ['GET'])]
+    public function getTipo(int $idTipo): JsonResponse
+    {
+        return $this->indicadoresService->getTipo($idTipo);    
     } 
     
 }

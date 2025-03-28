@@ -27,24 +27,24 @@ INSERT INTO clase (id, nombre) VALUES
 (2, '2. DAM');
 
 INSERT INTO modulo (id, clase_id, nombre) VALUES
-(1, 2, 'Diseño de Intefaces'),
-(2, 2, 'Sistemas de gestión empresarial'),
-(3, 2, 'Acceso a datos'),
-(4, 2, 'Prog. servicios y procesos'),
-(5, 2, 'Ingles II'),
-(6, 2, 'Prog. Multimedia en dispositivos móviles'),
-(7, 2, 'Empresa e iniciativa emprendedora'),
-(8, 2, 'Desarrollo Web'),
-(9, 1, 'Lenguaje de Marcas'),
-(10, 1, 'Programacion'),
-(11, 1, 'Bases de datos'),
-(12, 1, 'Ingles I'),
-(13, 1, 'Sistemas informaticos'),
-(14, 1, 'Entornos de desarrollo'),
-(15, 1, 'Fol'),
-(16, 1, 'Digitalización aplicada a los sectores productivos'),
-(17, 1, 'Sostenibilidad aplicada al sistema productivo'),
-(18, 1, 'Itinerario personal para la empleabilidad');
+(1, 'Diseño de Intefaces'),
+(2, 'Sistemas de gestión empresarial'),
+(3, 'Acceso a datos'),
+(4, 'Prog. servicios y procesos'),
+(5, 'Ingles II'),
+(6, 'Prog. Multimedia en dispositivos móviles'),
+(7, 'Empresa e iniciativa emprendedora'),
+(8, 'Desarrollo Web'),
+(9, 'Lenguaje de Marcas'),
+(10, 'Programacion'),
+(11, 'Bases de datos'),
+(12, 'Ingles I'),
+(13, 'Sistemas informaticos'),
+(14, 'Entornos de desarrollo'),
+(15, 'Fol'),
+(16, 'Digitalización aplicada a los sectores productivos'),
+(17, 'Sostenibilidad aplicada al sistema productivo'),
+(18, 'Itinerario personal para la empleabilidad');
 
 INSERT INTO profesor (id, nombre) VALUES
 (1, 'Maria Martin'),
@@ -77,6 +77,26 @@ INSERT INTO iniciativa (id, tipo, horas, nombre, explicacion, fecha_inicio, fech
 VALUES 
 (1, 'Investigación sobre IA', 50, 'IA en educación', 'Informe de IA', '2025-01-01', '2025-06-01', 0, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVUGdra5SfyyJUvZ-mWByvoY1gEwp0df8NLA&s', DATE_FORMAT(CURRENT_DATE, '%Y-%m-%d'), 1, '2024-2025', 'comentario'),
 (2, 'Desarrollo de software', 60, 'Plataforma educativa', 'Prototipo funcional', '2025-02-01', '2025-07-01', 0, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVUGdra5SfyyJUvZ-mWByvoY1gEwp0df8NLA&s', DATE_FORMAT(CURRENT_DATE, '%Y-%m-%d'), 1, '2024-2025', 'comentario');
+
+INSERT INTO moduloclase (id, modulo_id, clase_id) VALUES
+(1, 1, 2),
+(2, 2, 2),
+(3, 3, 2),
+(4, 4, 2),
+(5, 5, 2),
+(6, 6, 2),
+(7, 7, 2),
+(8, 8, 2),
+(9, 9, 1),
+(10, 10, 1),
+(11, 11, 1),
+(12, 12, 1),
+(13, 13, 1),
+(14, 14, 1),
+(15, 15, 1),
+(16, 16, 1),
+(17, 17, 1),
+(18, 18, 1);
 
 INSERT INTO redes_sociales (id, nombre, enlace) VALUES
 (1, 'twitter', 'enlace1'),

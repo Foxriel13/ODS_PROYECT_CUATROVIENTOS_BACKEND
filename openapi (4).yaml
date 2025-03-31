@@ -706,8 +706,11 @@ paths:
       responses:
         '404':
           description: Actividad no encontrada
+    #INDICADOR 1
   /indicadores/iniciativasPorCurso/{idCurso}:
     get:
+      tags:
+        - Indicadores
       summary: Obtener iniciativas dirigidas a los ODS por curso académico
       description: Devuelve los nombres de las iniciativas realizadas en un curso específico.
       parameters:
@@ -726,6 +729,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Iniciativa'
+    #INDICADOR 2
   /indicadores/cantidadIniciativas:
     get:
       tags:
@@ -743,6 +747,25 @@ paths:
                   $ref: '#/components/schemas/Count'
         '400':
           description: Algún problema con el servidor
+    #INDICADOR 3
+  /indicadores/ciclosYModulosConInciativas:
+    get:
+      tags:
+        - Indicadores
+      summary: Que Ciclos y sus modulos han hecho iniciativas
+      operationId: getCiclosYModulosConIniciativas
+      responses:
+        '200':
+          description: Lista de cursos con sus modulos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/IniciativasPorCiclosYModulos'
+        '400':
+          description: Algún problema con el servidor
+    #INDICADOR 4
   /indicadores/explicacionIniciativas:
     get:
       tags:
@@ -760,9 +783,29 @@ paths:
                   $ref: '#/components/schemas/Explicacion'
         '400':
           description: Algún problema con el servidor
-            
+    #INDICADOR 5
+  /indicadores/odsTrabajadosYSusMetas:
+    get:
+      tags:
+        - Indicadores
+      summary: Lista de Iniciativas con ODS y las metas que trabajan
+      operationId: getODStrabajadosYSusMetas
+      responses:
+        '200':
+          description: Lista de Iniciativas con ODS y las metas que trabajan
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OdsYMetasDeInciativa'
+        '400':
+          description: Algún problema con el servidor
+    #INDICADOR 6        
   /indicadores/tieneEntidadesExternas/{idIniciativa}:
     get:
+      tags: 
+        - Indicadores
       summary: Obtener si la iniciativa cuenta con entidades externas
       description: Devuelve un booleano de si la iniciativa tiene entidades externas
       parameters:
@@ -781,8 +824,11 @@ paths:
                 type: boolean
                 items:
                   $ref: '#/components/schemas/HayEntidadesExternas'
+    #INDICADOR 7
   /indicadores/tieneRRSS/{idIniciativa}:
     get:
+      tags:
+        - Indicadores
       summary: Obtener si la iniciativa cuenta con redes sociales
       description: Devuelve una lista de si la iniciativa tiene redes sociales
       parameters:
@@ -801,10 +847,14 @@ paths:
                 type: boolean
                 items:
                   $ref: '#/components/schemas/Redes_sociales'
-  /indicadores/tieneRRSS/{tipo_iniciativa}:
+                  
+    #INDICADOR: 8              
+  /indicadores/tipoIniciativa/{tipo_iniciativa}:
     get:
-      summary: Obtener si la iniciativa cuenta con redes sociales
-      description: Devuelve una lista de si la iniciativa tiene redes sociales
+      tags:
+        - Indicadores
+      summary: Obtener las iniciativas de ese tipo
+      description: Obtener las iniciativas de ese tipo
       parameters:
         - name: tipo_iniciativa
           in: path
@@ -964,11 +1014,51 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Redes_sociales'
-        
+    #Body para el 2do Indicador
     Count:
       type: integer
       example: 2
-
+    
+    #Bodies para el 3er Indicador
+    IniciativasPorCiclosYModulos:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        nombre_iniciativa:
+          type: string
+          example: Iniciativa1
+        ciclos:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ciclos3'
+            
+    Ciclos3:
+      type: object
+      properties:
+        id_ciclo:
+          type: integer
+          example: 2
+        nombre_ciclo:
+          type: string
+          example: Ciclo1
+        modulos: 
+          type: array
+          items:
+            $ref: '#/components/schemas/Modulos3'
+            
+    Modulos3:
+      type: object
+      properties:
+        id_modulo:
+          type: integer
+          example: 1
+        nombre_modulo:
+          type: string
+          example: Modulo1
+   
+   #Body para el 4to Indicador
     Explicacion:
       type: string
       properties:
@@ -978,7 +1068,40 @@ components:
         explicacion:
           type: string
           example: "Explicación para la iniciativa"
-      
+    
+    #Bodies para el 5to indicador
+    OdsYMetasDeInciativa:
+      type: object
+      properties:
+        nombre_Inciativa:
+          type: string
+          example: Iniciativa1
+        ods:
+          type: array
+          items:
+            $ref: "#/components/schemas/Ods5"
+    
+    Ods5:
+      type: object
+      properties:
+        nombre_ods:
+          type: string
+          example: Acción por el clima
+        metas:
+          type: array
+          items:
+            $ref: "#/components/schemas/Metas5"
+          
+          
+    Metas5:
+      type: object
+      properties:
+        nombre_meta:
+          type: string
+          example: Ayudar a los bosques de navarra
+    
+    
+    #Body para el 6to Indicador
     HayEntidadesExternas:
       type: boolean
       example: false
@@ -1115,6 +1238,3 @@ components:
         nombre:
           type: string
           example: "GreenTech International"
-          
-          
-          

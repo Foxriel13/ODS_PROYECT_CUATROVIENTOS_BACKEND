@@ -17,10 +17,10 @@ final class IndicadoresController extends AbstractController
     }
 
     // GET Indicador 1
-    #[Route('/indicadores/iniciativasPorCurso/{idCurso}', methods: ['GET'])]
-    public function getIniciativasPorCurso(int $idCurso): JsonResponse
+    #[Route('/indicadores/iniciativasPorCurso', methods: ['GET'])]
+    public function getIniciativasPorCurso(): JsonResponse
     {
-        return $this->indicadoresService->getIniciativasPorCurso($idCurso);    
+        return $this->indicadoresService->getIniciativasPorCurso();    
     } 
 
     // GET Indicador 2
@@ -46,10 +46,10 @@ final class IndicadoresController extends AbstractController
     } 
 
     // GET Indicador 7
-    #[Route('/indicadores/haColaboradoEntidadExterna/{id}', methods: ['GET'])]
+    #[Route('/indicadores/haColaboradoEntidadExterna', methods: ['GET'])]
     public function getRedesSociales(int $id): JsonResponse
     {
-        return $this->indicadoresService->getRedesSociales($id);    
+        return $this->indicadoresService->getDifusionIniciativas();    
     } 
 
     // GET Indicador 8

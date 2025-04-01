@@ -707,28 +707,23 @@ paths:
         '404':
           description: Actividad no encontrada
     #INDICADOR 1
-  /indicadores/iniciativasPorCurso/{idCurso}:
+  /indicadores/iniciativasPorCurso:
     get:
       tags:
         - Indicadores
-      summary: Obtener iniciativas dirigidas a los ODS por curso académico
-      description: Devuelve los nombres de las iniciativas realizadas en un curso específico.
-      parameters:
-        - name: idCurso
-          in: path
-          required: true
-          schema:
-            type: integer
-          description: ID del curso académico
+      summary: La cantidad de inicativas hechas por año lectivo
+      operationId: getIniciativasPorCurso
       responses:
-        "200":
-          description: Lista de iniciativas
+        '200':
+          description: Lista de años y la cantidad de iniciativas
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Iniciativa'
+                  $ref: '#/components/schemas/IniciativasPorCurso'
+        '400':
+          description: Algún problema con el servidor
     #INDICADOR 2
   /indicadores/cantidadIniciativas:
     get:
@@ -742,9 +737,7 @@ paths:
           content:
             application/json:
               schema:
-                type: integer
-                items:
-                  $ref: '#/components/schemas/Count'
+                $ref: '#/components/schemas/Count'
         '400':
           description: Algún problema con el servidor
     #INDICADOR 3
@@ -802,75 +795,148 @@ paths:
         '400':
           description: Algún problema con el servidor
     #INDICADOR 6        
-  /indicadores/tieneEntidadesExternas/{idIniciativa}:
+  /indicadores/tieneEntidadesExternas:
     get:
-      tags: 
+      tags:
         - Indicadores
-      summary: Obtener si la iniciativa cuenta con entidades externas
-      description: Devuelve un booleano de si la iniciativa tiene entidades externas
-      parameters:
-        - name: idIniciativa
-          in: path
-          required: true
-          schema:
-            type: integer
-          description: ID de la iniciativa
+      summary: Información sobre la cantidad de iniciativas con y sin entidades externas
+      operationId: getTieneEntidadesExternas
       responses:
-        "200":
-          description: Si tiene Entidades externas
+        '200':
+          description: Cantidad de Iniciativas con y sin entidades externas
           content:
             application/json:
               schema:
-                type: boolean
-                items:
-                  $ref: '#/components/schemas/HayEntidadesExternas'
+                $ref: '#/components/schemas/HayEntidadesExternas'
+        '400':
+          description: Algún problema con el servidor
     #INDICADOR 7
-  /indicadores/tieneRRSS/{idIniciativa}:
+  /indicadores/tieneRRSS:
     get:
       tags:
         - Indicadores
-      summary: Obtener si la iniciativa cuenta con redes sociales
-      description: Devuelve una lista de si la iniciativa tiene redes sociales
-      parameters:
-        - name: idIniciativa
-          in: path
-          required: true
-          schema:
-            type: integer
-          description: ID de la iniciativa
+      summary: Las iniciativas, sus redes sociales y los enlaces
+      operationId: getRRSSdeIniciativa
       responses:
-        "200":
-          description: Si tiene RRSS
-          content:
-            application/json:
-              schema:
-                type: boolean
-                items:
-                  $ref: '#/components/schemas/Redes_sociales'
-                  
-    #INDICADOR: 8              
-  /indicadores/tipoIniciativa/{tipo_iniciativa}:
-    get:
-      tags:
-        - Indicadores
-      summary: Obtener las iniciativas de ese tipo
-      description: Obtener las iniciativas de ese tipo
-      parameters:
-        - name: tipo_iniciativa
-          in: path
-          required: true
-          schema:
-            type: string
-          description: Tipo de la iniciativa
-      responses:
-        "200":
-          description: Que saque info dependiendo del tipo de iniciativa
+        '200':
+          description: Lista de Iniciativas RRSS y enlaces
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Iniciativa'
+                  $ref: '#/components/schemas/RRSSPorInciativa'
+        '400':
+          description: Algún problema con el servidor
+                  
+    #INDICADOR 8              
+  /indicadores/tipoIniciativa:
+    get:
+      tags:
+        - Indicadores
+      summary: Cantidad de iniciativas por tipo
+      operationId: getTiposIniciativas
+      responses:
+        '200':
+          description: Lista de iniciativas por tipo
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TiposIniciativa'
+        '400':
+          description: Algún problema con el servidor
+          
+    #INDICADOR 10.1
+  /indicadores/cantProfesores:
+    get:
+      tags:
+        - Indicadores
+      summary: Cantidad de profesores
+      operationId: getCantidadDeProfesores
+      responses:
+        '200':
+          description: Cantidad de profesores
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Count'
+        '400':
+          description: Algún problema con el servidor
+          
+    #INDICADOR 10.2
+  /indicadores/cantIniciativasProfesor:
+    get:
+      tags:
+        - Indicadores
+      summary: Cantidad de iniciativas por profesor
+      operationId: getCantidadDeIniciativasPorProfesor
+      responses:
+        '200':
+          description: Cantidad de Iniciativas por profesor
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CantIniciativasPorProfesores'
+        '400':
+          description: Algún problema con el servidor
+          
+          
+    #INDICADOR 11
+  /indicadores/diferenciaInnovadoresYNo:
+    get:
+      tags:
+        - Indicadores
+      summary: Cantidad iniciativas si y no innovadoras
+      operationId: getDiferenciaInnovadoras
+      responses:
+        '200':
+          description: Cantidad de Iniciativas innovadoras y no innovadoras
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DifereciaEntreInnovadoraYNo'
+        '400':
+          description: Algún problema con el servidor
+          
+    #INDICADOR 12
+  /indicadores/cantHorasIniciativa:
+    get:
+      tags:
+        - Indicadores
+      summary: Cantidad de Horas por cada Actividad
+      operationId: getHorasActividad
+      responses:
+        '200':
+          description: Cantidad de horas de cada Iniciativa
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CantidadHorasPorIniciativas'
+        '400':
+          description: Algún problema con el servidor
+          
+    #INDICADOR 13
+  /indicadores/haTendioActividad:
+    get:
+      tags:
+        - Indicadores
+      summary: Dos contadores para diferenciar las iniciativas con y sin actividades
+      operationId: getIniciativasActividad
+      responses:
+        '200':
+          description: Cant de iniciativas q tienen y q no tienen actividades
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HaTendioActividad'
+        '400':
+          description: Algún problema con el servidor
 components:
   schemas:
     Ods:
@@ -1014,7 +1080,19 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Redes_sociales'
-    #Body para el 2do Indicador
+            
+            
+    #Body para el 1er Indicador
+    IniciativasPorCurso:
+      type: object
+      properties:
+        nombreCurso:
+          type: string
+          example: Curso1
+        numIniciativas:
+          type: integer
+          
+    #Body para el 2doy 10.1avo Indicador
     Count:
       type: integer
       example: 2
@@ -1060,11 +1138,11 @@ components:
    
    #Body para el 4to Indicador
     Explicacion:
-      type: string
+      type: object
       properties:
-        id: 
-          type: integer
-          example: 1
+        nombre: 
+          type: string
+          example: "Mercadillo Navideño"
         explicacion:
           type: string
           example: "Explicación para la iniciativa"
@@ -1103,8 +1181,91 @@ components:
     
     #Body para el 6to Indicador
     HayEntidadesExternas:
-      type: boolean
-      example: false
+      type: object
+      properties: 
+        tiene_entidades:
+          type: integer
+          example: 2
+        no_tiene_entidades:
+          type: integer
+          example: 1
+          
+    #Bodies para el 7mo Indicador
+    RRSSPorInciativa:
+      type: object
+      properties:
+        nombre_iniciativa:
+          type: string
+          example: "Mercado Navideño"
+        redes_sociales:
+          type: array
+          items:
+            $ref: "#/components/schemas/RRSS7"
+            
+    RRSS7:
+      type: object
+      properties: 
+        nombreRRSS:
+          type: string
+          example: "Twitter"
+        enlace:
+          type: string
+          example: "https://x.com/?lang=es"
+    
+    #Body del 8vo Indicador
+    TiposIniciativa:
+      type: object
+      properties:
+        tipo:
+          type: string
+          example: "Excursión"
+        cantidad:
+          type: integer
+          example: 3
+          
+    #Body del 10.2avo Indicador
+    CantIniciativasPorProfesores:
+      type: object
+      properties:
+        nombre_profesor:
+          type: string
+          example: "Fernando Alonso"
+        cantDeIniciativas:
+          type: integer
+          example: 33
+          
+    #Body del 11avo Indicador
+    DifereciaEntreInnovadoraYNo:
+      type: object
+      properties:
+        cantidad_innovadoras:
+          type: integer
+          example: 4
+        cantidad_no_innovadores:
+          type: integer
+          example: 2
+          
+    #Body del 12do Indicador
+    CantidadHorasPorIniciativas:
+      type: object
+      properties:
+        nombre_iniciativa:
+          type: string
+          example: "Mercado Navideño"
+        horas_dedicadas:
+          type: integer
+          example: 9
+          
+    #Body del 13avo Indicador
+    HaTendioActividad:
+      type: object
+      properties:
+        tiene_actividades:
+          type: integer
+          example: 2
+        no_tiene_actividades:
+          type: integer
+          example: 4
         
     NewIniciativa:
       type: object

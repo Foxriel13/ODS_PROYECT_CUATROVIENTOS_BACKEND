@@ -17,20 +17,30 @@ class IndicadoresService
     }
 
     // GET Indicador 1
-    public function getIniciativasPorCurso(int $id): JsonResponse
+    public function getIniciativasPorCurso(): JsonResponse
     {
-        $iniciativas = $this->entityManager->getRepository(Iniciativa::class)->findByCurso($id);
+        $iniciativas = $this->entityManager->getRepository(Iniciativa::class)->findAll();
 
         if (!$iniciativas) {
             return new JsonResponse(['message' => 'No se han encontrado iniciativas'], Response::HTTP_NOT_FOUND);
         }
 
-        $data = array_map(fn($iniciativa) => $this->formatIniciativa($iniciativa), $iniciativas);
+        $resultados = [];
+        foreach ($iniciativas as $iniciativa) {
+
+            $clase = $iniciativa->getModulos()->getModulo()->getCurso()->getModuloClases();
+
+            if (!isset($data[$clase])) {
+                $data[$clase] = ['numIniciativas' => 0];
+            }
+
+            $data[$clase]['numIniciativas']++;
+        }
 
         return new JsonResponse($data);
     }
 
-    // GET Indicador 2
+    // GET Indicador 2: Done
     public function getNumeroIniciativas(): JsonResponse
     {
         $iniciativas = $this->entityManager->getRepository(Iniciativa::class)->findAll();
@@ -39,12 +49,14 @@ class IndicadoresService
             return new JsonResponse(['message' => 'No se han encontrado iniciativas'], Response::HTTP_NOT_FOUND);
         }
 
-        $data = count($iniciativas);
+        $data = [
+            'numero_iniciativas' => count($iniciativas)
+        ];
 
         return new JsonResponse($data);
     }
 
-    // GET Indicador 4
+    // GET Indicador 4: Done
     public function getDescripcionIniciativa(): JsonResponse
     {
         $iniciativas = $this->entityManager->getRepository(Iniciativa::class)->findAll();
@@ -55,7 +67,10 @@ class IndicadoresService
     
         $data = [];
         foreach ($iniciativas as $iniciativa) {
-            $data[] = $iniciativa->getExplicacion();
+            $data[] = [
+                'Nombre' => $iniciativa->getNombre(),
+                'Descripción' => $iniciativa->getExplicacion()
+            ];
         }
     
         return new JsonResponse($data);
@@ -63,7 +78,7 @@ class IndicadoresService
     
 
 
-    // GET Indicador 6
+    // GET Indicador 6: Done 
     public function getHaColaboradoEntidadExterna(int $id): JsonResponse
     {
         $iniciativa = $this->entityManager->getRepository(Iniciativa::class)->findById($id);
@@ -84,22 +99,35 @@ class IndicadoresService
     }
 
     // GET Indicador 7
-    public function getRedesSociales(int $id): JsonResponse
+    public function getDifusionIniciativas(): JsonResponse
     {
-        $iniciativa = $this->entityManager->getRepository(Iniciativa::class)->findById($id);
-
-        if (!$iniciativa) {
+        // Obtenemos todas las iniciativas
+        $iniciativas = $this->entityManager->getRepository(Iniciativa::class)->findAll();
+    
+        if (!$iniciativas) {
             return new JsonResponse(['message' => 'No se han encontrado iniciativas'], Response::HTTP_NOT_FOUND);
         }
-
-        $redesSociales = $iniciativa->getIniciativaRedesSociales();
-
-        if (count($redesSociales) == 0) {
-            return new JsonResponse(['message' => "La iniciativa con id $id no tiene Redes Sociales"], Response::HTTP_NOT_FOUND);
-        }else{
-            $data = $redesSociales;
+    
+        $data = [];
+    
+        foreach ($iniciativas as $iniciativa) {
+            $redesSociales = $iniciativa->getIniciativaRedesSociales()->getRedesSociales();
+    
+            if (count($redesSociales) > 0) {
+                foreach ($redesSociales as $redSocial) {
+                    $data[] = [
+                        'nombre_iniciativa'      => $iniciativa->getNombre(),
+                        'red_social'      => $redSocial->getNombre(),
+                        'enlace'          => $redSocial->getEnlace()
+                    ];
+                }
+            }
         }
-
+    
+        if (empty($data)) {
+            return new JsonResponse(['message' => 'No hay iniciativas difundidas'], Response::HTTP_NOT_FOUND);
+        }
+    
         return new JsonResponse($data);
     }
 

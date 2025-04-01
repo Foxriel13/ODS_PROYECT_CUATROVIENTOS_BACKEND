@@ -6,7 +6,6 @@ use App\Repository\ODSRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Proxies\__CG__\App\Entity\Meta;
 use Symfony\Component\Serializer\Annotation\Ignore;
 
 #[ORM\Entity(repositoryClass: ODSRepository::class)]

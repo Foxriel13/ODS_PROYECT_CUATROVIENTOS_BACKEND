@@ -39,15 +39,15 @@ final class IndicadoresController extends AbstractController
     } 
 
     // GET Indicador 6
-    #[Route('/indicadores/tieneEntidadesExternas/{id}', methods: ['GET'])]
-    public function getHaColaboradoEntidadExterna(int $id): JsonResponse
+    #[Route('/indicadores/tieneEntidadesExternas', methods: ['GET'])]
+    public function getTieneEntidadesExternas(): JsonResponse
     {
-        return $this->indicadoresService->getHaColaboradoEntidadExterna($id);    
+        return $this->indicadoresService->getHaColaboradoEntidadExterna();    
     } 
 
     // GET Indicador 7
-    #[Route('/indicadores/haColaboradoEntidadExterna', methods: ['GET'])]
-    public function getRedesSociales(int $id): JsonResponse
+    #[Route('/indicadores/tieneRRSS', methods: ['GET'])]
+    public function getRRSSdeIniciativa(): JsonResponse
     {
         return $this->indicadoresService->getDifusionIniciativas();    
     } 

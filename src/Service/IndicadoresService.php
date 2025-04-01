@@ -7,6 +7,8 @@ use App\Entity\Iniciativa;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use App\Repository\IniciativaRepository;
+
 
 class IndicadoresService
 {
@@ -14,30 +16,33 @@ class IndicadoresService
     public function __construct(private EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
+        $this->iniciativaRepository = $iniciativaRepository;
+
     }
 
     // GET Indicador 1
     public function getIniciativasPorCurso(): JsonResponse
     {
-        $iniciativas = $this->entityManager->getRepository(Iniciativa::class)->findAll();
+        $aniosLectivos = $this->iniciativaRepository->findAniosLectivos();
+        $conteoIniciativas = $this->iniciativaRepository->countIniciativasPorAnio();
 
-        if (!$iniciativas) {
-            return new JsonResponse(['message' => 'No se han encontrado iniciativas'], Response::HTTP_NOT_FOUND);
-        }
-
-        $resultados = [];
-        foreach ($iniciativas as $iniciativa) {
-
-            $clase = $iniciativa->getModulos()->getModulo()->getCurso()->getModuloClases();
-
-            if (!isset($data[$clase])) {
-                $data[$clase] = ['numIniciativas' => 0];
+        $resultado = [];
+        foreach ($aniosLectivos as $anyoLectivo) {
+            $totalIniciativas = 0;
+            foreach ($conteoIniciativas as $conteo) {
+                if ($conteo['anyoLectivo'] === $anyoLectivo) {
+                    $totalIniciativas = $conteo['total'];
+                    break;
+                }
             }
 
-            $data[$clase]['numIniciativas']++;
+            $resultado[] = [
+                'nombreCurso' => $anyoLectivo,
+                'numIniciativas' => $totalIniciativas
+            ];
         }
 
-        return new JsonResponse($data);
+        return new JsonResponse($resultado);
     }
 
     // GET Indicador 2: Done
@@ -79,21 +84,28 @@ class IndicadoresService
 
 
     // GET Indicador 6: Done 
-    public function getHaColaboradoEntidadExterna(int $id): JsonResponse
+    public function getHaColaboradoEntidadExterna(): JsonResponse
     {
-        $iniciativa = $this->entityManager->getRepository(Iniciativa::class)->findById($id);
+        $iniciativas = $this->entityManager->getRepository(Iniciativa::class)->findAll();
 
-        if (!$iniciativa) {
+        if (!$iniciativas) {
             return new JsonResponse(['message' => 'No se han encontrado iniciativas'], Response::HTTP_NOT_FOUND);
         }
-
-        $entidadesExternas = $iniciativa->getEntidadesExternas();
-
-        if (count($entidadesExternas) == 0) {
-            $data = false;
-        }else{
-            $data = true;
+        $tiene = 0;
+        $notiene = 0;
+        foreach ($iniciativas as $iniciativa) {
+            $entidadesExternas = $iniciativas->getEntidadesExternas();
+            if (count($entidadesExternas) == 0) {
+                $notiene += 1;
+            }else{
+                $tiena += 1;
+            }
         }
+
+        $data[] = [
+            'tiene_entidades' => $tiene,
+            'no_tiene_entidades' => $notiene
+        ];
 
         return new JsonResponse($data);
     }

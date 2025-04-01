@@ -28,14 +28,24 @@ class IniciativaRepository extends ServiceEntityRepository
         return $this->findBy(['eliminado' => false]);
     }
 
-    public function findByCurso($cursoId)
+    public function findAniosLectivos(): array
     {
         return $this->createQueryBuilder('i')
-            ->innerJoin('i.modulos', 'im')
-            ->innerJoin('im.modulo', 'm')
-            ->innerJoin('m.clase', 'c')
-            ->andWhere('c.id = :cursoId')
-            ->setParameter('cursoId', $cursoId)
+            ->select('DISTINCT i.anyoLectivo') // Asegura que no haya duplicados
+            ->orderBy('i.anyoLectivo', 'DESC')
+            ->getQuery()
+            ->getSingleColumnResult();
+    }
+
+    /**
+     * Obtiene el número de iniciativas por año lectivo
+     */
+    public function countIniciativasPorAnio(): array
+    {
+        return $this->createQueryBuilder('i')
+            ->select('i.anyoLectivo, COUNT(i.id) AS total')
+            ->groupBy('i.anyoLectivo')
+            ->orderBy('i.anyoLectivo', 'DESC')
             ->getQuery()
             ->getResult();
     }

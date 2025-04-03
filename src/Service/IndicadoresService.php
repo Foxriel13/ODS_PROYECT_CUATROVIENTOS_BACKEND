@@ -4,6 +4,7 @@ namespace App\Service;
 
 
 use App\Entity\Iniciativa;
+use App\Entity\Profesor;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -54,7 +55,7 @@ class IndicadoresService
         }
 
         $data = [
-            'numero_iniciativas' => count($iniciativas)
+            'cantidad' => count($iniciativas)
         ];
 
         return new JsonResponse($data);
@@ -166,6 +167,37 @@ class IndicadoresService
 
         return new JsonResponse($resultado);
     }
+
+    //GET indicador 10.1
+    public function getCantidadProfesores(): JsonResponse
+    {
+        $profesores = $this->entityManager->getRepository(Profesor::class)->findAll();
+
+        if (!$profesores) {
+            return new JsonResponse(['message' => 'No se han encontrado profesores'], Response::HTTP_NOT_FOUND);
+        }
+
+        $data = [
+            'cantidad' => count($profesores)
+        ];
+        return new JsonResponse($data);
+    }
+
+    //GET indicador 10.2
+    public function getCantidadDeIniciativasPorProfesor(): array
+    {
+        $profesores = $this->profesorRepository->countIniciativasPorProfesor();
+
+        if (!$profesores) {
+            return new JsonResponse(['message' => 'No se han encontrado profesores'], Response::HTTP_NOT_FOUND);
+        }
+
+        return array_map(fn($profesor) => [
+            'nombre_profesor' => $profesor['nombre'],
+            'cantDeIniciativas' => (int) $profesor['totalIniciativas'] // Aseguramos que sea número entero
+        ], $profesores);
+    }
+
 
     private function formatIniciativa($iniciativa): array
     {

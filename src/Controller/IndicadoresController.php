@@ -57,4 +57,16 @@ final class IndicadoresController extends AbstractController
     {
         return $this->indicadoresService->getTipo();
     }
+
+    #[Route('/indicadores/cantProfesores', methods: ['GET'])]
+    public function getCantidadProfesores(): JsonResponse
+    {
+        return $this->indicadoresServide->getCantidadProfesores();
+    }
+
+    #[Route('/indicadores/cantIniciativasProfesor', methods: ['GET'])]
+    public function getCantidadDeIniciativasPorProfesor(): JsonResponse
+    {
+        return $this->indicadoresServide->getCantidadDeIniciativasPorProfesor();
+    }
 }

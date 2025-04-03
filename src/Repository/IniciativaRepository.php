@@ -99,7 +99,7 @@ class IniciativaRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('i')
             ->select('i.id AS iniciativa_id, i.nombre AS iniciativa_nombre, 
                       o.id AS ods_id, o.nombre AS ods_nombre, 
-                      m.id AS meta_id, m.nombre AS meta_nombre')
+                      m.id AS meta_id, m.descripcion AS meta_nombre')
             ->join('i.modulos', 'm')
             ->join('m.ciclos', 'o')
             ->orderBy('i.id', 'ASC')

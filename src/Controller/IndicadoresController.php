@@ -72,12 +72,14 @@ final class IndicadoresController extends AbstractController
         return $this->indicadoresService->getTiposIniciativas();
     }
 
+    // GET Indicador 10.1
     #[Route('/indicadores/cantProfesores', methods: ['GET'])]
     public function getCantidadProfesores(): JsonResponse
     {
         return $this->indicadoresServide->getCantidadProfesores();
     }
 
+    // GET Indicador 10.2
     #[Route('/indicadores/cantIniciativasProfesor', methods: ['GET'])]
     public function getCantidadDeIniciativasPorProfesor(): JsonResponse
     {
@@ -85,15 +87,19 @@ final class IndicadoresController extends AbstractController
         return $this->json($data);
     }
 
+    // GET Indicador 11
     #[Route('/indicadores/diferenciaInnovadoresYNo', methods: ['GET'])]
     public function getDiferenciaInnovadoras(): JsonResponse
     {
         return $this->indicadoresService->getDiferenciaInnovadoras();
     }
 
+    // GET Indicador 12
     #[Route('/indicadores/cantHorasIniciativa', methods: ['GET'])]
     public function getHorasActividad(): JsonResponse
     {
         return $this->indicadoresService->getHorasActividad();
     }
+
+    // GET Indicador 13
 }

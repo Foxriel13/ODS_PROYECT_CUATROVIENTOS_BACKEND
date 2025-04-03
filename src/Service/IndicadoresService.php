@@ -20,7 +20,7 @@ class IndicadoresService
         $this->iniciativaRepository = $iniciativaRepository;
     }
 
-    // GET Indicador 1
+    // GET Indicador 1: Por revisar
     public function getIniciativasPorCurso(): JsonResponse
     {
         $aniosLectivos = $this->iniciativaRepository->findAniosLectivos();
@@ -45,7 +45,7 @@ class IndicadoresService
         return new JsonResponse($resultado);
     }
 
-    // GET Indicador 2: Done
+    // GET Indicador 2: Por revisar
     public function getNumeroIniciativas(): JsonResponse
     {
         $iniciativas = $this->entityManager->getRepository(Iniciativa::class)->findAll();
@@ -61,7 +61,7 @@ class IndicadoresService
         return new JsonResponse($data);
     }
 
-    //GET Indicador 3
+    //GET Indicador 3: Por revisar
     public function getCiclosYModulosConIniciativas(): JsonResponse
     {
         $datos = $this->iniciativaRepository->getIniciativasConCiclosYModulos();
@@ -95,12 +95,11 @@ class IndicadoresService
             ];
         }
 
-        // Convertimos los ciclos en arrays indexados
         foreach ($resultado as &$iniciativa) {
             $iniciativa['ciclos'] = array_values($iniciativa['ciclos']);
         }
 
-        return array_values($resultado);
+        return new JsonResponse(array_values($resultado));
     }
 
     // GET Indicador 4: Done
@@ -123,8 +122,7 @@ class IndicadoresService
         return new JsonResponse($data);
     }
 
-    // GET Indicador 5
-
+    // GET Indicador 5: Por revisar
     public function getODStrabajadosYSusMetas(): JsonResponse
     {
         $datos = $this->iniciativaRepository->getODStrabajadosYSusMetas();
@@ -158,15 +156,14 @@ class IndicadoresService
             ];
         }
 
-        // Convertimos los ods en arrays indexados
         foreach ($resultado as &$iniciativa) {
             $iniciativa['ods'] = array_values($iniciativa['ods']);
         }
 
-        return array_values($resultado);
+        return new JsonResponse(array_values($resultado));
     }
 
-    // GET Indicador 6: Done 
+    // GET Indicador 6: Por revisar 
     public function getTieneEntidadesExternas(): JsonResponse
     {
         $iniciativas = $this->entityManager->getRepository(Iniciativa::class)->findAll();
@@ -181,7 +178,7 @@ class IndicadoresService
             if (count($entidadesExternas) == 0) {
                 $notiene += 1;
             } else {
-                $tiena += 1;
+                $tiene += 1;
             }
         }
 
@@ -193,7 +190,7 @@ class IndicadoresService
         return new JsonResponse($data);
     }
 
-    // GET Indicador 7
+    // GET Indicador 7: Por revisar
     public function getRRSSdeIniciativa(): JsonResponse
     {
         // Obtenemos todas las iniciativas
@@ -226,7 +223,7 @@ class IndicadoresService
         return new JsonResponse($data);
     }
 
-    // GET Indicador 8
+    // GET Indicador 8: Por revisar
     public function getTiposIniciativas(): JsonResponse
     {
         $tiposIniciativas = $this->iniciativaRepository->findAniosLectivos();
@@ -251,7 +248,7 @@ class IndicadoresService
         return new JsonResponse($resultado);
     }
 
-    //GET indicador 10.1
+    //GET indicador 10.1: Por revisar
     public function getCantidadProfesores(): JsonResponse
     {
         $profesores = $this->entityManager->getRepository(Profesor::class)->findAll();
@@ -266,7 +263,7 @@ class IndicadoresService
         return new JsonResponse($data);
     }
 
-    //GET indicador 10.2
+    //GET indicador 10.2: Por revisar
     public function getCantidadDeIniciativasPorProfesor(): array
     {
         $profesores = $this->profesorRepository->countIniciativasPorProfesor();
@@ -281,7 +278,7 @@ class IndicadoresService
         ], $profesores);
     }
 
-    //GET indicador 11
+    //GET indicador 11: Por revisar
     public function getDiferenciaInnovadoras(): JsonResponse
     {
         $innovadoras = $this->entityManager->getRepository(Iniciativa::class)->findByInnovadoras();
@@ -298,7 +295,7 @@ class IndicadoresService
         return new JsonResponse($data);
     }
 
-    //GET indicador 12
+    //GET indicador 12: Por revisar
     public function getHorasActividad(): JsonResponse
     {
         $iniciativas = $this->entityManager->getRepository(Iniciativa::class)->findAll();

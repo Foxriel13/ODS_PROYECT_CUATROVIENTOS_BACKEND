@@ -49,7 +49,27 @@ class IniciativaRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-    
+
+    public function findTiposIniciativa(): array{
+
+        return $this->createQueryBuilder('i')
+        ->select('DISTINCT i.tipo') // Asegura que no haya duplicados
+        ->orderBy('i.tipo', 'DESC')
+        ->getQuery()
+        ->getSingleColumnResult();
+    }
+
+    public function countIniciativasPorTipo(): array
+    {
+        return $this->createQueryBuilder('i')
+            ->select('i.tipo, COUNT(i.id) AS total')
+            ->groupBy('i.tipo')
+            ->orderBy('i.tipo', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+
 
     //    /**
     //     * @return Iniciativa[] Returns an array of Iniciativa objects

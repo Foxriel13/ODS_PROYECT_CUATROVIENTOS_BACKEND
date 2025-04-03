@@ -17,7 +17,6 @@ class IndicadoresService
     {
         $this->entityManager = $entityManager;
         $this->iniciativaRepository = $iniciativaRepository;
-
     }
 
     // GET Indicador 1
@@ -65,11 +64,11 @@ class IndicadoresService
     public function getDescripcionIniciativa(): JsonResponse
     {
         $iniciativas = $this->entityManager->getRepository(Iniciativa::class)->findAll();
-    
+
         if (!$iniciativas) {
             return new JsonResponse(['message' => 'No se han encontrado iniciativas'], Response::HTTP_NOT_FOUND);
         }
-    
+
         $data = [];
         foreach ($iniciativas as $iniciativa) {
             $data[] = [
@@ -77,10 +76,10 @@ class IndicadoresService
                 'Descripción' => $iniciativa->getExplicacion()
             ];
         }
-    
+
         return new JsonResponse($data);
     }
-    
+
 
 
     // GET Indicador 6: Done 
@@ -97,7 +96,7 @@ class IndicadoresService
             $entidadesExternas = $iniciativas->getEntidadesExternas();
             if (count($entidadesExternas) == 0) {
                 $notiene += 1;
-            }else{
+            } else {
                 $tiena += 1;
             }
         }
@@ -115,16 +114,16 @@ class IndicadoresService
     {
         // Obtenemos todas las iniciativas
         $iniciativas = $this->entityManager->getRepository(Iniciativa::class)->findAll();
-    
+
         if (!$iniciativas) {
             return new JsonResponse(['message' => 'No se han encontrado iniciativas'], Response::HTTP_NOT_FOUND);
         }
-    
+
         $data = [];
-    
+
         foreach ($iniciativas as $iniciativa) {
             $redesSociales = $iniciativa->getIniciativaRedesSociales()->getRedesSociales();
-    
+
             if (count($redesSociales) > 0) {
                 foreach ($redesSociales as $redSocial) {
                     $data[] = [
@@ -135,32 +134,37 @@ class IndicadoresService
                 }
             }
         }
-    
+
         if (empty($data)) {
             return new JsonResponse(['message' => 'No hay iniciativas difundidas'], Response::HTTP_NOT_FOUND);
         }
-    
+
         return new JsonResponse($data);
     }
 
     // GET Indicador 8
-    public function getTipo(int $id): JsonResponse
+    public function getTipo(): JsonResponse
     {
-        $iniciativa = $this->entityManager->getRepository(Iniciativa::class)->findById($id);
+        $tiposIniciativas = $this->iniciativaRepository->findAniosLectivos();
+        $conteoIniciativas = $this->iniciativaRepository->countIniciativasPorAnio();
 
-        if (!$iniciativa) {
-            return new JsonResponse(['message' => 'No se han encontrado iniciativas'], Response::HTTP_NOT_FOUND);
+        $resultado = [];
+        foreach ($tiposIniciativas as $tipo) {
+            $totalIniciativas = 0;
+            foreach ($conteoIniciativas as $conteo) {
+                if ($conteo['tipo'] === $tipo) {
+                    $totalIniciativas = $conteo['total'];
+                    break;
+                }
+            }
+
+            $resultado[] = [
+                'tipoIniciativa' => $anyoLectivo,
+                'numIniciativas' => $totalIniciativas
+            ];
         }
 
-        $redesSociales = $iniciativa->getTipo();
-
-        if (count($redesSociales) == 0) {
-            return new JsonResponse(['message' => "La iniciativa con id $id no tiene Redes Sociales"], Response::HTTP_NOT_FOUND);
-        }else{
-            $data = $redesSociales;
-        }
-
-        return new JsonResponse($data);
+        return new JsonResponse($resultado);
     }
 
     private function formatIniciativa($iniciativa): array
@@ -211,5 +215,4 @@ class IndicadoresService
             ], $iniciativa->getIniciativaRedesSociales()->toArray()),
         ];
     }
-
 }

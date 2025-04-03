@@ -100,8 +100,8 @@ class IniciativaRepository extends ServiceEntityRepository
             ->select('i.id AS iniciativa_id, i.nombre AS iniciativa_nombre, 
                       o.id AS ods_id, o.nombre AS ods_nombre, 
                       m.id AS meta_id, m.descripcion AS meta_nombre')
-            ->join('i.modulos', 'm')
-            ->join('m.ciclos', 'o')
+            ->join('i.metas', 'm')
+            ->join('m.ods', 'o')
             ->orderBy('i.id', 'ASC')
             ->addOrderBy('o.id', 'ASC')
             ->addOrderBy('m.id', 'ASC')

@@ -28,6 +28,16 @@ class IniciativaRepository extends ServiceEntityRepository
         return $this->findBy(['eliminado' => false]);
     }
 
+    public function findByInnovadoras()
+    {
+        return $this->findBy(['innovador' => true]);
+    }
+
+    public function findByNoInnovadoras()
+    {
+        return $this->findBy(['innovador' => false]);
+    }
+
     public function findAniosLectivos(): array
     {
         return $this->createQueryBuilder('i')
@@ -65,6 +75,36 @@ class IniciativaRepository extends ServiceEntityRepository
             ->select('i.tipo, COUNT(i.id) AS total')
             ->groupBy('i.tipo')
             ->orderBy('i.tipo', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getIniciativasConCiclosYModulos(): array
+    {
+        return $this->createQueryBuilder('i')
+            ->select('i.id AS iniciativa_id, i.nombre AS iniciativa_nombre, 
+                      c.id AS ciclo_id, c.nombre AS ciclo_nombre, 
+                      m.id AS modulo_id, m.nombre AS modulo_nombre')
+            ->join('i.modulos', 'm')
+            ->join('m.ciclos', 'c')
+            ->orderBy('i.id', 'ASC')
+            ->addOrderBy('c.id', 'ASC')
+            ->addOrderBy('m.id', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getODStrabajadosYSusMetas(): array
+    {
+        return $this->createQueryBuilder('i')
+            ->select('i.id AS iniciativa_id, i.nombre AS iniciativa_nombre, 
+                      o.id AS ods_id, o.nombre AS ods_nombre, 
+                      m.id AS meta_id, m.nombre AS meta_nombre')
+            ->join('i.modulos', 'm')
+            ->join('m.ciclos', 'o')
+            ->orderBy('i.id', 'ASC')
+            ->addOrderBy('o.id', 'ASC')
+            ->addOrderBy('m.id', 'ASC')
             ->getQuery()
             ->getResult();
     }

@@ -61,6 +61,48 @@ class IndicadoresService
         return new JsonResponse($data);
     }
 
+    //GET Indicador 3
+    public function getCiclosYModulosConIniciativas(): JsonResponse
+    {
+        $datos = $this->iniciativaRepository->getIniciativasConCiclosYModulos();
+        
+        $resultado = [];
+
+        foreach ($datos as $dato) {
+            $iniciativaId = $dato['iniciativa_id'];
+            $cicloId = $dato['ciclo_id'];
+            $moduloId = $dato['modulo_id'];
+
+            if (!isset($resultado[$iniciativaId])) {
+                $resultado[$iniciativaId] = [
+                    'id' => $iniciativaId,
+                    'nombre_iniciativa' => $dato['iniciativa_nombre'],
+                    'ciclos' => []
+                ];
+            }
+
+            if (!isset($resultado[$iniciativaId]['ciclos'][$cicloId])) {
+                $resultado[$iniciativaId]['ciclos'][$cicloId] = [
+                    'id_ciclo' => $cicloId,
+                    'nombre_ciclo' => $dato['ciclo_nombre'],
+                    'modulos' => []
+                ];
+            }
+
+            $resultado[$iniciativaId]['ciclos'][$cicloId]['modulos'][] = [
+                'id_modulo' => $moduloId,
+                'nombre_modulo' => $dato['modulo_nombre']
+            ];
+        }
+
+        // Convertimos los ciclos en arrays indexados
+        foreach ($resultado as &$iniciativa) {
+            $iniciativa['ciclos'] = array_values($iniciativa['ciclos']);
+        }
+
+        return array_values($resultado);
+    }
+
     // GET Indicador 4: Done
     public function getDescripcionIniciativa(): JsonResponse
     {
@@ -81,10 +123,51 @@ class IndicadoresService
         return new JsonResponse($data);
     }
 
+    // GET Indicador 5
 
+    public function getODStrabajadosYSusMetas(): JsonResponse
+    {
+        $datos = $this->iniciativaRepository->getODStrabajadosYSusMetas();
+        
+        $resultado = [];
+
+        foreach ($datos as $dato) {
+            $iniciativaId = $dato['iniciativa_id'];
+            $odsId = $dato['ods_id'];
+            $metaId = $dato['meta_id'];
+
+            if (!isset($resultado[$iniciativaId])) {
+                $resultado[$iniciativaId] = [
+                    'id' => $iniciativaId,
+                    'nombre_Iniciativa' => $dato['iniciativa_nombre'],
+                    'ods' => []
+                ];
+            }
+
+            if (!isset($resultado[$iniciativaId]['ods'][$odsId])) {
+                $resultado[$iniciativaId]['ods'][$odsId] = [
+                    'id_ods' => $odsId,
+                    'nombre_ods' => $dato['ods_nombre'],
+                    'metas' => []
+                ];
+            }
+
+            $resultado[$iniciativaId]['ods'][$odsId]['metas'][] = [
+                'id_meta' => $metaId,
+                'nombre_meta' => $dato['meta_nombre']
+            ];
+        }
+
+        // Convertimos los ods en arrays indexados
+        foreach ($resultado as &$iniciativa) {
+            $iniciativa['ods'] = array_values($iniciativa['ods']);
+        }
+
+        return array_values($resultado);
+    }
 
     // GET Indicador 6: Done 
-    public function getHaColaboradoEntidadExterna(): JsonResponse
+    public function getTieneEntidadesExternas(): JsonResponse
     {
         $iniciativas = $this->entityManager->getRepository(Iniciativa::class)->findAll();
 
@@ -111,7 +194,7 @@ class IndicadoresService
     }
 
     // GET Indicador 7
-    public function getDifusionIniciativas(): JsonResponse
+    public function getRRSSdeIniciativa(): JsonResponse
     {
         // Obtenemos todas las iniciativas
         $iniciativas = $this->entityManager->getRepository(Iniciativa::class)->findAll();
@@ -144,7 +227,7 @@ class IndicadoresService
     }
 
     // GET Indicador 8
-    public function getTipo(): JsonResponse
+    public function getTiposIniciativas(): JsonResponse
     {
         $tiposIniciativas = $this->iniciativaRepository->findAniosLectivos();
         $conteoIniciativas = $this->iniciativaRepository->countIniciativasPorAnio();
@@ -198,6 +281,39 @@ class IndicadoresService
         ], $profesores);
     }
 
+    //GET indicador 11
+    public function getDiferenciaInnovadoras(): JsonResponse
+    {
+        $innovadoras = $this->entityManager->getRepository(Iniciativa::class)->findByInnovadoras();
+        $noInnovadoras = $this->entityManager->getRepository(Iniciativa::class)->findByNoInnovadoras();
+        
+        if(!$innovadoras && !$noInnovadoras){
+            return new JsonResponse(['message' => 'No se han encontrado iniciativas'], Response::HTTP_NOT_FOUND);
+        }
+
+        $data = [
+            'cantidad_innovadoras' => $innovadoras,
+            'cantidad_no_innovadores' => $noInnovadoras
+        ];
+        return new JsonResponse($data);
+    }
+
+    //GET indicador 12
+    public function getHorasActividad(): JsonResponse
+    {
+        $iniciativas = $this->entityManager->getRepository(Iniciativa::class)->findAll();
+        $data = [];
+        if(!$inicaitivas){
+            return new JsonResponse(['message' => 'No se han encontrado iniciativas'], Response::HTTP_NOT_FOUND);
+        }
+        foreach ($iniciativas as $iniciativa) {
+            $data[] = [
+                'nombre_iniciativa' => $iniciativa->getNombre(),
+                'horas_dedicadas' => $iniciativa->getHoras()
+            ];
+        }        
+        return new JsonResponse($data);
+    }
 
     private function formatIniciativa($iniciativa): array
     {

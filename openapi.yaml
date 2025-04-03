@@ -1094,8 +1094,11 @@ components:
           
     #Body para el 2doy 10.1avo Indicador
     Count:
-      type: integer
-      example: 2
+      type: object
+      properties:
+        cantidad:
+          type: integer
+          example: 2
     
     #Bodies para el 3er Indicador
     IniciativasPorCiclosYModulos:
@@ -1151,6 +1154,9 @@ components:
     OdsYMetasDeInciativa:
       type: object
       properties:
+        id_iniciativa:
+          type: integer
+          example: 3
         nombre_Inciativa:
           type: string
           example: Iniciativa1
@@ -1162,6 +1168,9 @@ components:
     Ods5:
       type: object
       properties:
+        id_ods:
+          type: integer
+          example: 2
         nombre_ods:
           type: string
           example: Acción por el clima
@@ -1174,6 +1183,9 @@ components:
     Metas5:
       type: object
       properties:
+        id_meta:
+          type: integer
+          example: 3
         nombre_meta:
           type: string
           example: Ayudar a los bosques de navarra
@@ -1241,7 +1253,7 @@ components:
         cantidad_innovadoras:
           type: integer
           example: 4
-        cantidad_no_innovadores:
+        cantidad_no_innovadoras:
           type: integer
           example: 2
           
@@ -1399,3 +1411,6 @@ components:
         nombre:
           type: string
           example: "GreenTech International"
+          
+          
+          

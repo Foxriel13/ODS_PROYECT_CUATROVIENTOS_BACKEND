@@ -993,7 +993,7 @@ components:
         nombre:
           type: string
           example: Álgebra
-        clase:
+        clases:
           type: array
           items: 
             $ref: '#/components/schemas/Clase'
@@ -1343,13 +1343,6 @@ components:
           items:
             type: integer
           example: [1, 2]
-
-    NewDimension:
-      type: object
-      properties:
-        nombre:
-          type: string
-          example: "Desarrollo Sostenible"
     
     NewOds:
       type: object
@@ -1384,9 +1377,11 @@ components:
         nombre:
           type: string
           example: "Energías Renovables"
-        clase:
-          type: integer
-          example: 1
+        clases:
+          type: array
+          items:
+            type: integer
+          example: [1, 2]
     
     NewProfesor:
       type: object

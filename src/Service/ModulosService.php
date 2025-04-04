@@ -38,19 +38,21 @@ class ModulosService{
             return new JsonResponse(['message' => 'El nombre es obligatoria'], Response::HTTP_BAD_REQUEST);
         }
 
-        if (empty($data['clase'])) {
-            return new JsonResponse(['message' => 'Debes de introducir al menos una clase válida'], Response::HTTP_BAD_REQUEST);
-        }
-
         $modulo = new Modulo();
         $modulo->setNombre($data['nombre'] ?? null);
 
-        // Validación de clases
-        $clase = $this->entityManager->getRepository(Clase::class)->find($data['clase']);
-        if ($clase !== null) {
-            $modulo->setClase($clase);
-        }else{
-            return new JsonResponse(['message' => 'Debes de introducir una clase válida'], Response::HTTP_BAD_REQUEST);
+        if (!empty($data['clases']) && is_array($data['clases'])) {
+            $clasesRepo = $this->entityManager->getRepository(Clase::class);
+            foreach ($data['clases'] as $clasesId) {
+                $clase = $clasesRepo->find($claseId);
+                if ($clase) {
+                    $moduloClase = new ModuloClase($modulo, $clase);
+                    $modulo->addModuloClase($moduloClase);
+                    $this->entityManager->persist($moduloClase);
+                }
+            }
+        } else {
+            return new JsonResponse(['message' => 'Debes de introducir al menos'], Response::HTTP_NOT_FOUND);
         }
 
         $this->entityManager->persist($modulo);

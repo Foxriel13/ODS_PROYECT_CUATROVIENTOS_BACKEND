@@ -60,13 +60,13 @@ class IniciativaRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findTiposIniciativa(): array{
-
+    public function countByTipo(): array
+    {
         return $this->createQueryBuilder('i')
-        ->select('DISTINCT i.tipo') // Asegura que no haya duplicados
-        ->orderBy('i.tipo', 'DESC')
-        ->getQuery()
-        ->getSingleColumnResult();
+            ->select('i.tipo AS tipo, COUNT(i.id) AS cantidad')
+            ->groupBy('i.tipo')
+            ->getQuery()
+            ->getResult();
     }
 
     public function countIniciativasPorTipo(): array
@@ -97,14 +97,9 @@ class IniciativaRepository extends ServiceEntityRepository
     public function getODStrabajadosYSusMetas(): array
     {
         return $this->createQueryBuilder('i')
-            ->select('i.id AS iniciativa_id, i.nombre AS iniciativa_nombre, 
-                      o.id AS ods_id, o.nombre AS ods_nombre, 
-                      m.id AS meta_id, m.descripcion AS meta_nombre')
-            ->join('i.metas', 'm')
-            ->join('m.ods', 'o')
-            ->orderBy('i.id', 'ASC')
-            ->addOrderBy('o.id', 'ASC')
-            ->addOrderBy('m.id', 'ASC')
+            ->leftJoin('i.metas', 'm')
+            ->leftJoin('m.ods', 'o')
+            ->addSelect('m', 'o')  // Para traer los datos de metas y ODS en la misma consulta
             ->getQuery()
             ->getResult();
     }

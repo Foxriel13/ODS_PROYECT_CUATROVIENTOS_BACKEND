@@ -50,7 +50,7 @@ class ODSController extends AbstractController
         if (!$data) {
             return new JsonResponse(['message' => 'Datos inválidos'], Response::HTTP_BAD_REQUEST);
         }
-    
+
         return $this->odsService->updateOds($idOds, $data);
     }
 

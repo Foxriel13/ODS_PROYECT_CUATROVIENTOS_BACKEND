@@ -49,10 +49,10 @@ class ModulosService{
                     $moduloClase = new ModuloClase($modulo, $clase);
                     $modulo->addModuloClase($moduloClase);
                     $this->entityManager->persist($moduloClase);
-                }
+                } 
             }
         } else {
-            return new JsonResponse(['message' => 'Debes de introducir al menos'], Response::HTTP_NOT_FOUND);
+            return new JsonResponse(['message' => 'Debes de introducir al menos una clase'], Response::HTTP_NOT_FOUND);
         }
 
         $this->entityManager->persist($modulo);

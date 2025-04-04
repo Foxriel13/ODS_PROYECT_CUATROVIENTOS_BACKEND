@@ -76,7 +76,7 @@ final class IndicadoresController extends AbstractController
     #[Route('/indicadores/cantProfesores', methods: ['GET'])]
     public function getCantidadProfesores(): JsonResponse
     {
-        return $this->indicadoresServide->getCantidadProfesores();
+        return $this->indicadoresService->getCantidadProfesores();
     }
 
     // GET Indicador 10.2

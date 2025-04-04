@@ -104,7 +104,7 @@ class MetasService{
         $this->entityManager->remove($meta);
         $this->entityManager->flush();
 
-        return new JsonResponse(null, Response::HTTP_NO_CONTENT);
+        return new JsonResponse(['message' => 'Meta eliminada correctamente'], Response::HTTP_OK);
     }
 
 }

@@ -18,15 +18,15 @@ class ProfesorRepository extends ServiceEntityRepository
 
     public function countIniciativasPorProfesor(): array
     {
-        return $this->createQueryBuilder('p')
-            ->select('p.id, p.nombre, COUNT(i.id) AS totalIniciativas')
-            ->leftJoin('p.iniciativas', 'i') // Relación con la tabla intermedia
+        return $this->createQueryBuilder('i')
+            ->select('p.id AS id, p.nombre AS nombre, COUNT(i.id) AS totalIniciativas')
+            ->innerJoin('i.profesores', 'p')
             ->groupBy('p.id')
             ->orderBy('totalIniciativas', 'DESC')
             ->getQuery()
             ->getResult();
     }
-
+    
     //    /**
     //     * @return Profesor[] Returns an array of Profesor objects
     //     */

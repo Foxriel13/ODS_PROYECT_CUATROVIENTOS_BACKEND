@@ -17,14 +17,13 @@ class IndicadoresService
     public function __construct(private EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
-        $this->iniciativaRepository = $iniciativaRepository;
     }
 
-    // GET Indicador 1: Por revisar
+    // GET Indicador 1: Done
     public function getIniciativasPorCurso(): JsonResponse
     {
-        $aniosLectivos = $this->iniciativaRepository->findAniosLectivos();
-        $conteoIniciativas = $this->iniciativaRepository->countIniciativasPorAnio();
+        $aniosLectivos =  $this->entityManager->getRepository(Iniciativa::class)->findAniosLectivos();
+        $conteoIniciativas =  $this->entityManager->getRepository(Iniciativa::class)->countIniciativasPorAnio();
 
         $resultado = [];
         foreach ($aniosLectivos as $anyoLectivo) {
@@ -45,7 +44,7 @@ class IndicadoresService
         return new JsonResponse($resultado);
     }
 
-    // GET Indicador 2: Por revisar
+    // GET Indicador 2: Done
     public function getNumeroIniciativas(): JsonResponse
     {
         $iniciativas = $this->entityManager->getRepository(Iniciativa::class)->findAll();
@@ -64,7 +63,7 @@ class IndicadoresService
     //GET Indicador 3: Por revisar
     public function getCiclosYModulosConIniciativas(): JsonResponse
     {
-        $datos = $this->iniciativaRepository->getIniciativasConCiclosYModulos();
+        $datos = $this->entityManager->getRepository(Iniciativa::class)->getIniciativasConCiclosYModulos();
         
         $resultado = [];
 
@@ -115,7 +114,7 @@ class IndicadoresService
         foreach ($iniciativas as $iniciativa) {
             $data[] = [
                 'Nombre' => $iniciativa->getNombre(),
-                'Descripción' => $iniciativa->getExplicacion()
+                'Explicacion' => $iniciativa->getExplicacion()
             ];
         }
 
@@ -125,7 +124,7 @@ class IndicadoresService
     // GET Indicador 5: Por revisar
     public function getODStrabajadosYSusMetas(): JsonResponse
     {
-        $datos = $this->iniciativaRepository->getODStrabajadosYSusMetas();
+        $datos = $this->entityManager->getRepository(Iniciativa::class)->getODStrabajadosYSusMetas();
         
         $resultado = [];
 
@@ -163,7 +162,7 @@ class IndicadoresService
         return new JsonResponse(array_values($resultado));
     }
 
-    // GET Indicador 6: Por revisar 
+    // GET Indicador 6: Done
     public function getTieneEntidadesExternas(): JsonResponse
     {
         $iniciativas = $this->entityManager->getRepository(Iniciativa::class)->findAll();
@@ -174,7 +173,7 @@ class IndicadoresService
         $tiene = 0;
         $notiene = 0;
         foreach ($iniciativas as $iniciativa) {
-            $entidadesExternas = $iniciativas->getEntidadesExternas();
+            $entidadesExternas = $iniciativa->getEntidadesExternas();
             if (count($entidadesExternas) == 0) {
                 $notiene += 1;
             } else {
@@ -190,65 +189,56 @@ class IndicadoresService
         return new JsonResponse($data);
     }
 
-    // GET Indicador 7: Por revisar
+    // GET Indicador 7: Done
     public function getRRSSdeIniciativa(): JsonResponse
     {
-        // Obtenemos todas las iniciativas
         $iniciativas = $this->entityManager->getRepository(Iniciativa::class)->findAll();
-
+    
         if (!$iniciativas) {
             return new JsonResponse(['message' => 'No se han encontrado iniciativas'], Response::HTTP_NOT_FOUND);
         }
-
+    
         $data = [];
-
+    
         foreach ($iniciativas as $iniciativa) {
-            $redesSociales = $iniciativa->getIniciativaRedesSociales()->getRedesSociales();
-
-            if (count($redesSociales) > 0) {
-                foreach ($redesSociales as $redSocial) {
+            $iniciativaRedesSociales = $iniciativa->getIniciativaRedesSociales();
+    
+            if (count($iniciativaRedesSociales) > 0) {
+                foreach ($iniciativaRedesSociales as $iniciativaRedSocial) {
+                    $redSocial = $iniciativaRedSocial->getRedesSociales();
+    
                     $data[] = [
-                        'nombre_iniciativa'      => $iniciativa->getNombre(),
-                        'red_social'      => $redSocial->getNombre(),
-                        'enlace'          => $redSocial->getEnlace()
+                        'nombre_iniciativa' => $iniciativa->getNombre(),
+                        'redes_sociales'    => [
+                            "nombreRRSS" => $redSocial->getNombre(),
+                            "enlace" => $redSocial->getEnlace(),
+                        ],
                     ];
                 }
             }
         }
-
+    
         if (empty($data)) {
             return new JsonResponse(['message' => 'No hay iniciativas difundidas'], Response::HTTP_NOT_FOUND);
         }
-
+    
         return new JsonResponse($data);
     }
 
     // GET Indicador 8: Por revisar
     public function getTiposIniciativas(): JsonResponse
     {
-        $tiposIniciativas = $this->iniciativaRepository->findAniosLectivos();
-        $conteoIniciativas = $this->iniciativaRepository->countIniciativasPorAnio();
+        // Se obtiene el repositorio y se llama a la función countByTipo
+        $resultados = $this->entityManager->getRepository(Iniciativa::class)->countByTipo();
 
-        $resultado = [];
-        foreach ($tiposIniciativas as $tipo) {
-            $totalIniciativas = 0;
-            foreach ($conteoIniciativas as $conteo) {
-                if ($conteo['tipo'] === $tipo) {
-                    $totalIniciativas = $conteo['total'];
-                    break;
-                }
-            }
-
-            $resultado[] = [
-                'tipoIniciativa' => $anyoLectivo,
-                'numIniciativas' => $totalIniciativas
-            ];
+        if (!$resultados) {
+            return new JsonResponse(['message' => 'No se han encontrado iniciativas'], Response::HTTP_NOT_FOUND);
         }
 
-        return new JsonResponse($resultado);
+        return new JsonResponse($resultados);
     }
 
-    //GET indicador 10.1: Por revisar
+    //GET indicador 10.1: Done
     public function getCantidadProfesores(): JsonResponse
     {
         $profesores = $this->entityManager->getRepository(Profesor::class)->findAll();
@@ -266,7 +256,7 @@ class IndicadoresService
     //GET indicador 10.2: Por revisar
     public function getCantidadDeIniciativasPorProfesor(): array
     {
-        $profesores = $this->profesorRepository->countIniciativasPorProfesor();
+        $profesores = $this->entityManager->getRepository(Profesor::class)->countIniciativasPorProfesor();
 
         if (!$profesores) {
             return new JsonResponse(['message' => 'No se han encontrado profesores'], Response::HTTP_NOT_FOUND);
@@ -278,7 +268,7 @@ class IndicadoresService
         ], $profesores);
     }
 
-    //GET indicador 11: Por revisar
+    //GET indicador 11: Done
     public function getDiferenciaInnovadoras(): JsonResponse
     {
         $innovadoras = $this->entityManager->getRepository(Iniciativa::class)->findByInnovadoras();
@@ -289,18 +279,18 @@ class IndicadoresService
         }
 
         $data = [
-            'cantidad_innovadoras' => $innovadoras,
-            'cantidad_no_innovadores' => $noInnovadoras
+            'cantidad_innovadoras' => count($innovadoras),
+            'cantidad_no_innovadores' => count($noInnovadoras)
         ];
         return new JsonResponse($data);
     }
 
-    //GET indicador 12: Por revisar
+    //GET indicador 12: Done
     public function getHorasActividad(): JsonResponse
     {
         $iniciativas = $this->entityManager->getRepository(Iniciativa::class)->findAll();
         $data = [];
-        if(!$inicaitivas){
+        if(!$iniciativas){
             return new JsonResponse(['message' => 'No se han encontrado iniciativas'], Response::HTTP_NOT_FOUND);
         }
         foreach ($iniciativas as $iniciativa) {

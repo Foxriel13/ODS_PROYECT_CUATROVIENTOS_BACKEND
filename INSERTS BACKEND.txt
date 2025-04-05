@@ -77,7 +77,7 @@
     (41, 'Ciencias aplicadas II'),
     (42, 'Comunicación y ciencias sociales II'),
     (43, 'Planificación y administración de redes'),
-    (44, 'Lenguajes de marcas y sistemas de gestión de información');
+    (44, 'Lenguajes de marcas y sistemas de gestión de información'),
     (45, 'Gestión de bases de datos'),
     (46, 'Aplicaciones web');
 

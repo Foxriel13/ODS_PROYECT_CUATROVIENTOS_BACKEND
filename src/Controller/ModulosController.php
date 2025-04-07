@@ -61,5 +61,4 @@ class ModulosController extends AbstractController
        return $this->modulosService->deleteModulo($id);
    }
 
-
 }

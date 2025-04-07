@@ -11,7 +11,7 @@ use App\Entity\IniciativaRedesSociales;
 use App\Entity\Meta;
 use App\Entity\MetaIniciativa;
 use App\Entity\Modulo;
-use App\Entity\ODS;
+use App\Entity\ModuloClase;
 use App\Entity\Profesor;
 use App\Entity\ProfesorIniciativa;
 use App\Entity\RedesSociales;
@@ -165,18 +165,35 @@ class IniciativaService
 
         if (!empty($data['modulos']) && is_array($data['modulos'])) {
             $modulosRepo = $this->entityManager->getRepository(Modulo::class);
-
+            $clasesRepo = $this->entityManager->getRepository(Clase::class);
+        
             foreach ($data['modulos'] as $moduloId) {
                 $modulo = $modulosRepo->find($moduloId);
+        
                 if ($modulo) {
                     $iniciativaModulo = new IniciativaModulo($iniciativa, $modulo);
                     $iniciativa->addModulo($iniciativaModulo);
                     $this->entityManager->persist($iniciativaModulo);
+        
+                    if (!empty($data['clases'][$moduloId]) && is_array($data['clases'][$moduloId])) {
+                        foreach ($data['clases'][$moduloId] as $claseId) {
+                            $clase = $clasesRepo->find($claseId);
+                            if ($clase) {
+                                $moduloClase = new ModuloClase();
+                                $moduloClase->setModulo($modulo);
+                                $moduloClase->setClase($clase);
+                                $this->entityManager->persist($moduloClase);
+                            }
+                        }
+                    }
                 }
             }
+        
+            $this->entityManager->flush();
         } else {
-            return new JsonResponse(['message' => 'Debes de introducir al menos un modulo'], Response::HTTP_NOT_FOUND);
+            return new JsonResponse(['message' => 'Debes de introducir al menos un módulo'], Response::HTTP_NOT_FOUND);
         }
+        
 
         // Procesamos redes sociales
         if (!empty($data['redes_sociales']) && is_array($data['redes_sociales'])) {
@@ -310,26 +327,47 @@ class IniciativaService
             return new JsonResponse(['message' => 'Debes de introducir al menos una entidad externa'], Response::HTTP_NOT_FOUND);
         }
 
-        // Relacionar Módulos
         if (!empty($data['modulos']) && is_array($data['modulos'])) {
             $modulosRepo = $this->entityManager->getRepository(Modulo::class);
-
+            $clasesRepo = $this->entityManager->getRepository(Clase::class);
+        
             foreach ($iniciativa->getModulos() as $modulos) {
                 $this->entityManager->remove($modulos);
             }
             $this->entityManager->flush();
-
+        
             foreach ($data['modulos'] as $moduloId) {
                 $modulo = $modulosRepo->find($moduloId);
-                if ($entidadExterna) {
+        
+                if ($entidadExterna && $modulo) {
                     $iniciativaModulo = new IniciativaModulo($iniciativa, $modulo);
                     $iniciativa->addModulo($iniciativaModulo);
                     $this->entityManager->persist($iniciativaModulo);
+        
+                    foreach ($modulo->getModuloClases() as $moduloClase) {
+                        $this->entityManager->remove($moduloClase);
+                    }
+        
+                    if (!empty($data['clases_por_modulo'][$moduloId]) && is_array($data['clases_por_modulo'][$moduloId])) {
+                        foreach ($data['clases_por_modulo'][$moduloId] as $claseId) {
+                            $clase = $clasesRepo->find($claseId);
+                            if ($clase) {
+                                $moduloClase = new ModuloClase();
+                                $moduloClase->setModulo($modulo);
+                                $moduloClase->setClase($clase);
+                                $this->entityManager->persist($moduloClase);
+                            }
+                        }
+                    }
                 }
             }
+        
+            $this->entityManager->flush();
         } else {
             return new JsonResponse(['message' => 'Debes de introducir al menos un módulo'], Response::HTTP_NOT_FOUND);
         }
+        
+        
 
         // Relacionar Módulos
         if (!empty($data['redes_sociales']) && is_array($data['redes_sociales'])) {

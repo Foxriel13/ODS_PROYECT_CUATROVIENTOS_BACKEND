@@ -8,8 +8,6 @@ use App\Entity\Profesor;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-use App\Repository\IniciativaRepository;
-
 
 class IndicadoresService
 {
@@ -228,7 +226,6 @@ class IndicadoresService
     // GET Indicador 8: Por revisar
     public function getTiposIniciativas(): JsonResponse
     {
-        // Se obtiene el repositorio y se llama a la función countByTipo
         $resultados = $this->entityManager->getRepository(Iniciativa::class)->countByTipo();
 
         if (!$resultados) {
@@ -253,21 +250,27 @@ class IndicadoresService
         return new JsonResponse($data);
     }
 
-    //GET indicador 10.2: Por revisar
-    public function getCantidadDeIniciativasPorProfesor(): array
+    //GET indicador 10.2: pendiente de revisar
+    public function getCantidadDeIniciativasPorProfesor(): JsonResponse
     {
         $profesores = $this->entityManager->getRepository(Profesor::class)->countIniciativasPorProfesor();
-
+    
         if (!$profesores) {
             return new JsonResponse(['message' => 'No se han encontrado profesores'], Response::HTTP_NOT_FOUND);
         }
-
-        return array_map(fn($profesor) => [
-            'nombre_profesor' => $profesor['nombre'],
-            'cantDeIniciativas' => (int) $profesor['totalIniciativas'] // Aseguramos que sea número entero
-        ], $profesores);
+    
+        $data = [];
+    
+        foreach ($profesores as $profesor) {
+            $data[] = [
+                'nombre_profesor' => $profesor['nombreProfesor'],
+                'cantDeIniciativas' => (int) $profesor['totalIniciativas'],
+            ];
+        }
+    
+        return new JsonResponse($data);
     }
-
+    
     //GET indicador 11: Done
     public function getDiferenciaInnovadoras(): JsonResponse
     {
@@ -298,56 +301,8 @@ class IndicadoresService
                 'nombre_iniciativa' => $iniciativa->getNombre(),
                 'horas_dedicadas' => $iniciativa->getHoras()
             ];
-        }        
+        }
         return new JsonResponse($data);
     }
 
-    private function formatIniciativa($iniciativa): array
-    {
-        return [
-            'id' => $iniciativa->getId(),
-            'tipo' => $iniciativa->getTipo(),
-            'horas' => $iniciativa->getHoras(),
-            'nombre' => $iniciativa->getNombre(),
-            'explicacion' => $iniciativa->getExplicacion(),
-            'fecha_inicio' => $iniciativa->getFechaInicio()->format('Y-m-d H:i:s'),
-            'fecha_fin' => $iniciativa->getFechaFin()->format('Y-m-d H:i:s'),
-            'eliminado' => (bool) $iniciativa->isEliminado(),
-            'innovador' => (bool) $iniciativa->isInnovador(),
-            'anyo_lectivo' => $iniciativa->getAnyoLectivo(),
-            'imagen' => $iniciativa->getImagen(),
-            'fecha_registro' => $iniciativa->getFechaRegistro()->format('Y-m-d H:i:s'),
-            'mas_comentarios' => $iniciativa->getMasComentarios(),
-            'metas' => array_map(fn($metaIniciativa) => [
-                'idMeta' => $metaIniciativa->getIdMetas()->getId(),
-                'descripcion' => $metaIniciativa->getIdMetas()->getDescripcion(),
-                'ods' => [
-                    'idOds' => $metaIniciativa->getIdMetas()->getOds()->getId(),
-                    'nombre' => $metaIniciativa->getIdMetas()->getOds()->getNombre(),
-                    'dimension' => $metaIniciativa->getIdMetas()->getOds()->getDimension()
-                ],
-            ], $iniciativa->getMetasIniciativas()->toArray()),
-            'profesores' => array_map(fn($profesorIniciativa) => [
-                'idProfesor' => $profesorIniciativa->getProfesor()->getId(),
-                'nombre' => $profesorIniciativa->getProfesor()->getNombre(),
-            ], $iniciativa->getProfesores()->toArray()),
-            'entidades_externas' => array_map(fn($entidadesExternasInciativa) => [
-                'idEntidadExterna' => $entidadesExternasInciativa->getEntidad()->getId(),
-                'nombre' => $entidadesExternasInciativa->getEntidad()->getNombre(),
-            ], $iniciativa->getEntidadesExternas()->toArray()),
-            'modulos' => array_map(fn($modulosIniciativas) => [
-                'idModulo' => $modulosIniciativas->getModulo()->getId(),
-                'nombre' => $modulosIniciativas->getModulo()->getNombre(),
-                'clase' => [
-                    'idClase' => $modulosIniciativas->getModulo()->getClase()->getId(),
-                    'nombre' => $modulosIniciativas->getModulo()->getClase()->getNombre(),
-                ],
-            ], $iniciativa->getModulos()->toArray()),
-            'redes_sociales' => array_map(fn($iniciativaRedSocial) => [
-                'idRedSocial' => $iniciativaRedSocial->getRedesSociales()->getId(),
-                'nombre' => $iniciativaRedSocial->getRedesSociales()->getNombre(),
-                'enlace' => $iniciativaRedSocial->getRedesSociales()->getEnlace(),
-            ], $iniciativa->getIniciativaRedesSociales()->toArray()),
-        ];
-    }
 }

@@ -40,7 +40,6 @@ class ClasesController extends AbstractController
     {
         $data = json_decode($request->getContent(), true);
  
- 
         if (!is_array($data)) {
             return new JsonResponse(
                 ['message' => 'Datos inválidos o formato incorrecto'],

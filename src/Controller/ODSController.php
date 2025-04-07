@@ -55,11 +55,10 @@ class ODSController extends AbstractController
     }
 
     // Eliminar Ods
-    #[Route('/ods/{id}', name: 'delete_ods', methods: ['DELETE'])]
-    public function deleteOds(int $id): JsonResponse
+    #[Route('/ods/{idOds}', name: 'delete_ods', methods: ['DELETE'])]
+    public function deleteOds(int $idOds): JsonResponse
     {
-        return $this->odsService->deleteOds($id);
+        return $this->odsService->deleteOds($idOds);
     }
 
-    
 }

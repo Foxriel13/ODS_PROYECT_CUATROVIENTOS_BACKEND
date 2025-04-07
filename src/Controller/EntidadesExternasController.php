@@ -41,8 +41,6 @@ class EntidadesExternasController extends AbstractController
         return $this->entidadesExternasService->createEntidadExterna($data);
     }
 
-
-
     // Actualizar Entidad Externa
     #[Route('/entidadesexternas/{idEntidadExterna}', methods: ['PUT'])]
     public function updateEntidadExterna(Request $request, int $idEntidadExterna): JsonResponse
@@ -63,5 +61,4 @@ class EntidadesExternasController extends AbstractController
         return $this->entidadesExternasService->deleteEntidadExterna($id);
     }
 
-    
 }

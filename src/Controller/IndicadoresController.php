@@ -72,6 +72,8 @@ final class IndicadoresController extends AbstractController
         return $this->indicadoresService->getTiposIniciativas();
     }
 
+    // TODO: GET Indicador 9
+
     // GET Indicador 10.1
     #[Route('/indicadores/cantProfesores', methods: ['GET'])]
     public function getCantidadProfesores(): JsonResponse
@@ -101,5 +103,5 @@ final class IndicadoresController extends AbstractController
         return $this->indicadoresService->getHorasActividad();
     }
 
-    // GET Indicador 13
+    // TODO: GET Indicador 13
 }

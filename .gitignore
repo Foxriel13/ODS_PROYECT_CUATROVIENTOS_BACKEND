@@ -22,7 +22,9 @@
 ###> symfony/asset-mapper ###
 /public/assets/
 /assets/vendor/
-/migrations/
+/migrations/*
+!/migrations/.gitkeep
+
 ###< symfony/asset-mapper ###
 migrations/Version20250310181524.php
 migrations/Version20250306192748.php

@@ -119,45 +119,70 @@ class IndicadoresService
         return new JsonResponse($data);
     }
 
-    // GET Indicador 5: Por revisar
-    public function getODStrabajadosYSusMetas(): JsonResponse
+    // GET Indicador 5: Vuelto a hacer para revisar
+    public function getODStrabajadosYSusMetas(): array
     {
-        $datos = $this->entityManager->getRepository(Iniciativa::class)->getODStrabajadosYSusMetas();
+        /* Lo he copiado y pegado de deepseek asique la mayoria de las cosas están en ingles, cuando
+        confirmemos que va bien cambiaremos el idioma */
+
+        /*Esto llama al iniciativaRepository y no se que te devuelve o como funciona la vd
+        se que te devuelve la info pero no se como, el formateo de abajo es para darle forma*/
+        $iniciativas = $this->iniciativaRepository->findAllWithRelations();
         
-        $resultado = [];
+        return $this->formatIniciativasData($iniciativas);
+    }
 
-        foreach ($datos as $dato) {
-            $iniciativaId = $dato['iniciativa_id'];
-            $odsId = $dato['ods_id'];
-            $metaId = $dato['meta_id'];
-
-            if (!isset($resultado[$iniciativaId])) {
-                $resultado[$iniciativaId] = [
-                    'id' => $iniciativaId,
-                    'nombre_Iniciativa' => $dato['iniciativa_nombre'],
-                    'ods' => []
+    private function formatIniciativasData(array $iniciativas): array
+    {
+        $formattedData = [];
+        
+        foreach ($iniciativas as $iniciativa) {
+            $odsGroups = [];
+            
+            /*Primero procesa la info de las iniciativas y va sacando de una en una los valores 
+            de la tabla intermedia para ir buscando los ods de esa meta*/
+            foreach ($iniciativa->getIniciativaMetas() as $iniciativaMeta) {
+                $meta = $iniciativaMeta->getIdMetas();
+                $ods = $meta->getOds();
+                $odsId = $ods->getId();
+                //Comprueba que ese ods no se habia añadido previamente a la lista
+                if (!isset($odsGroups[$odsId])) {
+                    $odsGroups[$odsId] = [
+                        'ods' => $ods,
+                        'metas' => []
+                    ];
+                }
+                //Guarda la meta para tenerla más adelante
+                $odsGroups[$odsId]['metas'][] = $meta;
+            }
+            
+            /*Aqui empezamos a formatear el codigo, empezamos por el array de ods para 
+             tenerlo más facil para después*/
+            $odsArray = [];
+            foreach ($odsGroups as $group) {
+                $odsArray[] = [
+                    'id_ods' => $group['ods']->getId(),
+                    'nombre_ods' => $group['ods']->getNombre(),
+                    /*Este array_map es como el que usamos en el InicitativaService para formatear la info
+                    pero un poco distinto */
+                    'metas' => array_map(function($meta) {
+                        return [
+                            'id_meta' => $meta->getId(),
+                            'nombre_meta' => $meta->getNombre()
+                        ];
+                    }, $group['metas'])
                 ];
             }
-
-            if (!isset($resultado[$iniciativaId]['ods'][$odsId])) {
-                $resultado[$iniciativaId]['ods'][$odsId] = [
-                    'id_ods' => $odsId,
-                    'nombre_ods' => $dato['ods_nombre'],
-                    'metas' => []
-                ];
-            }
-
-            $resultado[$iniciativaId]['ods'][$odsId]['metas'][] = [
-                'id_meta' => $metaId,
-                'nombre_meta' => $dato['meta_nombre']
+            /*Aqui si que formateamos la data completa como bien he dicho antes creas el array de ODS para
+            más adelante poder simplemente incluirlo*/
+            $formattedData[] = [
+                'id_iniciativa' => $iniciativa->getId(),
+                'nombre_Inciativa' => $iniciativa->getNombre(),
+                'ods' => $odsArray
             ];
         }
-
-        foreach ($resultado as &$iniciativa) {
-            $iniciativa['ods'] = array_values($iniciativa['ods']);
-        }
-
-        return new JsonResponse(array_values($resultado));
+        
+        return $formattedData;
     }
 
     // GET Indicador 6: Done
@@ -223,17 +248,32 @@ class IndicadoresService
         return new JsonResponse($data);
     }
 
-    // GET Indicador 8: Por revisar
+    // GET Indicador 8: Hecho de nuevo (falta revisar)
     public function getTiposIniciativas(): JsonResponse
     {
-        $resultados = $this->entityManager->getRepository(Iniciativa::class)->countByTipo();
 
-        if (!$resultados) {
-            return new JsonResponse(['message' => 'No se han encontrado iniciativas'], Response::HTTP_NOT_FOUND);
+        $tiposIniciativas =  $this->entityManager->getRepository(Iniciativa::class)->findTiposIniciativa();
+        $conteoIniciativas =  $this->entityManager->getRepository(Iniciativa::class)->countIniciativasPorTipo();
+
+        $resultado = [];
+        foreach ($tiposIniciativas as $tipo) {
+            $totalIniciativas = 0;
+            foreach ($conteoIniciativas as $conteo) {
+                if ($conteo['tipo'] === $tipo) {
+                    $totalIniciativas = $conteo['total'];
+                    break;
+                }
+            }
+
+            $resultado[] = [
+                'tipoIniciativa' => $tipo,
+                'numIniciativas' => $totalIniciativas
+            ];
         }
 
-        return new JsonResponse($resultados);
+        return new JsonResponse($resultado);
     }
+
 
     //GET indicador 10.1: Done
     public function getCantidadProfesores(): JsonResponse
@@ -250,10 +290,10 @@ class IndicadoresService
         return new JsonResponse($data);
     }
 
-    //GET indicador 10.2: pendiente de revisar
+    //GET indicador 10.2: Se ha hecho de nuevo (para revisar)
     public function getCantidadDeIniciativasPorProfesor(): JsonResponse
     {
-        $profesores = $this->entityManager->getRepository(Profesor::class)->countIniciativasPorProfesor();
+        $profesores = $this->entityManager->getRepository(Profesor::class)->findAll();
     
         if (!$profesores) {
             return new JsonResponse(['message' => 'No se han encontrado profesores'], Response::HTTP_NOT_FOUND);
@@ -263,8 +303,8 @@ class IndicadoresService
     
         foreach ($profesores as $profesor) {
             $data[] = [
-                'nombre_profesor' => $profesor['nombreProfesor'],
-                'cantDeIniciativas' => (int) $profesor['totalIniciativas'],
+                'nombre_profesor' => $profesor->getNombre(),
+                'cantDeIniciativas' => $profesor->getProfesoresIniciativas()->count(),
             ];
         }
     

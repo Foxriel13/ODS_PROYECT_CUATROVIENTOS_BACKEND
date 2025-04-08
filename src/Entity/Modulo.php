@@ -30,7 +30,6 @@ class Modulo
      * @var Collection<int, ModuloClase>
      */
     #[ORM\OneToMany(targetEntity: ModuloClase::class, mappedBy: 'modulo')]
-    #[Ignore]
     private Collection $moduloClases;
 
     public function __construct()

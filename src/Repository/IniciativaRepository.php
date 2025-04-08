@@ -82,17 +82,21 @@ class IniciativaRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('i')
             ->select('i.id AS iniciativa_id, i.nombre AS iniciativa_nombre, 
-                      c.id AS ciclo_id, c.nombre AS ciclo_nombre, 
-                      m.id AS modulo_id, m.nombre AS modulo_nombre')
-            ->join('i.modulos', 'm')
-            ->join('m.ciclos', 'c')
+                      cl.id AS clase_id, 
+                      cl.nombre AS nombre_clase, 
+                      m.id AS modulo_id, 
+                      m.nombre AS nombre_modulo')  // Aquí seleccionamos el nombre del módulo
+            ->join('i.modulos', 'im')  // IniciativaModulo
+            ->join('im.modulo', 'm')
+            ->join('m.moduloClases', 'mc')  // Relación con la tabla intermedia ModuloClase
+            ->join('mc.clase', 'cl')  // Relación con la entidad Clase
             ->orderBy('i.id', 'ASC')
-            ->addOrderBy('c.id', 'ASC')
+            ->addOrderBy('cl.id', 'ASC')
             ->addOrderBy('m.id', 'ASC')
             ->getQuery()
             ->getResult();
     }
-
+    
     public function getODStrabajadosYSusMetas(): array
     {
         return $this->createQueryBuilder('i')
@@ -103,11 +107,11 @@ class IniciativaRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findAllWithRelations()
+    public function findAllWithIniciativaMetaOds()
     {
         return $this->createQueryBuilder('i')
-            ->leftJoin('i.iniciativaMetas', 'im')
-            ->leftJoin('im.meta', 'm')
+            ->leftJoin('i.metasIniciativas', 'im')
+            ->leftJoin('im.idMetas', 'm')
             ->leftJoin('m.ods', 'o')
             ->addSelect('im')
             ->addSelect('m')

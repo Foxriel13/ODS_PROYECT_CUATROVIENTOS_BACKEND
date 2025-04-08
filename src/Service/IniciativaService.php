@@ -167,32 +167,38 @@ class IniciativaService
             $modulosRepo = $this->entityManager->getRepository(Modulo::class);
             $clasesRepo = $this->entityManager->getRepository(Clase::class);
         
-            foreach ($data['modulos'] as $moduloId) {
+            foreach ($data['modulos'] as $moduloData) {
+                // Esperamos que cada item sea un array con 'id' y 'clases'
+                $moduloId = $moduloData['id'] ?? null;
+                $claseIds = $moduloData['clases'] ?? [];
+        
+                if (!$moduloId || empty($claseIds)) {
+                    continue;
+                }
+        
                 $modulo = $modulosRepo->find($moduloId);
         
                 if ($modulo) {
+                    // Asociar el módulo a la iniciativa
                     $iniciativaModulo = new IniciativaModulo($iniciativa, $modulo);
                     $iniciativa->addModulo($iniciativaModulo);
                     $this->entityManager->persist($iniciativaModulo);
         
-                    if (!empty($data['clases'][$moduloId]) && is_array($data['clases'][$moduloId])) {
-                        foreach ($data['clases'][$moduloId] as $claseId) {
-                            $clase = $clasesRepo->find($claseId);
-                            if ($clase) {
-                                $moduloClase = new ModuloClase();
-                                $moduloClase->setModulo($modulo);
-                                $moduloClase->setClase($clase);
-                                $this->entityManager->persist($moduloClase);
-                            }
+                    // Asociar clases al módulo
+                    foreach ($claseIds as $claseId) {
+                        $clase = $clasesRepo->find($claseId);
+                        if ($clase) {
+                            $moduloClase = new ModuloClase($modulo, $clase);
+                            $modulo->addModuloClase($moduloClase);
+                            $this->entityManager->persist($moduloClase);
                         }
                     }
                 }
             }
-        
-            $this->entityManager->flush();
         } else {
-            return new JsonResponse(['message' => 'Debes de introducir al menos un módulo'], Response::HTTP_NOT_FOUND);
+            return new JsonResponse(['message' => 'Debes de introducir al menos un módulo con clases'], Response::HTTP_NOT_FOUND);
         }
+        
         
 
         // Procesamos redes sociales
@@ -331,43 +337,45 @@ class IniciativaService
             $modulosRepo = $this->entityManager->getRepository(Modulo::class);
             $clasesRepo = $this->entityManager->getRepository(Clase::class);
         
-            foreach ($iniciativa->getModulos() as $modulos) {
-                $this->entityManager->remove($modulos);
+            // Eliminar relaciones antiguas de módulos y sus clases
+            foreach ($iniciativa->getModulos() as $iniciativaModulo) {
+                $modulo = $iniciativaModulo->getModulo();
+                foreach ($modulo->getModuloClases() as $moduloClase) {
+                    $this->entityManager->remove($moduloClase);
+                }
+                $this->entityManager->remove($iniciativaModulo);
             }
             $this->entityManager->flush();
         
-            foreach ($data['modulos'] as $moduloId) {
-                $modulo = $modulosRepo->find($moduloId);
+            foreach ($data['modulos'] as $moduloData) {
+                $moduloId = $moduloData['id'] ?? null;
+                $claseIds = $moduloData['clases'] ?? [];
         
-                if ($entidadExterna && $modulo) {
+                if (!$moduloId || empty($claseIds)) {
+                    continue;
+                }
+        
+                $modulo = $modulosRepo->find($moduloId);
+                if ($modulo) {
+                    // Relacionar módulo con iniciativa
                     $iniciativaModulo = new IniciativaModulo($iniciativa, $modulo);
                     $iniciativa->addModulo($iniciativaModulo);
                     $this->entityManager->persist($iniciativaModulo);
         
-                    foreach ($modulo->getModuloClases() as $moduloClase) {
-                        $this->entityManager->remove($moduloClase);
-                    }
-        
-                    if (!empty($data['clases_por_modulo'][$moduloId]) && is_array($data['clases_por_modulo'][$moduloId])) {
-                        foreach ($data['clases_por_modulo'][$moduloId] as $claseId) {
-                            $clase = $clasesRepo->find($claseId);
-                            if ($clase) {
-                                $moduloClase = new ModuloClase();
-                                $moduloClase->setModulo($modulo);
-                                $moduloClase->setClase($clase);
-                                $this->entityManager->persist($moduloClase);
-                            }
+                    // Relacionar clases al módulo
+                    foreach ($claseIds as $claseId) {
+                        $clase = $clasesRepo->find($claseId);
+                        if ($clase) {
+                            $moduloClase = new ModuloClase($modulo, $clase);
+                            $modulo->addModuloClase($moduloClase);
+                            $this->entityManager->persist($moduloClase);
                         }
                     }
                 }
             }
-        
-            $this->entityManager->flush();
         } else {
-            return new JsonResponse(['message' => 'Debes de introducir al menos un módulo'], Response::HTTP_NOT_FOUND);
+            return new JsonResponse(['message' => 'Debes de introducir al menos un módulo con clases'], Response::HTTP_NOT_FOUND);
         }
-        
-        
 
         // Relacionar Módulos
         if (!empty($data['redes_sociales']) && is_array($data['redes_sociales'])) {

@@ -19,6 +19,13 @@ class ModuloClase
     #[ORM\ManyToOne(inversedBy: 'moduloClases')]
     private ?Clase $clase = null;
 
+    public function __construct(Modulo $modulo, Clase $clase)
+    {
+        $this->modulo = $modulo;
+        $this->clase = $clase;
+    }
+
+
     public function getId(): ?int
     {
         return $this->id;

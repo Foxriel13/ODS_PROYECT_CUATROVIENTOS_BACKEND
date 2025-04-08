@@ -5,11 +5,13 @@ namespace App\Service;
 use App\Entity\Clase;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Modulo;
+use App\Entity\ModuloClase;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-class ModulosService{
+class ModulosService
+{
 
     // Constructor con el manejador de entidades y el serializador
     public function __construct(private EntityManagerInterface $entityManager, private SerializerInterface $serializer)
@@ -27,15 +29,15 @@ class ModulosService{
             return new JsonResponse(['message' => 'No se han encontrado módulos'], Response::HTTP_NOT_FOUND);
         }
 
-        $json = $this->serializer->serialize($modulos, 'json');
-        return new JsonResponse($json, Response::HTTP_OK, [], true);
+        $data = array_map(fn($modulo) => $this->formatModulo($modulo), $modulos);
+        return new JsonResponse($data);
     }
 
     // Función para crear un Módulo
     public function createModulo(array $data): JsonResponse
     {
         if (empty($data['nombre'])) {
-            return new JsonResponse(['message' => 'El nombre es obligatoria'], Response::HTTP_BAD_REQUEST);
+            return new JsonResponse(['message' => 'El nombre es obligatorio'], Response::HTTP_BAD_REQUEST);
         }
 
         $modulo = new Modulo();
@@ -43,13 +45,13 @@ class ModulosService{
 
         if (!empty($data['clases']) && is_array($data['clases'])) {
             $clasesRepo = $this->entityManager->getRepository(Clase::class);
-            foreach ($data['clases'] as $clasesId) {
+            foreach ($data['clases'] as $claseId) {
                 $clase = $clasesRepo->find($claseId);
                 if ($clase) {
                     $moduloClase = new ModuloClase($modulo, $clase);
                     $modulo->addModuloClase($moduloClase);
                     $this->entityManager->persist($moduloClase);
-                } 
+                }
             }
         } else {
             return new JsonResponse(['message' => 'Debes de introducir al menos una clase'], Response::HTTP_NOT_FOUND);
@@ -57,11 +59,10 @@ class ModulosService{
 
         $this->entityManager->persist($modulo);
         $this->entityManager->flush();
-    
+
         return new JsonResponse(['message' => 'Módulo creado correctamente'], Response::HTTP_CREATED);
     }
 
-    // Función para actualizar un Módulo
     public function updateModulo(int $id, array $data): JsonResponse
     {
         $modulo = $this->entityManager->getRepository(Modulo::class)->find($id);
@@ -74,17 +75,22 @@ class ModulosService{
             $modulo->setNombre($data['nombre']);
         }
 
-        // Actualización de clases
-        if (!empty($data['clase'])) {
-            $clase = $this->entityManager->getRepository(Clase::class)->find($data['clase']);
-            if ($clase !== null) {
-                $claseEntities[] = $clase;
+        // Actualizar clases
+        if (!empty($data['clases']) && is_array($data['clases'])) {
+            // Eliminar relaciones anteriores
+            foreach ($modulo->getModuloClases() as $moduloClase) {
+                $this->entityManager->remove($moduloClase);
             }
 
-            if (!empty($claseEntities)) {
-                $modulo->setClase($clase);
-            } else {
-                return new JsonResponse(['message' => 'Debes de introducir al menos una clase válida'], Response::HTTP_BAD_REQUEST);
+            // Añadir nuevas relaciones
+            $clasesRepo = $this->entityManager->getRepository(Clase::class);
+            foreach ($data['clases'] as $claseId) {
+                $clase = $clasesRepo->find($claseId);
+                if ($clase) {
+                    $moduloClase = new ModuloClase($modulo, $clase);
+                    $modulo->addModuloClase($moduloClase);
+                    $this->entityManager->persist($moduloClase);
+                }
             }
         }
 
@@ -92,6 +98,7 @@ class ModulosService{
 
         return new JsonResponse(['message' => 'Módulo actualizado correctamente'], Response::HTTP_OK);
     }
+
 
     // Función para eliminar un Módulo
     public function deleteModulo(int $id): JsonResponse
@@ -108,4 +115,17 @@ class ModulosService{
         return new JsonResponse(['message' => 'Módulo eliminado correctamente'], Response::HTTP_OK);
     }
 
+    private function formatModulo($modulo): array
+    {
+        return [
+            'modulos' => array_map(fn($iniciativaModulo) => [
+                'idModulo' => $iniciativaModulo->getModulo()->getId(),
+                'nombre' => $iniciativaModulo->getModulo()->getNombre(),
+                'clases' => array_map(fn($modulosClase) => [
+                    'idClase' => $modulosClase->getClase()->getId(),
+                    'nombre' => $modulosClase->getClase()->getNombre(),
+                ], $iniciativaModulo->getModulo()->getModuloClases()->toArray()),
+            ], $modulo->getModuloClases()->toArray()),
+        ];
+    }
 }

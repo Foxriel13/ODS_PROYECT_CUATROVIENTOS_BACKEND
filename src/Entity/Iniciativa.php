@@ -86,7 +86,7 @@ class Iniciativa
      * @var Collection<int, IniciativaActividad>
      */
     #[ORM\OneToMany(targetEntity: IniciativaActividad::class, mappedBy: 'iniciativa')]
-    private Collection $iniciativaActividads;
+    private Collection $iniciativaActividades;
 
 
     public function __construct()
@@ -96,7 +96,7 @@ class Iniciativa
         $this->entidadesExternas = new ArrayCollection();
         $this->profesores = new ArrayCollection();
         $this->iniciativaRedesSociales = new ArrayCollection();
-        $this->iniciativaActividads = new ArrayCollection();
+        $this->iniciativaActividades = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -398,15 +398,15 @@ class Iniciativa
     /**
      * @return Collection<int, IniciativaActividad>
      */
-    public function getIniciativaActividads(): Collection
+    public function getIniciativaActividades(): Collection
     {
-        return $this->iniciativaActividads;
+        return $this->iniciativaActividades;
     }
 
     public function addIniciativaActividad(IniciativaActividad $iniciativaActividad): static
     {
-        if (!$this->iniciativaActividads->contains($iniciativaActividad)) {
-            $this->iniciativaActividads->add($iniciativaActividad);
+        if (!$this->iniciativaActividades->contains($iniciativaActividad)) {
+            $this->iniciativaActividades->add($iniciativaActividad);
             $iniciativaActividad->setIniciativa($this);
         }
 
@@ -415,7 +415,7 @@ class Iniciativa
 
     public function removeIniciativaActividad(IniciativaActividad $iniciativaActividad): static
     {
-        if ($this->iniciativaActividads->removeElement($iniciativaActividad)) {
+        if ($this->iniciativaActividades->removeElement($iniciativaActividad)) {
             // set the owning side to null (unless already changed)
             if ($iniciativaActividad->getIniciativa() === $this) {
                 $iniciativaActividad->setIniciativa(null);

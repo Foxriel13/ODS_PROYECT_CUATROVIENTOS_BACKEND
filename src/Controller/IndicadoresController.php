@@ -104,4 +104,9 @@ final class IndicadoresController extends AbstractController
     }
 
     // TODO: GET Indicador 13
+    #[Route('/indicadores/haTendioActividad', methods: ['GET'])]
+    public function getIniciativasActividad(): JsonResponse
+    {
+        return $this->indicadoresService->getIniciativasActividad();
+    }
 }

@@ -119,66 +119,44 @@ class IndicadoresService
         return new JsonResponse($data);
     }
 
-    // GET Indicador 5: No se como hacerlo
+    // GET Indicador 5: Para revisar
     public function getODStrabajadosYSusMetas(): array
     {
-        $metasIniciativas = $this->entityManager
-            ->getRepository(Iniciativa::class)
-            ->findAllWithIniciativaMetaOds();
-    
+        $datos = $this->entityManager->getRepository(Iniciativa::class)->findOdsYSusMetas();
         $resultado = [];
-    
-        foreach ($metasIniciativas as $mi) {
-            $iniciativa = $mi->getIniciativa();
-            $meta = $mi->getMeta();
-    
-            // Validaciones por si faltan relaciones
-            if (!$iniciativa || !$meta) {
-                continue;
-            }
-    
-            $ods = $meta->getOds();
-            if (!$ods) {
-                continue;
-            }
-    
-            $nombreIniciativa = $iniciativa->getNombre();
-            $nombreOds = $ods->getNombre();
-            $nombreMeta = $meta->getDescripcion();
-    
-            // Agrupar en array multidimensional
-            if (!isset($resultado[$nombreIniciativa])) {
-                $resultado[$nombreIniciativa] = [];
-            }
-    
-            if (!isset($resultado[$nombreIniciativa][$nombreOds])) {
-                $resultado[$nombreIniciativa][$nombreOds] = [];
-            }
-    
-            $resultado[$nombreIniciativa][$nombreOds][] = [
-                'nombre_meta' => $nombreMeta
-            ];
-        }
-    
-        $final = [];
-    
-        foreach ($resultado as $nombreIniciativa => $odsList) {
-            $odsFormatted = [];
-    
-            foreach ($odsList as $nombreOds => $metas) {
-                $odsFormatted[] = [
-                    'nombre_ods' => $nombreOds,
-                    'metas' => $metas
+
+        foreach ($datos as $dato) {
+            $iniciativaId = $dato['iniciativa_id'];
+            $odsId = $dato['ods_id'];
+            $metaId = $dato['meta_id'];
+
+            if (!isset($resultado[$iniciativaId])) {
+                $resultado[$iniciativaId] = [
+                    'id' => $iniciativaId,
+                    'nombre_iniciativa' => $dato['iniciativa_nombre'],
+                    'ods' => []
                 ];
             }
-    
-            $final[] = [
-                'nombre_Iniciativa' => $nombreIniciativa,
-                'ods' => $odsFormatted
+
+            if (!isset($resultado[$iniciativaId]['ods'][$odsId])) {
+                $resultado[$iniciativaId]['ods'][$odsId] = [
+                    'id_ods' => $odsId,
+                    'nombre_ods' => $dato['ods_nombre'],
+                    'metas' => []
+                ];
+            }
+
+            $resultado[$iniciativaId]['ods'][$odsId]['metas'][] = [
+                'id_meta' => $metaId,
+                'nombre_meta' => $dato['meta_nombre']
             ];
+
+        
         }
-    
-        return $final;
+        foreach ($resultado as &$iniciativa) {
+            $iniciativa['ods'] = array_values($iniciativa['ods']);
+        }
+        return new JsonResponse(array_values($resultado));
     }
     
     // GET Indicador 6: Done
@@ -336,6 +314,26 @@ class IndicadoresService
                 'horas_dedicadas' => $iniciativa->getHoras()
             ];
         }
+        return new JsonResponse($data);
+    }
+
+    //GET indicador 13:
+    public function getIniciativasActividad(): JsonResponse
+    {
+        $iniciativas = $this->entityManager->getRepository(Iniciativa::class)->findAll();
+        $conActividad;
+        $sinActividad;
+        foreach ($iniciativas as $iniciativa) {
+            if ($iniciativa->getIniciativaActividades() > 0) {
+                $conActividad++;
+            } else {
+                $sinActividad++;
+            }
+        }
+        $data=[
+            "tiene_actividades" => $conActividad,
+            "no_tiene_actividades" => $sinActividad
+        ];
         return new JsonResponse($data);
     }
 

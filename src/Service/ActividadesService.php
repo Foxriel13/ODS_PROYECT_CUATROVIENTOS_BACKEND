@@ -47,7 +47,7 @@ class ActividadesService{
     }
 
     // Actualizar una Actividad
-    public function updateClase(int $id, array $data): JsonResponse
+    public function updateActividad(int $id, array $data): JsonResponse
     {
         $actividad = $this->entityManager->getRepository(Actividad::class)->find($id);
 

@@ -31,6 +31,8 @@ tags:
     description: Operaciones sobre las iniciativas
   - name: Indicadores
     description: Operaciones sobre los indicadores
+  - name: Actividad
+    description: Operaciones sobre las actividades
 paths:
   /ods:
     get:
@@ -937,6 +939,90 @@ paths:
                 $ref: '#/components/schemas/HaTendioActividad'
         '400':
           description: Algún problema con el servidor
+  /actividades:
+    get:
+      tags:
+        - Actividad
+      summary: Recuperar todas las Actividades
+      operationId: getActividades
+      responses:
+        '200':
+          description: Lista de Actividades
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Actividades'
+        '400':
+          description: Algún problema con el servidor
+    post:
+      tags:
+        - Actividad
+      summary: Crear una nueva Actividad
+      operationId: createActividad
+      requestBody:
+        description: Datos de la nueva Actividad
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewActividades'
+      responses:
+        '201':
+          description: Actividad creada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Actividades'
+  /actividades/{idActividad}:
+    put:
+      tags:
+        - Actividad
+      summary: Actualizar una actividad existente
+      description: Actualizar una actividad existetne por Id
+      operationId: updateActividad
+      parameters:
+        - name: idActividad
+          in: path
+          description: Id para actualizar una actividad
+          required: true
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        description: Actualiza una actividad existente
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewActividades'
+        required: true
+      responses:
+        '200':
+          description: Operación completada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Actividades'
+        '404':
+          description: Actividad no encontrada
+    delete:
+      tags:
+        - Actividad
+      summary: Elimina una Actividad
+      description: elimina una Actividad
+      operationId: deleteActividad
+      parameters:
+        - name: idActividad
+          in: path
+          description: Id de la Actividad que se eliminará
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '404':
+          description: Actividad no encontrada
 components:
   schemas:
     Ods:
@@ -1436,5 +1522,9 @@ components:
           type: string
           example: "GreenTech International"
           
-          
-          
+    NewActividades:
+      type: object
+      properties:
+        nombre:
+          type: string
+          example: "Salida al museo"

@@ -52,7 +52,7 @@ class ActividadesController extends AbstractController
 
     // Actualizar actividades
     #[Route('/actividades/{idActividad}', name: 'update_actividad', methods: ['PUT'])]
-    public function updateClase(Request $request, int $idActividad): JsonResponse
+    public function updateActividad(Request $request, int $idActividad): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
     
@@ -65,7 +65,7 @@ class ActividadesController extends AbstractController
 
     // Eliminar actividades
     #[Route('/actividades/{idActividad}', name: 'delete_actividad', methods: ['DELETE'])]
-    public function deleteClase(int $idActividad): JsonResponse
+    public function deleteActividad(int $idActividad): JsonResponse
     {
         return $this->actividadesService->deleteActividad($idActividad);
     }

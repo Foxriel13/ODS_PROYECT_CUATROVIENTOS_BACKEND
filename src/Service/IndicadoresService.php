@@ -120,7 +120,7 @@ class IndicadoresService
     }
 
     // GET Indicador 5: Para revisar
-    public function getODStrabajadosYSusMetas(): array
+    public function getODStrabajadosYSusMetas(): JsonResponse
     {
         $datos = $this->entityManager->getRepository(Iniciativa::class)->findOdsYSusMetas();
         $resultado = [];
@@ -321,8 +321,8 @@ class IndicadoresService
     public function getIniciativasActividad(): JsonResponse
     {
         $iniciativas = $this->entityManager->getRepository(Iniciativa::class)->findAll();
-        $conActividad;
-        $sinActividad;
+        $conActividad = 0;
+        $sinActividad = 0;
         foreach ($iniciativas as $iniciativa) {
             if ($iniciativa->getIniciativaActividades() > 0) {
                 $conActividad++;

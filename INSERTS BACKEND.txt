@@ -33,7 +33,7 @@
     (13, 'Concurso artístico'),
     (14, 'Mentoría grupal'),
     (15, 'Limpieza de espacios naturales'),
-    (16, 'Compra/Venta de objetos'),
+    (16, 'Compra/Venta de objetos');
 
 
     INSERT INTO meta (id, ods_id, descripcion) VALUES

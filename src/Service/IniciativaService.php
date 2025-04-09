@@ -15,6 +15,8 @@ use App\Entity\ModuloClase;
 use App\Entity\Profesor;
 use App\Entity\ProfesorIniciativa;
 use App\Entity\RedesSociales;
+use App\Entity\Actividad;
+use App\Entity\IniciativaActividad;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -216,6 +218,19 @@ class IniciativaService
             return new JsonResponse(['message' => 'Debes de introducir al menos una red social'], Response::HTTP_NOT_FOUND);
         }
 
+        // Procesamos actividades
+        if (!empty($data['actividades']) && is_array($data['actividades'])) {
+            $actividadesRepo = $this->entityManager->getRepository(Actividad::class);
+            foreach ($data['actividades'] as $actividadId) {
+                $actividad = $actividadesRepo->find($actividadId);
+                if ($actividad) {
+                    $iniciativaActividad = new IniciativaActividad($iniciativa, $actividad);
+                    $iniciativa->addIniciativaActividad($iniciativaActividad);
+                    $this->entityManager->persist($iniciativaRedSocial);
+                }
+            }
+        }
+
         $this->entityManager->persist($iniciativa);
         $this->entityManager->flush();
 
@@ -396,7 +411,29 @@ class IniciativaService
             }
             
         } else {
-            return new JsonResponse(['message' => 'Debes de introducir al menos un módulo'], Response::HTTP_NOT_FOUND);
+            return new JsonResponse(['message' => 'Debes de introducir al menos una red social'], Response::HTTP_NOT_FOUND);
+        }
+
+        // Relacionar Actividades
+        if (!empty($data['actividades']) && is_array($data['actividades'])) {
+            $actividadesesRepo = $this->entityManager->getRepository(Actividad::class);
+            
+            foreach ($iniciativa->getIniciativaActividad() as $actividad) {
+                $this->entityManager->remove($actividad);
+            }
+            $this->entityManager->flush();
+
+            foreach ($data['actividades'] as $actividadId) {
+                $actividad = $actividadesesRepo->find($actividadId);
+                if ($actividad) {
+                    $iniciativaActividad = new IniciativaActividad($iniciativa, $actividad);
+                    $iniciativa->addIniciativaActividad($iniciativaActividad);
+                    $this->entityManager->persist($iniciativaActividad);
+                }
+            }
+            
+        } else {
+            return new JsonResponse(['message' => 'Debes de introducir al menos una actividad'], Response::HTTP_NOT_FOUND);
         }
 
         $this->entityManager->flush();

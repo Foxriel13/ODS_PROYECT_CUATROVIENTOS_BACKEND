@@ -541,7 +541,7 @@ paths:
   /redes_sociales:
     get:
       tags:
-        - Red Social
+        - Redes Sociales
       summary: Recuperar todas las redes sociales
       operationId: getRedesSociales
       responses:
@@ -557,7 +557,7 @@ paths:
           description: Algún problema con el servidor
     post:
       tags:
-        - Red Social
+        - Redes Sociales
       summary: Crear una nueva Red Social
       operationId: crearRedSocial
       requestBody:
@@ -577,7 +577,7 @@ paths:
   /redes_sociales/{idRedsocial}:
     put:
       tags:
-        - Red Social
+        - Redes Sociales
       summary: Actualiza una Red Social existente
       description: Actualiza una Red Social existente by Id
       operationId: updateRedSocial
@@ -607,7 +607,7 @@ paths:
           description: Red Social no econtrada
     delete:
       tags:
-        - Red Social
+        - Redes Sociales
       summary: Elimina una Red Social
       description: elimina una Red Social
       operationId: deleteRedsocial
@@ -1015,6 +1015,15 @@ components:
         nombre:
           type: string
           example: Universidad Nacional
+    Actividades:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        nombre:
+          type: string
+          example: Charla
     Iniciativa:
       type: object
       properties:
@@ -1080,6 +1089,10 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Redes_sociales'
+        actividades:
+          type: array
+          items:
+            $ref: '#/components/schemas/Actividades'
             
             
     #Body para el 1er Indicador
@@ -1338,6 +1351,11 @@ components:
           items:
             $ref: "#/components/schemas/NewModulo2"
         redes_sociales:
+          type: array
+          items:
+            type: integer
+          example: [1, 2]
+        actividades:
           type: array
           items:
             type: integer

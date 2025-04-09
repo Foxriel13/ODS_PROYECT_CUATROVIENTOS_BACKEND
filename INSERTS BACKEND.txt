@@ -17,6 +17,24 @@
     (16, 'Paz, Justicia e Instituciones Sólidas', 'Económica'),
     (17, 'Alianzas para Lograr los Objetivos', 'Social');
 
+    INSERT INTO actividades(id, nombre) VALUES
+    (1, 'Charla'),
+    (2, 'Excursión'),
+    (3, 'Taller'),
+    (4, 'Seminario'),
+    (5, 'Curso'),
+    (6, 'Formación Técnica'),
+    (7, 'Visita guiada'),
+    (8, 'Acampada'),
+    (9, 'Voluntariado'),
+    (10, 'Actividad Deportiva'),
+    (11, 'Presentación de grupo'),
+    (12, 'Exposición'),
+    (13, 'Concurso artístico'),
+    (14, 'Mentoría grupal'),
+    (15, 'Limpieza de espacios naturales'),
+    (16, 'Compra/Venta de objetos'),
+
 
     INSERT INTO meta (id, ods_id, descripcion) VALUES
     (1, 1, 'Fomentar la educación digital'),
@@ -179,6 +197,12 @@
     INSERT INTO iniciativa_redes_sociales (id, iniciativa_id, redes_sociales_id) VALUES
     (1, 1, 1),
     (2, 2, 2);
+
+    INSERT INTO iniciativa_actividad(id, iniciativa_id, avtividad_id) VALUES
+    (1, 1, 4),
+    (2, 1, 7),
+    (3, 1, 2);
+
 
     INSERT INTO iniciativa_modulo (id, iniciativa_id, modulo_id) VALUES
     (1, 1, 3),

@@ -377,7 +377,7 @@ class IniciativaService
             return new JsonResponse(['message' => 'Debes de introducir al menos un módulo con clases'], Response::HTTP_NOT_FOUND);
         }
 
-        // Relacionar Módulos
+        // Relacionar Redes Sociales
         if (!empty($data['redes_sociales']) && is_array($data['redes_sociales'])) {
             $redesSocialesRepo = $this->entityManager->getRepository(RedesSociales::class);
             
@@ -451,6 +451,10 @@ class IniciativaService
                 'nombre' => $iniciativaRedSocial->getRedesSociales()->getNombre(),
                 'enlace' => $iniciativaRedSocial->getRedesSociales()->getEnlace(),
             ], $iniciativa->getIniciativaRedesSociales()->toArray()),
+            'actividades' => array_map(fn($iniciativaActividad) => [
+                'idActividad' => $iniciativaActividad->getActividad()->getId(),
+                'nombre' => $iniciativaActividad->getActividad()->getNombre(),
+            ], $iniciativa->getIniciativaActividades()->toArray()),
         ];
     }
 }

@@ -85,11 +85,11 @@ class IniciativaRepository extends ServiceEntityRepository
                       cl.id AS clase_id, 
                       cl.nombre AS nombre_clase, 
                       m.id AS modulo_id, 
-                      m.nombre AS nombre_modulo')  // Aquí seleccionamos el nombre del módulo
-            ->join('i.modulos', 'im')  // IniciativaModulo
+                      m.nombre AS nombre_modulo')
+            ->join('i.modulos', 'im')
             ->join('im.modulo', 'm')
-            ->join('m.moduloClases', 'mc')  // Relación con la tabla intermedia ModuloClase
-            ->join('mc.clase', 'cl')  // Relación con la entidad Clase
+            ->join('m.moduloClases', 'mc')
+            ->join('mc.clase', 'cl')
             ->orderBy('i.id', 'ASC')
             ->addOrderBy('cl.id', 'ASC')
             ->addOrderBy('m.id', 'ASC')
@@ -102,7 +102,7 @@ class IniciativaRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('i')
             ->leftJoin('i.metas', 'm')
             ->leftJoin('m.ods', 'o')
-            ->addSelect('m', 'o')  // Para traer los datos de metas y ODS en la misma consulta
+            ->addSelect('m', 'o')
             ->getQuery()
             ->getResult();
     }

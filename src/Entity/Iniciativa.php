@@ -82,6 +82,12 @@ class Iniciativa
     #[ORM\OneToMany(targetEntity: IniciativaRedesSociales::class, mappedBy: 'iniciativa')]
     private Collection $iniciativaRedesSociales;
 
+    /**
+     * @var Collection<int, IniciativaActividad>
+     */
+    #[ORM\OneToMany(targetEntity: IniciativaActividad::class, mappedBy: 'iniciativa')]
+    private Collection $iniciativaActividads;
+
 
     public function __construct()
     {
@@ -90,6 +96,7 @@ class Iniciativa
         $this->entidadesExternas = new ArrayCollection();
         $this->profesores = new ArrayCollection();
         $this->iniciativaRedesSociales = new ArrayCollection();
+        $this->iniciativaActividads = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -382,6 +389,36 @@ class Iniciativa
             // set the owning side to null (unless already changed)
             if ($iniciativaRedesSociale->getIniciativa() === $this) {
                 $iniciativaRedesSociale->setIniciativa(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, IniciativaActividad>
+     */
+    public function getIniciativaActividads(): Collection
+    {
+        return $this->iniciativaActividads;
+    }
+
+    public function addIniciativaActividad(IniciativaActividad $iniciativaActividad): static
+    {
+        if (!$this->iniciativaActividads->contains($iniciativaActividad)) {
+            $this->iniciativaActividads->add($iniciativaActividad);
+            $iniciativaActividad->setIniciativa($this);
+        }
+
+        return $this;
+    }
+
+    public function removeIniciativaActividad(IniciativaActividad $iniciativaActividad): static
+    {
+        if ($this->iniciativaActividads->removeElement($iniciativaActividad)) {
+            // set the owning side to null (unless already changed)
+            if ($iniciativaActividad->getIniciativa() === $this) {
+                $iniciativaActividad->setIniciativa(null);
             }
         }
 

@@ -54,9 +54,9 @@ class EntidadesExternasService{
     }
 
     // Actualizar una entidad externa
-    public function updateEntidadExterna(int $id, array $data): JsonResponse
+    public function updateEntidadExterna(int $idEntidadExterna, array $data): JsonResponse
     {
-        $entidadExterna = $this->getEntidadExternaById($id);
+        $entidadExterna = $this->getEntidadExternaById($idEntidadExterna);
 
         if (!$entidadExterna) {
             return new JsonResponse(['message' => 'Entidad Externa no encontrada'], Response::HTTP_NOT_FOUND);
@@ -72,9 +72,9 @@ class EntidadesExternasService{
     }
 
     // Eliminar una entidad externa
-    public function deleteEntidadExterna(int $id): JsonResponse
+    public function deleteEntidadExterna(int $idEntidadExterna): JsonResponse
     {
-        $entidadExterna = $this->getEntidadExternaById($id);
+        $entidadExterna = $this->getEntidadExternaById($idEntidadExterna);
 
         if (!$entidadExterna) {
             return new JsonResponse(['message' => 'Entidad Externa no encontrada'], Response::HTTP_NOT_FOUND);

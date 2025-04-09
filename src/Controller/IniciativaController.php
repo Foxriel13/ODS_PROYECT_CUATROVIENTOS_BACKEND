@@ -19,7 +19,7 @@ final class IniciativaController extends AbstractController
     }
 
     // Get de las iniciativas
-    #[Route('/iniciativas', methods: ['GET'])]
+    #[Route('/iniciativas', name: 'get_iniciativas', methods: ['GET'])]
     public function getIniciativas(Request $request): JsonResponse
     {
         $eliminado = $request->query->get('eliminado');
@@ -27,23 +27,15 @@ final class IniciativaController extends AbstractController
         // Si el campo eliminado es true, sacamos las iniciativas eliminadas, si es false las activas y si no las todas
         if ($eliminado == 'true') {
             return $this->iniciativaService->getIniciativasEliminadas();
-        }elseif ($eliminado == 'false') {
+        } elseif ($eliminado == 'false') {
             return $this->iniciativaService->getIniciativasActivas();
-        }else{
-            return $this->iniciativaService->getIniciativas();    
+        } else {
+            return $this->iniciativaService->getIniciativas();
         }
-        
-    } 
-
-    // Marcar como eliminado una inicitativa
-    #[Route('/iniciativas/{idIniciativa}', methods: ['DELETE'])]
-    public function deleteIniciativa( int $idIniciativa): JsonResponse
-    {
-        return $this->iniciativaService->deleteIniciativa($idIniciativa);
     }
-    
+
     // Crear iniciativa
-    #[Route('/iniciativas', methods: ['POST'])]
+    #[Route('/iniciativas', name: 'create_iniciativa', methods: ['POST'])]
     public function createIniciativa(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
@@ -60,16 +52,22 @@ final class IniciativaController extends AbstractController
     }
 
     // Actualizar iniciativa
-    #[Route('/iniciativas/{idIniciativa}', methods: ['PUT'])]
+    #[Route('/iniciativas/{idIniciativa}', name: 'update_iniciativa', methods: ['PUT'])]
     public function updateIniciativa(Request $request, int $idIniciativa): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
-    
+
         if (!$data) {
             return new JsonResponse(['message' => 'Datos inválidos'], Response::HTTP_BAD_REQUEST);
         }
-    
+
         return $this->iniciativaService->updateIniciativa($idIniciativa, $data);
     }
-    
+
+    // Marcar como eliminado una inicitativa
+    #[Route('/iniciativas/{idIniciativa}', name: 'delete_iniciativa', methods: ['DELETE'])]
+    public function deleteIniciativa(int $idIniciativa): JsonResponse
+    {
+        return $this->iniciativaService->deleteIniciativa($idIniciativa);
+    }
 }

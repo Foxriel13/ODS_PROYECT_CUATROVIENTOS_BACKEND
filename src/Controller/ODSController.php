@@ -19,14 +19,14 @@ class ODSController extends AbstractController
     }
 
     // Get de las ODS
-    #[Route('/ods', name: 'ods', methods: ['GET'])]
+    #[Route('/ods', name: 'get_ods', methods: ['GET'])]
     public function getOds(): JsonResponse
     {
         return $this->odsService->getAllOds();
     }
 
     // Crear Ods
-    #[Route('/ods', methods: ['POST'])]
+    #[Route('/ods', name: 'create_ods', methods: ['POST'])]
     public function createOds(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
@@ -42,7 +42,7 @@ class ODSController extends AbstractController
     }
 
     // Actualizar Ods
-    #[Route('/ods/{idOds}', methods: ['PUT'])]
+    #[Route('/ods/{idOds}', name: 'update_ods', methods: ['PUT'])]
     public function updateOds(Request $request, int $idOds): JsonResponse
     {
         $data = json_decode($request->getContent(), true);

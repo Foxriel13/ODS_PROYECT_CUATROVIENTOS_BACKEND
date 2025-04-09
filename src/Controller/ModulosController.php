@@ -19,14 +19,14 @@ class ModulosController extends AbstractController
     }
 
     // Get de las Modulos
-    #[Route('/modulos', name: 'modulos', methods: ['GET'])]
+    #[Route('/modulos', name: 'get_modulos', methods: ['GET'])]
     public function getModulos(): JsonResponse
     {
         return $this->modulosService->getAllModulos();
     }
     
    // Crear Modulo
-   #[Route('/modulos', methods: ['POST'])]
+   #[Route('/modulos', name: 'create_modulo', methods: ['POST'])]
    public function createModulo(Request $request): JsonResponse
    {
        $data = json_decode($request->getContent(), true);
@@ -42,7 +42,7 @@ class ModulosController extends AbstractController
    }
 
    // Actualizar Modulo
-   #[Route('/modulos/{idModulo}', methods: ['PUT'])]
+   #[Route('/modulos/{idModulo}', name: 'update_modulo', methods: ['PUT'])]
    public function updateMeta(Request $request, int $idModulo): JsonResponse
    {
        $data = json_decode($request->getContent(), true);
@@ -56,9 +56,9 @@ class ModulosController extends AbstractController
 
    // Eliminar Modulo
    #[Route('/modulos/{id}', name: 'delete_modulo', methods: ['DELETE'])]
-   public function deleteModulo(int $id): JsonResponse
+   public function deleteModulo(int $idModulo): JsonResponse
    {
-       return $this->modulosService->deleteModulo($id);
+       return $this->modulosService->deleteModulo($idModulo);
    }
 
 }

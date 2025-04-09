@@ -20,7 +20,7 @@ class Modulo
     private ?string $nombre = null;
 
     /**
-     * @var Collection<int, ProfesorModulo>
+     * @var Collection<int, IniciativaModulo>
      */
     #[ORM\OneToMany(targetEntity: IniciativaModulo::class, mappedBy: 'modulo')]
     #[Ignore]

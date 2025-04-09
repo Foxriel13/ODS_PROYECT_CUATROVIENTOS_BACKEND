@@ -19,14 +19,14 @@ class EntidadesExternasController extends AbstractController
     }
 
     // Get de las Entidades Externas
-    #[Route('/entidadesexternas', name: 'entidadesExternas', methods: ['GET'])]
+    #[Route('/entidadesexternas', name: 'get_entidadesExternas', methods: ['GET'])]
     public function getEntidadesExternas(): JsonResponse
     {
         return $this->entidadesExternasService->getAllEntidadesExternas();
     }
 
     // Crear Entidad Externa
-    #[Route('/entidadesexternas', methods: ['POST'])]
+    #[Route('/entidadesexternas', name: 'create_entidadExterna', methods: ['POST'])]
     public function createEntidadExterna(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
@@ -42,7 +42,7 @@ class EntidadesExternasController extends AbstractController
     }
 
     // Actualizar Entidad Externa
-    #[Route('/entidadesexternas/{idEntidadExterna}', methods: ['PUT'])]
+    #[Route('/entidadesexternas/{idEntidadExterna}', name: 'update_entidadExterna', methods: ['PUT'])]
     public function updateEntidadExterna(Request $request, int $idEntidadExterna): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
@@ -55,10 +55,10 @@ class EntidadesExternasController extends AbstractController
     }
 
     // Eliminar Entidad Externa
-    #[Route('/entidadesexternas/{id}', name: 'delete_entidadexterna', methods: ['DELETE'])]
-    public function deleteEntidadExterna(int $id): JsonResponse
+    #[Route('/entidadesexternas/{idEntidadExterna}', name: 'delete_entidadExterna', methods: ['DELETE'])]
+    public function deleteEntidadExterna(int $idEntidadExterna): JsonResponse
     {
-        return $this->entidadesExternasService->deleteEntidadExterna($id);
+        return $this->entidadesExternasService->deleteEntidadExterna($idEntidadExterna);
     }
 
 }

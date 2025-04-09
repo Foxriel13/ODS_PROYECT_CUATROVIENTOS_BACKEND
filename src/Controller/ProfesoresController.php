@@ -19,14 +19,14 @@ class ProfesoresController extends AbstractController
     }
 
     // Get de las Profesores
-    #[Route('/profesores', name: 'profesores', methods: ['GET'])]
+    #[Route('/profesores', name: 'get_profesores', methods: ['GET'])]
     public function getProfesores(): JsonResponse
     {
         return $this->profesoresService->getAllProfesores();
     }
     
     // Crear Profesor
-    #[Route('/profesores', methods: ['POST'])]
+    #[Route('/profesores', name: 'create_profesor', methods: ['POST'])]
     public function createProfesor(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
@@ -42,7 +42,7 @@ class ProfesoresController extends AbstractController
     }
 
     // Actualizar Profesor
-    #[Route('/profesores/{idProfesor}', methods: ['PUT'])]
+    #[Route('/profesores/{idProfesor}', name: 'update_profesor', methods: ['PUT'])]
     public function updateProfesor(Request $request, int $idProfesor): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
@@ -56,9 +56,9 @@ class ProfesoresController extends AbstractController
 
     // Eliminar Profesor
     #[Route('/profesores/{id}', name: 'delete_profesor', methods: ['DELETE'])]
-    public function deleteProfesor(int $id): JsonResponse
+    public function deleteProfesor(int $idProfesor): JsonResponse
     {
-        return $this->profesoresService->deleteProfesor($id);
+        return $this->profesoresService->deleteProfesor($idProfesor);
     }
 
 }

@@ -52,9 +52,9 @@ class RedesSocialesService{
     }
 
     // Función para actualizar una red social
-    public function updateRedSocial(int $id, array $data): JsonResponse
+    public function updateRedSocial(int $idRedSocial, array $data): JsonResponse
     {
-        $redSocial = $this->entityManager->getRepository(RedesSociales::class)->find($id);
+        $redSocial = $this->entityManager->getRepository(RedesSociales::class)->find($idRedSocial);
 
         if (!$redSocial) {
             return new JsonResponse([
@@ -77,9 +77,9 @@ class RedesSocialesService{
     }
 
     // Función para eliminar una red social
-    public function deleteRedSocial(int $id): JsonResponse
+    public function deleteRedSocial(int $idRedSocial): JsonResponse
     {
-        $redSocial = $this->entityManager->getRepository(RedesSociales::class)->find($id);
+        $redSocial = $this->entityManager->getRepository(RedesSociales::class)->find($idRedSocial);
 
         if (!$redSocial) {
             return new JsonResponse([

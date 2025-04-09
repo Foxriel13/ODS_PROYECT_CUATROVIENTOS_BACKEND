@@ -19,14 +19,14 @@ class MetasController extends AbstractController
     }
 
     // Get de las Metas
-    #[Route('/metas', name: 'metas', methods: ['GET'])]
+    #[Route('/metas', name: 'get_metas', methods: ['GET'])]
     public function getMetas(): JsonResponse
     {
         return $this->metasService->getAllMetas();
     }
     
     // Crear Meta
-    #[Route('/metas', methods: ['POST'])]
+    #[Route('/metas', name: 'create_meta', methods: ['POST'])]
     public function createMeta(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
@@ -42,7 +42,7 @@ class MetasController extends AbstractController
     }
     
     // Actualizar Meta
-    #[Route('/metas/{idMeta}', methods: ['PUT'])]
+    #[Route('/metas/{idMeta}', name: 'update_meta', methods: ['PUT'])]
     public function updateMeta(Request $request, int $idMeta): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
@@ -55,9 +55,9 @@ class MetasController extends AbstractController
     }
     
     #[Route('/metas/{id}', name: 'delete_meta', methods: ['DELETE'])]
-    public function deleteMeta(int $id): JsonResponse
+    public function deleteMeta(int $idMeta): JsonResponse
     {
-        return $this->metasService->deleteMeta($id);
+        return $this->metasService->deleteMeta($idMeta);
     }
     
 }

@@ -49,9 +49,9 @@ class ProfesoresService{
     }
 
     // Función para actualizar un profesor
-    public function updateProfesor(int $id, array $data): JsonResponse
+    public function updateProfesor(int $idProfesor, array $data): JsonResponse
     {
-        $profesor = $this->entityManager->getRepository(Profesor::class)->find($id);
+        $profesor = $this->entityManager->getRepository(Profesor::class)->find($idProfesor);
 
         if (!$profesor) {
             return new JsonResponse([
@@ -71,9 +71,9 @@ class ProfesoresService{
     }
 
     // Función para eliminar un profesor
-    public function deleteProfesor(int $id): JsonResponse
+    public function deleteProfesor(int $idProfesor): JsonResponse
     {
-        $profesor = $this->entityManager->getRepository(Profesor::class)->find($id);
+        $profesor = $this->entityManager->getRepository(Profesor::class)->find($idProfesor);
 
         if (!$profesor) {
             return new JsonResponse([

@@ -47,9 +47,9 @@ class ClasesService{
     }
 
     // Actualizar una clase
-    public function updateClase(int $id, array $data): JsonResponse
+    public function updateClase(int $idClase, array $data): JsonResponse
     {
-        $clase = $this->entityManager->getRepository(Clase::class)->find($id);
+        $clase = $this->entityManager->getRepository(Clase::class)->find($idClase);
 
         if (!$clase) {
             return new JsonResponse(['message' => 'Clase no encontrada'], Response::HTTP_NOT_FOUND);
@@ -65,9 +65,9 @@ class ClasesService{
     }
 
     // Eliminar una clase
-    public function deleteClase(int $id): JsonResponse
+    public function deleteClase(int $idClase): JsonResponse
     {
-        $clase = $this->entityManager->getRepository(Clase::class)->find($id);
+        $clase = $this->entityManager->getRepository(Clase::class)->find($idClase);
 
         if (!$clase) {
             return new JsonResponse(['message' => 'Clase no encontrada'], Response::HTTP_NOT_FOUND);

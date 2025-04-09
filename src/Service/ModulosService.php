@@ -63,9 +63,9 @@ class ModulosService
         return new JsonResponse(['message' => 'Módulo creado correctamente'], Response::HTTP_CREATED);
     }
 
-    public function updateModulo(int $id, array $data): JsonResponse
+    public function updateModulo(int $idModulo, array $data): JsonResponse
     {
-        $modulo = $this->entityManager->getRepository(Modulo::class)->find($id);
+        $modulo = $this->entityManager->getRepository(Modulo::class)->find($idModulo);
 
         if (!$modulo) {
             return new JsonResponse(['message' => 'Módulo no encontrado'], Response::HTTP_NOT_FOUND);
@@ -84,8 +84,8 @@ class ModulosService
 
             // Añadir nuevas relaciones
             $clasesRepo = $this->entityManager->getRepository(Clase::class);
-            foreach ($data['clases'] as $claseId) {
-                $clase = $clasesRepo->find($claseId);
+            foreach ($data['clases'] as $idClase) {
+                $clase = $clasesRepo->find($idClase);
                 if ($clase) {
                     $moduloClase = new ModuloClase($modulo, $clase);
                     $modulo->addModuloClase($moduloClase);
@@ -101,9 +101,9 @@ class ModulosService
 
 
     // Función para eliminar un Módulo
-    public function deleteModulo(int $id): JsonResponse
+    public function deleteModulo(int $idModulo): JsonResponse
     {
-        $modulo = $this->entityManager->getRepository(Modulo::class)->find($id);
+        $modulo = $this->entityManager->getRepository(Modulo::class)->find($idModulo);
 
         if (!$modulo) {
             return new JsonResponse(['message' => 'Módulo no encontrado'], Response::HTTP_NOT_FOUND);

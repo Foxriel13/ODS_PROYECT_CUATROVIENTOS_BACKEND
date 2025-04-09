@@ -58,9 +58,9 @@ class ODSService{
     }
 
     // Función para actualizar un ODS
-    public function updateOds(int $id, array $data): JsonResponse
+    public function updateOds(int $idOds, array $data): JsonResponse
     {
-        $ods = $this->entityManager->getRepository(ODS::class)->find($id);
+        $ods = $this->entityManager->getRepository(ODS::class)->find($idOds);
 
         if (!$ods) {
             return new JsonResponse([

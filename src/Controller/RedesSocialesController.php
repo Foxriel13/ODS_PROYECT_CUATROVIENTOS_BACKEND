@@ -19,14 +19,14 @@ class RedesSocialesController extends AbstractController
     }
 
     // Get de las Redes
-    #[Route('/redes_sociales', name: 'redesSociales', methods: ['GET'])]
+    #[Route('/redes_sociales', name: 'get_redesSociales', methods: ['GET'])]
     public function getRedesSociales(): JsonResponse
     {
         return $this->redesSocialesService->getAllRedes();
     }
     
     // Crear Red Social
-    #[Route('/redes_sociales', methods: ['POST'])]
+    #[Route('/redes_sociales', name: 'create_redSocial', methods: ['POST'])]
     public function createRedSocial(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
@@ -42,7 +42,7 @@ class RedesSocialesController extends AbstractController
     }
 
     // Actualizar Profesor
-    #[Route('/redes_sociales/{idRedSocial}', methods: ['PUT'])]
+    #[Route('/redes_sociales/{idRedSocial}', name: 'update_redSocial', methods: ['PUT'])]
     public function updateRedSocial(Request $request, int $idRedSocial): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
@@ -55,10 +55,10 @@ class RedesSocialesController extends AbstractController
     }
 
     // Eliminar Profesor
-    #[Route('/redes_sociales/{id}', name: 'delete_red_social', methods: ['DELETE'])]
-    public function deleteRedSocial(int $id): JsonResponse
+    #[Route('/redes_sociales/{id}', name: 'delete_redSocial', methods: ['DELETE'])]
+    public function deleteRedSocial(int $idRedSocial): JsonResponse
     {
-        return $this->redesSocialesService->deleteRedSocial($id);
+        return $this->redesSocialesService->deleteRedSocial($idRedSocial);
     }
 
 }

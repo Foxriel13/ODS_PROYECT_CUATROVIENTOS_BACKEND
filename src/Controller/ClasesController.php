@@ -19,7 +19,7 @@ class ClasesController extends AbstractController
     }
 
     // Obtener todas las clases
-    #[Route('/clases', name: 'clases', methods: ['GET'])]
+    #[Route('/clases', name: 'get_clases', methods: ['GET'])]
     public function getClases(): JsonResponse
     {
         $clases = $this->clasesService->getAllClases();
@@ -35,7 +35,7 @@ class ClasesController extends AbstractController
     }
 
     // Crear Clase
-    #[Route('/clases', methods: ['POST'])]
+    #[Route('/clases', name: 'create_clase', methods: ['POST'])]
     public function createClase(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
@@ -51,7 +51,7 @@ class ClasesController extends AbstractController
     }
 
     // Actualizar Clase
-    #[Route('/clases/{idClase}', methods: ['PUT'])]
+    #[Route('/clases/{idClase}', name : 'update_clase', methods: ['PUT'])]
     public function updateClase(Request $request, int $idClase): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
@@ -65,9 +65,9 @@ class ClasesController extends AbstractController
 
     // Eliminar Clase
     #[Route('/clases/{id}', name: 'delete_clase', methods: ['DELETE'])]
-    public function deleteClase(int $id): JsonResponse
+    public function deleteClase(int $idClase): JsonResponse
     {
-        return $this->clasesService->deleteClase($id);
+        return $this->clasesService->deleteClase($idClase);
     }
 
 }

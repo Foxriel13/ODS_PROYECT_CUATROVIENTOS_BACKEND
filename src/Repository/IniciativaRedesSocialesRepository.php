@@ -16,28 +16,4 @@ class IniciativaRedesSocialesRepository extends ServiceEntityRepository
         parent::__construct($registry, IniciativaRedesSociales::class);
     }
 
-    //    /**
-    //     * @return IniciativaRedesSociales[] Returns an array of IniciativaRedesSociales objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('i')
-    //            ->andWhere('i.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('i.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
-    //    public function findOneBySomeField($value): ?IniciativaRedesSociales
-    //    {
-    //        return $this->createQueryBuilder('i')
-    //            ->andWhere('i.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
 }

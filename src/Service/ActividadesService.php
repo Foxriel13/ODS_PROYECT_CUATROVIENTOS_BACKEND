@@ -47,9 +47,9 @@ class ActividadesService{
     }
 
     // Actualizar una Actividad
-    public function updateActividad(int $id, array $data): JsonResponse
+    public function updateActividad(int $idActividad, array $data): JsonResponse
     {
-        $actividad = $this->entityManager->getRepository(Actividad::class)->find($id);
+        $actividad = $this->entityManager->getRepository(Actividad::class)->find($idActividad);
 
         if (!$actividad) {
             return new JsonResponse(['message' => 'Actividad no encontrada'], Response::HTTP_NOT_FOUND);
@@ -65,9 +65,9 @@ class ActividadesService{
     }
 
     // Eliminar una Actividad
-    public function deleteActividad(int $id): JsonResponse
+    public function deleteActividad(int $idActividad): JsonResponse
     {
-        $actividad = $this->entityManager->getRepository(Actividad::class)->find($id);
+        $actividad = $this->entityManager->getRepository(Actividad::class)->find($idActividad);
 
         if (!$actividad) {
             return new JsonResponse(['message' => 'Actividad no encontrada'], Response::HTTP_NOT_FOUND);

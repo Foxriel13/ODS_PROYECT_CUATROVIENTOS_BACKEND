@@ -65,9 +65,9 @@ class MetasService{
     }
 
     // Función para actualizar una Meta
-    public function updateMeta(int $id, array $data): JsonResponse
+    public function updateMeta(int $idMeta, array $data): JsonResponse
     {
-        $meta = $this->getMetaById($id);
+        $meta = $this->getMetaById($idMeta);
 
         if (!$meta) {
             return new JsonResponse(['message' => 'Meta no encontrada'], Response::HTTP_NOT_FOUND);
@@ -93,9 +93,9 @@ class MetasService{
     }
 
     // Función para eliminar una Meta
-    public function deleteMeta(int $id): JsonResponse
+    public function deleteMeta(int $idMeta): JsonResponse
     {
-        $meta = $this->getMetaById($id);
+        $meta = $this->getMetaById($idMeta);
 
         if (!$meta) {
             return new JsonResponse(['message' => 'Meta no encontrada'], Response::HTTP_NOT_FOUND);

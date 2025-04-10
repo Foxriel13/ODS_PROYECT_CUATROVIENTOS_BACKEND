@@ -17,7 +17,7 @@
     (16, 'Paz, Justicia e Instituciones Sólidas', 'Económica'),
     (17, 'Alianzas para Lograr los Objetivos', 'Social');
 
-    INSERT INTO actividades(id, nombre) VALUES
+    INSERT INTO actividad(id, nombre) VALUES
     (1, 'Charla'),
     (2, 'Excursión'),
     (3, 'Taller'),
@@ -198,7 +198,7 @@
     (1, 1, 1),
     (2, 2, 2);
 
-    INSERT INTO iniciativa_actividad(id, iniciativa_id, avtividad_id) VALUES
+    INSERT INTO iniciativa_actividad(id, iniciativa_id, actividad_id) VALUES
     (1, 1, 4),
     (2, 1, 7),
     (3, 1, 2);

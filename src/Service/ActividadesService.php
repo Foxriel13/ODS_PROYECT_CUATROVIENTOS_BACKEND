@@ -19,16 +19,23 @@ class ActividadesService{
 
     // Obtener todas las Actividades
     public function getAllActividades(): JsonResponse
-    {
-        $actividades = $this->entityManager->getRepository(Actividad::class)->findAll();
+{
+    $actividades = $this->entityManager->getRepository(Actividad::class)->findAll();
 
-        if (empty($actividades)) {
-            return new JsonResponse(['message' => 'No se han encontrado actividades'], Response::HTTP_NO_CONTENT);
-        }
-
-        $json = $this->serializer->serialize($actividades, 'json');
-        return new JsonResponse($json, Response::HTTP_OK, [], true);
+    if (empty($actividades)) {
+        return new JsonResponse(['message' => 'No se han encontrado actividades'], Response::HTTP_NO_CONTENT);
     }
+
+    $data = array_map(function ($actividad) {
+        return [
+            'id' => $actividad->getId(),
+            'nombre' => $actividad->getNombre()
+        ];
+    }, $actividades);
+
+    return new JsonResponse($data, Response::HTTP_OK);
+}
+
 
     // Crear una nueva Actividad
     public function createActividad(array $data): JsonResponse

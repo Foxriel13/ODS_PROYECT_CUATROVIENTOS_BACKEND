@@ -19,6 +19,13 @@ class IniciativaActividad
     #[ORM\ManyToOne(inversedBy: 'iniciativaActividads')]
     private ?Iniciativa $iniciativa = null;
 
+    public function __construct(Iniciativa $iniciativa, Actividad $actividad)
+    {
+        $this->iniciativa = $iniciativa;
+        $this->actividad = $actividad;
+    }
+
+
     public function getId(): ?int
     {
         return $this->id;

@@ -85,7 +85,7 @@ class Iniciativa
     /**
      * @var Collection<int, IniciativaActividad>
      */
-    #[ORM\OneToMany(targetEntity: IniciativaActividad::class, mappedBy: 'iniciativa')]
+    #[ORM\OneToMany(targetEntity: IniciativaActividad::class, mappedBy: 'iniciativa', cascade: ["persist"])]
     private Collection $iniciativaActividades;
 
 

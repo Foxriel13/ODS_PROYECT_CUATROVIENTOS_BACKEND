@@ -85,8 +85,7 @@ final class IndicadoresController extends AbstractController
     #[Route('/indicadores/cantIniciativasProfesor', methods: ['GET'])]
     public function getCantidadDeIniciativasPorProfesor(): JsonResponse
     {
-        $data = $this->indicadoresService->getCantidadDeIniciativasPorProfesor();
-        return $this->json($data);
+        return $this->indicadoresService->getCantidadDeIniciativasPorProfesor();
     }
 
     // GET Indicador 11

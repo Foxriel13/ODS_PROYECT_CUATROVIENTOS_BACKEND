@@ -5,6 +5,7 @@ namespace App\Service;
 
 use App\Entity\Iniciativa;
 use App\Entity\Profesor;
+use App\Entity\ProfesorIniciativa;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -265,20 +266,27 @@ class IndicadoresService
     //GET indicador 10.2: no funciona
     public function getCantidadDeIniciativasPorProfesor(): JsonResponse
     {
-        $profesores = $this->entityManager->getRepository(Profesor::class)->findAll();
-
-        if (!$profesores) {
-            return new JsonResponse(['message' => 'No se han encontrado profesores'], Response::HTTP_NOT_FOUND);
-        }
-
-        foreach ($profesores as $profesor) {
+        $qb = $this->entityManager->createQuery(
+            'SELECT p.id, p.nombre, COUNT(i.id) as cantDeIniciativas
+             FROM App\Entity\Profesor p
+             LEFT JOIN p.profesorIniciativas i
+             GROUP BY p.id'
+        );
+    
+        $resultados = $qb->getResult();
+    
+        $data = [];
+    
+        foreach ($resultados as $fila) {
             $data[] = [
-                'nombre_profesor' => $profesor->getNombre(),
+                'nombre_profesor' => $fila['nombre'],
+                'cantDeIniciativas' => $fila['cantDeIniciativas'],
             ];
         }
-
+    
         return new JsonResponse($data);
     }
+    
 
 
     //GET indicador 11: Done

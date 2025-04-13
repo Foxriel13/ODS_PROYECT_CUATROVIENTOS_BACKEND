@@ -3,7 +3,9 @@
 namespace App\Entity;
 
 use App\Repository\ProfesorRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\Collection;
 
 #[ORM\Entity(repositoryClass: ProfesorRepository::class)]
 class Profesor
@@ -15,6 +17,17 @@ class Profesor
 
     #[ORM\Column(length: 255)]
     private ?string $nombre = null;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection<int, ProfesorIniciativa>
+     */
+    #[ORM\OneToMany(targetEntity: ProfesorIniciativa::class, mappedBy: 'profesor')]
+    private \Doctrine\Common\Collections\Collection $profesorIniciativas;
+
+    public function __construct()
+    {
+        $this->profesorIniciativas = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -29,6 +42,36 @@ class Profesor
     public function setNombre(string $nombre): static
     {
         $this->nombre = $nombre;
+
+        return $this;
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\Collection<int, ProfesorIniciativa>
+     */
+    public function getProfesorIniciativas(): \Doctrine\Common\Collections\Collection
+    {
+        return $this->profesorIniciativas;
+    }
+
+    public function addProfesorIniciativa(ProfesorIniciativa $profesorIniciativa): static
+    {
+        if (!$this->profesorIniciativas->contains($profesorIniciativa)) {
+            $this->profesorIniciativas->add($profesorIniciativa);
+            $profesorIniciativa->setProfesor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProfesorIniciativa(ProfesorIniciativa $profesorIniciativa): static
+    {
+        if ($this->profesorIniciativas->removeElement($profesorIniciativa)) {
+            // set the owning side to null (unless already changed)
+            if ($profesorIniciativa->getProfesor() === $this) {
+                $profesorIniciativa->setProfesor(null);
+            }
+        }
 
         return $this;
     }

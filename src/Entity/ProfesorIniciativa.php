@@ -17,8 +17,7 @@ class ProfesorIniciativa
     #[ORM\JoinColumn]
     private ?Iniciativa $iniciativa = null;
 
-    #[ORM\ManyToOne (targetEntity: Profesor::class)]
-    #[ORM\JoinColumn]
+    #[ORM\ManyToOne(inversedBy: 'profesorIniciativas')]
     private ?Profesor $profesor = null;
 
     public function getId(): ?int
@@ -38,6 +37,12 @@ class ProfesorIniciativa
         return $this;
     }
 
+
+    public function __construct(Iniciativa $iniciativa) {
+        $this->iniciativa = $iniciativa;
+
+    }
+
     public function getProfesor(): ?Profesor
     {
         return $this->profesor;
@@ -48,10 +53,5 @@ class ProfesorIniciativa
         $this->profesor = $profesor;
 
         return $this;
-    }
-
-    public function __construct(Iniciativa $iniciativa, Profesor $profesor) {
-        $this->iniciativa = $iniciativa;
-        $this->profesor = $profesor;
     }
 }

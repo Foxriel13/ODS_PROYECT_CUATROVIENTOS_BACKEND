@@ -19,16 +19,24 @@ class ProfesoresService{
 
     // Función para obtener todos los profesores
     public function getAllProfesores(): JsonResponse
-    {
-        $profesores = $this->entityManager->getRepository(Profesor::class)->findAll();
+{
+    $profesores = $this->entityManager->getRepository(Profesor::class)->findAll();
 
-        if (empty($profesores)) {
-            return new JsonResponse(['message' => 'No se han encontrado profesores'], Response::HTTP_NOT_FOUND);
-        }
-
-        $json = $this->serializer->serialize($profesores, 'json');
-        return new JsonResponse($json, Response::HTTP_OK, [], true);
+    if (empty($profesores)) {
+        return new JsonResponse(['message' => 'No se han encontrado profesores'], Response::HTTP_NOT_FOUND);
     }
+
+    // Mapear manualmente solo los campos deseados
+    $data = array_map(function (Profesor $profesor) {
+        return [
+            'id' => $profesor->getId(),
+            'nombre' => $profesor->getNombre(),
+        ];
+    }, $profesores);
+
+    return new JsonResponse($data, Response::HTTP_OK);
+}
+
 
     // Función para crear un profesor
     public function createProfesor(array $data): JsonResponse

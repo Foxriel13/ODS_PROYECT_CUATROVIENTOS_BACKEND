@@ -29,7 +29,7 @@ class ModulosService
             return new JsonResponse(['message' => 'No se han encontrado módulos'], Response::HTTP_NOT_FOUND);
         }
 
-        $data = array_map(fn($modulo) => $this->formatModulo($modulo), $modulos);
+        $data = array_merge(...array_map(fn($modulo) => $this->formatModulo($modulo), $modulos));
         return new JsonResponse($data);
     }
 
@@ -117,15 +117,14 @@ class ModulosService
 
     private function formatModulo($modulo): array
     {
-        return [
-            'modulos' => array_map(fn($iniciativaModulo) => [
-                'idModulo' => $iniciativaModulo->getModulo()->getId(),
-                'nombre' => $iniciativaModulo->getModulo()->getNombre(),
-                'clases' => array_map(fn($modulosClase) => [
-                    'idClase' => $modulosClase->getClase()->getId(),
-                    'nombre' => $modulosClase->getClase()->getNombre(),
-                ], $iniciativaModulo->getModulo()->getModuloClases()->toArray()),
-            ], $modulo->getModuloClases()->toArray()),
-        ];
+        return array_map(fn($iniciativaModulo) => [
+            'idModulo' => $iniciativaModulo->getModulo()->getId(),
+            'nombre' => $iniciativaModulo->getModulo()->getNombre(),
+            'clases' => array_map(fn($modulosClase) => [
+                'idClase' => $modulosClase->getClase()->getId(),
+                'nombre' => $modulosClase->getClase()->getNombre(),
+            ], $iniciativaModulo->getModulo()->getModuloClases()->toArray()),
+        ], $modulo->getModuloClases()->toArray());
     }
+
 }

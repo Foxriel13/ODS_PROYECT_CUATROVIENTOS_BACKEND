@@ -120,7 +120,7 @@ class IndicadoresService
         return new JsonResponse($data);
     }
 
-    // GET Indicador 5: Para revisar
+    // GET Indicador 5: Done
     public function getODStrabajadosYSusMetas(): JsonResponse
     {
         $datos = $this->entityManager->getRepository(Iniciativa::class)->findOdsYSusMetas();
@@ -263,7 +263,7 @@ class IndicadoresService
         return new JsonResponse($data);
     }
 
-    //GET indicador 10.2: no funciona
+    //GET indicador 10.2: Done
     public function getCantidadDeIniciativasPorProfesor(): JsonResponse
     {
         $qb = $this->entityManager->createQuery(

@@ -106,21 +106,25 @@ class IniciativaRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-
-    public function findOdsYSusMetas()
+    
+    public function findOdsYSusMetas(): array
     {
         return $this->createQueryBuilder('i')
-            ->select('i.id AS iniciativa_id, i.nombre AS iniciativa_nombre,
-                      o.id AS ods_id, o.nombre AS ods_nombre
-                      m.id AS meta_id, m.nombre AS meta_nombre')
-            ->join('i.metasIniciativas', 'mi')
-            ->join('mi.idMetas', 'm')
-            ->join('m.ods', 'o')
-            ->orderBy('i.id', 'ASC')
-            ->addOrderBy('o.id', 'ASC')
-            ->addOrderBy('m.id', 'ASC')
+            ->select(
+                'i.id AS iniciativa_id',
+                'i.nombre AS iniciativa_nombre',
+                'ods.id AS ods_id',
+                'ods.nombre AS ods_nombre',
+                'm.id AS meta_id',
+                'm.descripcion AS meta_nombre'
+            )
+            ->leftJoin('i.metasIniciativas', 'im') // tabla intermedia
+            ->leftJoin('im.idMetas', 'm')            // relación desde la intermedia a meta
+            ->leftJoin('m.ods', 'ods')            // relación desde meta a ods
             ->getQuery()
-            ->getResult();
+            ->getArrayResult();
     }
+    
+    
 
 }

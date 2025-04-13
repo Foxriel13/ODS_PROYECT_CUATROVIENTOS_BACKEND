@@ -62,7 +62,7 @@ class IndicadoresService
     public function getCiclosYModulosConIniciativas(): JsonResponse
     {
         $datos = $this->entityManager->getRepository(Iniciativa::class)->getIniciativasConCiclosYModulos();
-        
+
         $resultado = [];
 
         foreach ($datos as $dato) {
@@ -150,15 +150,13 @@ class IndicadoresService
                 'id_meta' => $metaId,
                 'nombre_meta' => $dato['meta_nombre']
             ];
-
-        
         }
         foreach ($resultado as &$iniciativa) {
             $iniciativa['ods'] = array_values($iniciativa['ods']);
         }
         return new JsonResponse(array_values($resultado));
     }
-    
+
     // GET Indicador 6: Done
     public function getTieneEntidadesExternas(): JsonResponse
     {
@@ -190,20 +188,20 @@ class IndicadoresService
     public function getRRSSdeIniciativa(): JsonResponse
     {
         $iniciativas = $this->entityManager->getRepository(Iniciativa::class)->findAll();
-    
+
         if (!$iniciativas) {
             return new JsonResponse(['message' => 'No se han encontrado iniciativas'], Response::HTTP_NOT_FOUND);
         }
-    
+
         $data = [];
-    
+
         foreach ($iniciativas as $iniciativa) {
             $iniciativaRedesSociales = $iniciativa->getIniciativaRedesSociales();
-    
+
             if (count($iniciativaRedesSociales) > 0) {
                 foreach ($iniciativaRedesSociales as $iniciativaRedSocial) {
                     $redSocial = $iniciativaRedSocial->getRedesSociales();
-    
+
                     $data[] = [
                         'nombre_iniciativa' => $iniciativa->getNombre(),
                         'redes_sociales'    => [
@@ -214,11 +212,11 @@ class IndicadoresService
                 }
             }
         }
-    
+
         if (empty($data)) {
             return new JsonResponse(['message' => 'No hay iniciativas difundidas'], Response::HTTP_NOT_FOUND);
         }
-    
+
         return new JsonResponse($data);
     }
 
@@ -268,28 +266,28 @@ class IndicadoresService
     public function getCantidadDeIniciativasPorProfesor(): JsonResponse
     {
         $profesores = $this->entityManager->getRepository(Profesor::class)->findAll();
-    
+
         if (!$profesores) {
             return new JsonResponse(['message' => 'No se han encontrado profesores'], Response::HTTP_NOT_FOUND);
         }
-    
+
         foreach ($profesores as $profesor) {
             $data[] = [
                 'nombre_profesor' => $profesor->getNombre(),
             ];
         }
-    
+
         return new JsonResponse($data);
     }
-    
-    
+
+
     //GET indicador 11: Done
     public function getDiferenciaInnovadoras(): JsonResponse
     {
         $innovadoras = $this->entityManager->getRepository(Iniciativa::class)->findByInnovadoras();
         $noInnovadoras = $this->entityManager->getRepository(Iniciativa::class)->findByNoInnovadoras();
-        
-        if(!$innovadoras && !$noInnovadoras){
+
+        if (!$innovadoras && !$noInnovadoras) {
             return new JsonResponse(['message' => 'No se han encontrado iniciativas'], Response::HTTP_NOT_FOUND);
         }
 
@@ -305,7 +303,7 @@ class IndicadoresService
     {
         $iniciativas = $this->entityManager->getRepository(Iniciativa::class)->findAll();
         $data = [];
-        if(!$iniciativas){
+        if (!$iniciativas) {
             return new JsonResponse(['message' => 'No se han encontrado iniciativas'], Response::HTTP_NOT_FOUND);
         }
         foreach ($iniciativas as $iniciativa) {
@@ -323,18 +321,20 @@ class IndicadoresService
         $iniciativas = $this->entityManager->getRepository(Iniciativa::class)->findAll();
         $conActividad = 0;
         $sinActividad = 0;
+
         foreach ($iniciativas as $iniciativa) {
-            if ($iniciativa->getIniciativaActividades() > 0) {
+            if (count($iniciativa->getIniciativaActividades()) > 0) {
                 $conActividad++;
             } else {
                 $sinActividad++;
             }
         }
-        $data=[
+
+        $data = [
             "tiene_actividades" => $conActividad,
             "no_tiene_actividades" => $sinActividad
         ];
+
         return new JsonResponse($data);
     }
-
 }

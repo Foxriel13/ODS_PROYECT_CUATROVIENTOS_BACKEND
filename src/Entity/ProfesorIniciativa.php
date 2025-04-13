@@ -38,9 +38,10 @@ class ProfesorIniciativa
     }
 
 
-    public function __construct(Iniciativa $iniciativa) {
+    public function __construct(Iniciativa $iniciativa, Profesor $profesor)
+    {
         $this->iniciativa = $iniciativa;
-
+        $this->profesor = $profesor;
     }
 
     public function getProfesor(): ?Profesor

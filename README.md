@@ -80,6 +80,12 @@ php bin/console doctrine:migrations:migrate
 symfony server:start
 ```
 
+### 5. Meter datos en la Base de Datos
+```bash
+Introducir INSERTS en el motor de Base de Datos del archivo
+https://github.com/Foxriel13/ODS_PROYECT_CUATROVIENTOS_BACKEND/blob/main/INSERTS%20BACKEND.txt
+```
+
 <p align="right">(<a href="#readme-top">vuelta arriba</a>)</p>
 
 ## 📡 Endpoints Disponibles
@@ -163,23 +169,11 @@ Estas entidades están relacionadas con las iniciativas:
 ### 🌱 ODS
 
 ```json
-{
-  "idOds": 1,
-  "nombre": "Fin de la pobreza",
-  "dimension": {
-    "idDimension": 1,
-    "nombre": "Social"
+  {
+    "idOds": 1,
+    "nombre": "Fin de la Pobreza",
+    "dimension": "Social"
   }
-}
-```
-
-### 🧭 Dimensiones
-
-```json
-{
-  "idDimension": 1,
-  "nombre": "Social"
-}
 ```
 
 ### 🧩 Módulos

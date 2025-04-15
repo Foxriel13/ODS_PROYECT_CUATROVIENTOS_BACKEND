@@ -29,7 +29,7 @@
 
 **ODS_PROYECT_CUATROVIENTOS** es una aplicación desarrollada para gestionar **iniciativas** vinculadas a los Objetivos de Desarrollo Sostenible (ODS), permitiendo su creación, consulta, actualización y eliminación lógica. También ofrece gestión de dimensiones, metas, profesores, entidades externas, módulos, cursos, y más.
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right">(<a href="#readme-top">vuelta arriba</a>)</p>
 
 ## 🧰 Requisitos Previos
 
@@ -41,7 +41,7 @@ Asegúrate de tener instaladas las siguientes herramientas:
 - **Base de datos**: MySQL, HeidiSQL u otra compatible con Doctrine  
 - **Git**
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right">(<a href="#readme-top">vuelta arriba</a>)</p>
 
 ## 🚀 Instalación
 
@@ -86,6 +86,7 @@ php bin/console doctrine:migrations:migrate
 symfony server:start
 ```
 
+<p align="right">(<a href="#readme-top">vuelta arriba</a>)</p>
 ---
 
 ## 📡 Endpoints Disponibles
@@ -138,6 +139,7 @@ symfony server:start
 - **Ruta**: `/iniciativas/{id}`  
 - **Descripción**: Actualiza los campos presentes en el cuerpo JSON.
 
+<p align="right">(<a href="#readme-top">vuelta arriba</a>)</p>
 ---
 
 ### ❌ Eliminar (marcado lógico)
@@ -146,6 +148,7 @@ symfony server:start
 - **Ruta**: `/iniciativas/{id}`  
 - **Descripción**: Marca la iniciativa como eliminada (`eliminado: true`), sin borrarla físicamente.
 
+<p align="right">(<a href="#readme-top">vuelta arriba</a>)</p>
 ---
 
 ## 📘 Entidades Asociadas
@@ -242,6 +245,7 @@ Estas entidades están relacionadas con las iniciativas:
 }
 ```
 
+<p align="right">(<a href="#readme-top">vuelta arriba</a>)</p>
 ---
 
 ## 📅 Estado del Proyecto
@@ -251,17 +255,14 @@ Actualmente el proyecto se encuentra en constante evolución. Se están implemen
 
 > Si encuentras un bug o tienes sugerencias, ¡no dudes en abrir un issue o una pull request!
 
+<p align="right">(<a href="#readme-top">vuelta arriba</a>)</p>
 ---
 
 ## 👥 Autores
 
 Proyecto desarrollado por:
 
-- [@Luismi](https://www.github.com/Foxriel13)  
 - [@Danel](https://www.github.com/danel-rico)  
-- [@Karla](https://www.github.com/karlalasluisa)  
-- [@Xabi](https://www.github.com/XabierAPC)  
-- [@Ander](https://www.github.com/AnderVegas)  
 - [@Aitor](https://www.github.com/AitorLopez057)
 
 

@@ -112,8 +112,8 @@ class IndicadoresService
         $data = [];
         foreach ($iniciativas as $iniciativa) {
             $data[] = [
-                'Nombre' => $iniciativa->getNombre(),
-                'Explicacion' => $iniciativa->getExplicacion()
+                'nombre' => $iniciativa->getNombre(),
+                'explicacion' => $iniciativa->getExplicacion()
             ];
         }
 
@@ -299,9 +299,9 @@ class IndicadoresService
             return new JsonResponse(['message' => 'No se han encontrado iniciativas'], Response::HTTP_NOT_FOUND);
         }
 
-        $data = [
+        $data[] = [
             'cantidad_innovadoras' => count($innovadoras),
-            'cantidad_no_innovadores' => count($noInnovadoras)
+            'cantidad_no_innovadoras' => count($noInnovadoras)
         ];
         return new JsonResponse($data);
     }
@@ -323,7 +323,7 @@ class IndicadoresService
         return new JsonResponse($data);
     }
 
-    //GET indicador 13:
+    //GET indicador 13: Done
     public function getIniciativasActividad(): JsonResponse
     {
         $iniciativas = $this->entityManager->getRepository(Iniciativa::class)->findAll();
@@ -338,7 +338,7 @@ class IndicadoresService
             }
         }
 
-        $data = [
+        $data[] = [
             "tiene_actividades" => $conActividad,
             "no_tiene_actividades" => $sinActividad
         ];

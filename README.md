@@ -87,7 +87,6 @@ symfony server:start
 ```
 
 <p align="right">(<a href="#readme-top">vuelta arriba</a>)</p>
----
 
 ## 📡 Endpoints Disponibles
 
@@ -96,8 +95,6 @@ symfony server:start
 - **Método**: `GET`  
 - **Ruta**: `/iniciativas`  
 - **Descripción**: Retorna todas las iniciativas. Puedes filtrar por estado con el parámetro `eliminado`.
-
----
 
 ### ➕ Crear una nueva iniciativa
 
@@ -130,9 +127,6 @@ symfony server:start
   "actividades": [1]
 }
 ```
-
----
-
 ### ✏️ Actualizar una iniciativa
 
 - **Método**: `PUT`  
@@ -140,7 +134,6 @@ symfony server:start
 - **Descripción**: Actualiza los campos presentes en el cuerpo JSON.
 
 <p align="right">(<a href="#readme-top">vuelta arriba</a>)</p>
----
 
 ### ❌ Eliminar (marcado lógico)
 
@@ -149,7 +142,6 @@ symfony server:start
 - **Descripción**: Marca la iniciativa como eliminada (`eliminado: true`), sin borrarla físicamente.
 
 <p align="right">(<a href="#readme-top">vuelta arriba</a>)</p>
----
 
 ## 📘 Entidades Asociadas
 
@@ -246,7 +238,16 @@ Estas entidades están relacionadas con las iniciativas:
 ```
 
 <p align="right">(<a href="#readme-top">vuelta arriba</a>)</p>
----
+
+## 🗺️ Oja de Ruta
+
+- [x] BBDD: Implantar el esquema SQL del proyecto 1 DAM
+- [x] REST API: GET/POST/PUT/DELETE Iniciativas
+- [x] REST API: GET de Entidades
+- [x] REST API: GET Indicadores
+- [x] REST API: POST/PUT/DELETE Entidades Auxiliares
+- [ ] Securizar API y gestión de roles (Usuario y Administrador)
+
 
 ## 📅 Estado del Proyecto
 
@@ -256,7 +257,6 @@ Actualmente el proyecto se encuentra en constante evolución. Se están implemen
 > Si encuentras un bug o tienes sugerencias, ¡no dudes en abrir un issue o una pull request!
 
 <p align="right">(<a href="#readme-top">vuelta arriba</a>)</p>
----
 
 ## 👥 Autores
 

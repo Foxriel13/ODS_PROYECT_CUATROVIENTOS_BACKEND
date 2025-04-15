@@ -25,16 +25,15 @@
   </p>
 </div>
 
+<!-- Sobre el proyecto -->
 # 🌍 Sobre el Proyecto
-
 **ODS_PROYECT_CUATROVIENTOS** es una aplicación desarrollada para gestionar **iniciativas** vinculadas a los Objetivos de Desarrollo Sostenible (ODS), permitiendo su creación, consulta, actualización y eliminación lógica. También ofrece gestión de dimensiones, metas, profesores, entidades externas, módulos, cursos, y más.
 
 <p align="right">(<a href="#readme-top">vuelta arriba</a>)</p>
 
+<!-- Requisitos Previos -->
 ## 🧰 Requisitos Previos
-
 Asegúrate de tener instaladas las siguientes herramientas:
-
 - **PHP** ≥ 8.1  
 - **Composer**  
 - **Symfony CLI**  
@@ -43,14 +42,12 @@ Asegúrate de tener instaladas las siguientes herramientas:
 
 <p align="right">(<a href="#readme-top">vuelta arriba</a>)</p>
 
+<!-- Instalación -->
 ## 🚀 Instalación
-
 Sigue los pasos a continuación para levantar el proyecto en tu entorno local:
 
 ### 1. Clonar el repositorio
-
 Puedes trabajar sobre la rama que necesites:
-
 ```bash
 # Clonar desde Entrega 1
 git clone --branch Entrega1 --single-branch https://github.com/Foxriel13/ODS_PROYECT_CUATROVIENTOS_BACKEND.git
@@ -62,13 +59,11 @@ cd ODS_PROYECT_CUATROVIENTOS_BACKEND
 ```
 
 ### 2. Instalar dependencias
-
 ```bash
 composer install
 ```
 
 ### 3. Configurar la base de datos
-
 ```bash
 # Crear la base de datos
 php bin/console doctrine:database:create
@@ -81,7 +76,6 @@ php bin/console doctrine:migrations:migrate
 ```
 
 ### 4. Iniciar el servidor
-
 ```bash
 symfony server:start
 ```

@@ -1116,9 +1116,6 @@ components:
         id:
           type: integer
           example: 1
-        tipo:
-          type: string
-          example: Investigación sobre IA
         horas:
           type: integer
           example: 50
@@ -1381,9 +1378,6 @@ components:
     NewIniciativa:
       type: object
       properties:
-        tipo:
-          type: string
-          example: "Educación Sostenible"
         horas:
           type: integer
           example: 40

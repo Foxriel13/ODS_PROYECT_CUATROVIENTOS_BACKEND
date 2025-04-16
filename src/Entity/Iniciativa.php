@@ -16,9 +16,6 @@ class Iniciativa
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $tipo = null;
-
     #[ORM\Column]
     private ?int $horas = null;
 
@@ -102,18 +99,6 @@ class Iniciativa
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getTipo(): ?string
-    {
-        return $this->tipo;
-    }
-
-    public function setTipo(?string $tipo): static
-    {
-        $this->tipo = $tipo;
-
-        return $this;
     }
 
     public function getHoras(): ?int

@@ -102,7 +102,6 @@ class IniciativaService
     {
         $iniciativa = new Iniciativa();
 
-        $iniciativa->setTipo($data['tipo'] ?? null);
         $iniciativa->setHoras($data['horas'] ?? null);
         $iniciativa->setNombre($data['nombre'] ?? null);
         $iniciativa->setExplicacion($data['explicacion'] ?? null);
@@ -245,10 +244,6 @@ class IniciativaService
         $iniciativa = $this->entityManager->getRepository(Iniciativa::class)->find($id);
         if (!$iniciativa) {
             return new JsonResponse(['message' => 'Iniciativa no encontrada'], Response::HTTP_NOT_FOUND);
-        }
-
-        if (isset($data['tipo'])) {
-            $iniciativa->setTipo($data['tipo']);
         }
         if (isset($data['horas'])) {
             $iniciativa->setHoras($data['horas']);
@@ -446,7 +441,6 @@ class IniciativaService
     {
         return [
             'id' => $iniciativa->getId(),
-            'tipo' => $iniciativa->getTipo(),
             'horas' => $iniciativa->getHoras(),
             'nombre' => $iniciativa->getNombre(),
             'explicacion' => $iniciativa->getExplicacion(),

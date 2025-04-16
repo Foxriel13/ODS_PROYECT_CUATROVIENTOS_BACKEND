@@ -5,6 +5,7 @@ namespace App\Service;
 
 use App\Entity\Iniciativa;
 use App\Entity\Profesor;
+use App\Entity\Actividad;
 use App\Entity\ProfesorIniciativa;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -225,21 +226,15 @@ class IndicadoresService
     public function getTiposIniciativas(): JsonResponse
     {
 
-        $tiposIniciativas =  $this->entityManager->getRepository(Iniciativa::class)->findTiposIniciativa();
-        $conteoIniciativas =  $this->entityManager->getRepository(Iniciativa::class)->countIniciativasPorTipo();
+        $actividades =  $this->entityManager->getRepository(Actividad::class)->findAll();
 
         $resultado = [];
-        foreach ($tiposIniciativas as $tipo) {
-            $totalIniciativas = 0;
-            foreach ($conteoIniciativas as $conteo) {
-                if ($conteo['tipo'] === $tipo) {
-                    $totalIniciativas = $conteo['total'];
-                    break;
-                }
-            }
+        foreach ($actividades as $actividad) {
+            $totalIniciativas = $actividad->getIniciativaActividads()->count();
+            
 
             $resultado[] = [
-                'tipo' => $tipo,
+                'tipo' => $actividad->getNombre(),
                 'cantidad' => $totalIniciativas
             ];
         }

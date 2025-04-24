@@ -64,7 +64,7 @@ class ClasesController extends AbstractController
     }
 
     // Eliminar Clase
-    #[Route('/clases/{id}', name: 'delete_clase', methods: ['DELETE'])]
+    #[Route('/clases/{idClase}', name: 'delete_clase', methods: ['DELETE'])]
     public function deleteClase(int $idClase): JsonResponse
     {
         return $this->clasesService->deleteClase($idClase);

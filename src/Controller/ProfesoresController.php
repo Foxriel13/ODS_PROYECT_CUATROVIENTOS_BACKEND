@@ -55,7 +55,7 @@ class ProfesoresController extends AbstractController
     }
 
     // Eliminar Profesor
-    #[Route('/profesores/{id}', name: 'delete_profesor', methods: ['DELETE'])]
+    #[Route('/profesores/{idProfesor}', name: 'delete_profesor', methods: ['DELETE'])]
     public function deleteProfesor(int $idProfesor): JsonResponse
     {
         return $this->profesoresService->deleteProfesor($idProfesor);

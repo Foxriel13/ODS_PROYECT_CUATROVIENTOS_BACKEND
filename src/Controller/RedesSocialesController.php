@@ -55,7 +55,7 @@ class RedesSocialesController extends AbstractController
     }
 
     // Eliminar Profesor
-    #[Route('/redes_sociales/{id}', name: 'delete_redSocial', methods: ['DELETE'])]
+    #[Route('/redes_sociales/{idRedSocial}', name: 'delete_redSocial', methods: ['DELETE'])]
     public function deleteRedSocial(int $idRedSocial): JsonResponse
     {
         return $this->redesSocialesService->deleteRedSocial($idRedSocial);

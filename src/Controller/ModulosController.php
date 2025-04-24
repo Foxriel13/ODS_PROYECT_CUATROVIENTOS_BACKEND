@@ -55,7 +55,7 @@ class ModulosController extends AbstractController
    }
 
    // Eliminar Modulo
-   #[Route('/modulos/{id}', name: 'delete_modulo', methods: ['DELETE'])]
+   #[Route('/modulos/{idModulo}', name: 'delete_modulo', methods: ['DELETE'])]
    public function deleteModulo(int $idModulo): JsonResponse
    {
        return $this->modulosService->deleteModulo($idModulo);

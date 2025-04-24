@@ -2,13 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\IniciativaRedesSocialesRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Repository\IniciativaRedSocialRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: IniciativaRedesSocialesRepository::class)]
-class IniciativaRedesSociales
+#[ORM\Entity(repositoryClass: IniciativaRedSocialRepository::class)]
+class IniciativaRedSocial
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -21,7 +19,7 @@ class IniciativaRedesSociales
 
     #[ORM\ManyToOne(inversedBy: 'iniciativaRedesSociales')]
     #[ORM\JoinColumn (nullable: true)]
-    private ?RedesSociales $redesSociales = null;
+    private ?RedSocial $redSocial = null;
 
     public function getId(): ?int
     {
@@ -40,21 +38,21 @@ class IniciativaRedesSociales
         return $this;
     }
 
-    public function getRedesSociales(): ?RedesSociales
+    public function getRedesSociales(): ?RedSocial
     {
-        return $this->redesSociales;
+        return $this->redSocial;
     }
 
-    public function setRedesSociales(?RedesSociales $redesSociales): static
+    public function setRedesSociales(?RedSocial $redSocial): static
     {
-        $this->redesSociales = $redesSociales;
+        $this->redSocial = $redSocial;
 
         return $this;
     }
 
-    public function __construct(Iniciativa $iniciativa, RedesSociales $redesSociales) {
+    public function __construct(Iniciativa $iniciativa, RedSocial $redSocial) {
         $this->iniciativa = $iniciativa;
-        $this->redesSociales = $redesSociales;
+        $this->redSocial = $redSocial;
     }
 
 }

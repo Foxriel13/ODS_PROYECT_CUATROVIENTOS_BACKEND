@@ -2,15 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\RedesSocialesRepository;
+use App\Repository\RedSocialRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Ignore;
 
 
-#[ORM\Entity(repositoryClass: RedesSocialesRepository::class)]
-class RedesSociales
+#[ORM\Entity(repositoryClass: RedSocialRepository::class)]
+class RedSocial
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -24,9 +24,9 @@ class RedesSociales
     private ?string $enlace = null;
 
     /**
-     * @var Collection<int, IniciativaRedesSociales>
+     * @var Collection<int, IniciativaRedSocial>
      */
-    #[ORM\OneToMany(targetEntity: IniciativaRedesSociales::class, mappedBy: 'redesSociales')]
+    #[ORM\OneToMany(targetEntity: IniciativaRedSocial::class, mappedBy: 'redesSociales')]
     #[Ignore]
     private Collection $iniciativaRedesSociales;
 
@@ -64,14 +64,14 @@ class RedesSociales
     }
 
     /**
-     * @return Collection<int, IniciativaRedesSociales>
+     * @return Collection<int, IniciativaRedesSocial>
      */
     public function getIniciativaRedesSociales(): Collection
     {
         return $this->iniciativaRedesSociales;
     }
 
-    public function addIniciativaRedesSociale(IniciativaRedesSociales $iniciativaRedesSociale): static
+    public function addIniciatiRedesSocial(IniciativaRedSocial $iniciativaRedesSociale): static
     {
         if (!$this->iniciativaRedesSociales->contains($iniciativaRedesSociale)) {
             $this->iniciativaRedesSociales->add($iniciativaRedesSociale);
@@ -81,7 +81,7 @@ class RedesSociales
         return $this;
     }
 
-    public function removeIniciativaRedesSociale(IniciativaRedesSociales $iniciativaRedesSociale): static
+    public function removeIniciatiRedesSocial(IniciativaRedSocial $iniciativaRedesSociale): static
     {
         if ($this->iniciativaRedesSociales->removeElement($iniciativaRedesSociale)) {
             // set the owning side to null (unless already changed)

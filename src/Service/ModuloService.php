@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-class ModulosService
+class ModuloService
 {
 
     // Constructor con el manejador de entidades y el serializador

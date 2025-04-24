@@ -9,7 +9,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use App\Entity\ODS;
 
-class MetasService{
+class MetaService{
 
     // Constructor con el manejador de entidades y el serializador
     public function __construct(private EntityManagerInterface $entityManager, private SerializerInterface $serializer)

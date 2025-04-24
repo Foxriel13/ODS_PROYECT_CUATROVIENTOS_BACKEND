@@ -2,27 +2,27 @@
 
 namespace App\Controller;
 
-use App\Service\ModulosService;
+use App\Service\ModuloService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class ModulosController extends AbstractController
+class ModuloController extends AbstractController
 {
 
-    // Constructor con el servicio de la entidad Meta
-    public function __construct(private ModulosService $modulosService)
+    // Constructor con el servicio de la entidad Modulo
+    public function __construct(private ModuloService $moduloService)
     {
-        $this->modulosService = $modulosService;
+        $this->moduloService = $moduloService;
     }
 
     // Get de las Modulos
     #[Route('/modulos', name: 'get_modulos', methods: ['GET'])]
     public function getModulos(): JsonResponse
     {
-        return $this->modulosService->getAllModulos();
+        return $this->moduloService->getAllModulos();
     }
     
    // Crear Modulo
@@ -38,7 +38,7 @@ class ModulosController extends AbstractController
            );
        }
   
-       return $this->modulosService->createModulo($data);
+       return $this->moduloService->createModulo($data);
    }
 
    // Actualizar Modulo
@@ -51,14 +51,14 @@ class ModulosController extends AbstractController
            return new JsonResponse(['message' => 'Datos inválidos'], Response::HTTP_BAD_REQUEST);
        }
   
-       return $this->modulosService->updateModulo($idModulo, $data);
+       return $this->moduloService->updateModulo($idModulo, $data);
    }
 
    // Eliminar Modulo
    #[Route('/modulos/{idModulo}', name: 'delete_modulo', methods: ['DELETE'])]
    public function deleteModulo(int $idModulo): JsonResponse
    {
-       return $this->modulosService->deleteModulo($idModulo);
+       return $this->moduloService->deleteModulo($idModulo);
    }
 
 }

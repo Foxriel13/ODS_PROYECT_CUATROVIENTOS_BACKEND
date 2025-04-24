@@ -2,27 +2,27 @@
 
 namespace App\Controller;
 
-use App\Service\MetasService;
+use App\Service\MetaService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class MetasController extends AbstractController
+class MetaController extends AbstractController
 {
 
     // Constructor con el servicio de la entidad Meta
-    public function __construct(private MetasService $metasService)
+    public function __construct(private MetaService $metaService)
     {
-        $this->metasService = $metasService;
+        $this->metaService = $metaService;
     }
 
     // Get de las Metas
     #[Route('/metas', name: 'get_metas', methods: ['GET'])]
     public function getMetas(): JsonResponse
     {
-        return $this->metasService->getAllMetas();
+        return $this->metaService->getAllMetas();
     }
     
     // Crear Meta
@@ -38,7 +38,7 @@ class MetasController extends AbstractController
             );
         }
     
-        return $this->metasService->createMeta($data);
+        return $this->metaService->createMeta($data);
     }
     
     // Actualizar Meta
@@ -51,13 +51,13 @@ class MetasController extends AbstractController
             return new JsonResponse(['message' => 'Datos inválidos'], Response::HTTP_BAD_REQUEST);
         }
     
-        return $this->metasService->updateMeta($idMeta, $data);
+        return $this->metaService->updateMeta($idMeta, $data);
     }
     
     #[Route('/metas/{idMeta}', name: 'delete_meta', methods: ['DELETE'])]
     public function deleteMeta(int $idMeta): JsonResponse
     {
-        return $this->metasService->deleteMeta($idMeta);
+        return $this->metaService->deleteMeta($idMeta);
     }
     
 }

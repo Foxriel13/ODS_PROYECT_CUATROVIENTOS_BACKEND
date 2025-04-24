@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Service\RedesSocialesService;
+use App\Service\RedSocialService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -12,17 +12,17 @@ use Symfony\Component\HttpFoundation\Response;
 class RedesSocialesController extends AbstractController
 {
 
-    // Constructor con el servicio de la entidad Profesor
-    public function __construct(private RedesSocialesService $redesSocialesService)
+    // Constructor con el servicio de la entidad Red Social
+    public function __construct(private RedSocialService $redSocialService)
     {
-        $this->redesSocialesService = $redesSocialesService;
+        $this->redSocialService = $redSocialService;
     }
 
-    // Get de las Redes
+    // Get de las Redes Sociales
     #[Route('/redes_sociales', name: 'get_redesSociales', methods: ['GET'])]
     public function getRedesSociales(): JsonResponse
     {
-        return $this->redesSocialesService->getAllRedes();
+        return $this->redSocialService->getAllRedes();
     }
     
     // Crear Red Social
@@ -38,7 +38,7 @@ class RedesSocialesController extends AbstractController
             );
         }
     
-        return $this->redesSocialesService->createRedSocial($data);
+        return $this->redSocialService->createRedSocial($data);
     }
 
     // Actualizar Profesor
@@ -51,14 +51,14 @@ class RedesSocialesController extends AbstractController
             return new JsonResponse(['message' => 'Datos inválidos'], Response::HTTP_BAD_REQUEST);
         }
     
-        return $this->redesSocialesService->updateRedSocial($idRedSocial, $data);
+        return $this->redSocialService->updateRedSocial($idRedSocial, $data);
     }
 
     // Eliminar Profesor
     #[Route('/redes_sociales/{idRedSocial}', name: 'delete_redSocial', methods: ['DELETE'])]
     public function deleteRedSocial(int $idRedSocial): JsonResponse
     {
-        return $this->redesSocialesService->deleteRedSocial($idRedSocial);
+        return $this->redSocialService->deleteRedSocial($idRedSocial);
     }
 
 }

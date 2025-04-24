@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-class ActividadesService{
+class ActividadService{
 
     // Constructor con el manejador de entidades y el serializador
     public function __construct(private EntityManagerInterface $entityManager, private SerializerInterface $serializer)

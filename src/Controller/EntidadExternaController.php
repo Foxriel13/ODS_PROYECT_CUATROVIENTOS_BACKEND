@@ -2,27 +2,27 @@
 
 namespace App\Controller;
 
-use App\Service\EntidadesExternasService;
+use App\Service\EntidadExternaService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class EntidadesExternasController extends AbstractController
+class EntidadExternaController extends AbstractController
 {
 
     // Constructor con el servicio de la entidad EntidadExterna
-    public function __construct(private EntidadesExternasService $entidadesExternasService)
+    public function __construct(private EntidadExternaService $entidadExternaService)
     {
-        $this->entidadesExternasService = $entidadesExternasService;
+        $this->entidadExternaService = $entidadExternaService;
     }
 
     // Get de las Entidades Externas
     #[Route('/entidadesexternas', name: 'get_entidadesExternas', methods: ['GET'])]
     public function getEntidadesExternas(): JsonResponse
     {
-        return $this->entidadesExternasService->getAllEntidadesExternas();
+        return $this->entidadExternaService->getAllEntidadesExternas();
     }
 
     // Crear Entidad Externa
@@ -38,7 +38,7 @@ class EntidadesExternasController extends AbstractController
             );
         }
     
-        return $this->entidadesExternasService->createEntidadExterna($data);
+        return $this->entidadExternaService->createEntidadExterna($data);
     }
 
     // Actualizar Entidad Externa
@@ -51,14 +51,14 @@ class EntidadesExternasController extends AbstractController
             return new JsonResponse(['message' => 'Datos inválidos'], Response::HTTP_BAD_REQUEST);
         }
     
-        return $this->entidadesExternasService->updateEntidadExterna($idEntidadExterna, $data);
+        return $this->entidadExternaService->updateEntidadExterna($idEntidadExterna, $data);
     }
 
     // Eliminar Entidad Externa
     #[Route('/entidadesexternas/{idEntidadExterna}', name: 'delete_entidadExterna', methods: ['DELETE'])]
     public function deleteEntidadExterna(int $idEntidadExterna): JsonResponse
     {
-        return $this->entidadesExternasService->deleteEntidadExterna($idEntidadExterna);
+        return $this->entidadExternaService->deleteEntidadExterna($idEntidadExterna);
     }
 
 }

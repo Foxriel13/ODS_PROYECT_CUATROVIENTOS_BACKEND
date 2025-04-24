@@ -6,7 +6,6 @@ namespace App\Service;
 use App\Entity\Iniciativa;
 use App\Entity\Profesor;
 use App\Entity\Actividad;
-use App\Entity\ProfesorIniciativa;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;

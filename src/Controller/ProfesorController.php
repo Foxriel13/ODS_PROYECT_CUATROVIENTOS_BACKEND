@@ -2,27 +2,27 @@
 
 namespace App\Controller;
 
-use App\Service\ProfesoresService;
+use App\Service\ProfesorService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class ProfesoresController extends AbstractController
+class ProfesorController extends AbstractController
 {
 
     // Constructor con el servicio de la entidad Profesor
-    public function __construct(private ProfesoresService $profesoresService)
+    public function __construct(private ProfesorService $profesorService)
     {
-        $this->profesoresService = $profesoresService;
+        $this->profesorService = $profesorService;
     }
 
     // Get de las Profesores
     #[Route('/profesores', name: 'get_profesores', methods: ['GET'])]
     public function getProfesores(): JsonResponse
     {
-        return $this->profesoresService->getAllProfesores();
+        return $this->profesorService->getAllProfesores();
     }
     
     // Crear Profesor
@@ -38,7 +38,7 @@ class ProfesoresController extends AbstractController
             );
         }
     
-        return $this->profesoresService->createProfesor($data);
+        return $this->profesorService->createProfesor($data);
     }
 
     // Actualizar Profesor
@@ -51,14 +51,14 @@ class ProfesoresController extends AbstractController
             return new JsonResponse(['message' => 'Datos inválidos'], Response::HTTP_BAD_REQUEST);
         }
     
-        return $this->profesoresService->updateProfesor($idProfesor, $data);
+        return $this->profesorService->updateProfesor($idProfesor, $data);
     }
 
     // Eliminar Profesor
     #[Route('/profesores/{idProfesor}', name: 'delete_profesor', methods: ['DELETE'])]
     public function deleteProfesor(int $idProfesor): JsonResponse
     {
-        return $this->profesoresService->deleteProfesor($idProfesor);
+        return $this->profesorService->deleteProfesor($idProfesor);
     }
 
 }

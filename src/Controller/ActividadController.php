@@ -2,27 +2,27 @@
 
 namespace App\Controller;
 
-use App\Service\ActividadesService;
+use App\Service\ActividadService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class ActividadesController extends AbstractController
+class ActividadController extends AbstractController
 {
 
     // Constructor con el servicio de la entidad Actividad
-    public function __construct(private ActividadesService $actividadesService)
+    public function __construct(private ActividadService $actividadService)
     {
-        $this->actividadesService = $actividadesService;
+        $this->actividadService = $actividadService;
     }
 
     // Obtener todas las actividades
     #[Route('/actividades', name: 'get_actividades', methods: ['GET'])]
     public function getActividades(): JsonResponse
     {
-        $actividades = $this->actividadesService->getAllActividades();
+        $actividades = $this->actividadService->getAllActividades();
 
         if (empty($actividades)) {
             return new JsonResponse(
@@ -47,7 +47,7 @@ class ActividadesController extends AbstractController
             );
         }
  
-        return $this->actividadesService->createActividad($data);
+        return $this->actividadService->createActividad($data);
     }
 
     // Actualizar actividades
@@ -60,14 +60,14 @@ class ActividadesController extends AbstractController
             return new JsonResponse(['message' => 'Datos inválidos'], Response::HTTP_BAD_REQUEST);
         }
     
-        return $this->actividadesService->updateActividad($idActividad, $data);
+        return $this->actividadService->updateActividad($idActividad, $data);
     }
 
     // Eliminar actividades
     #[Route('/actividades/{idActividad}', name: 'delete_actividad', methods: ['DELETE'])]
     public function deleteActividad(int $idActividad): JsonResponse
     {
-        return $this->actividadesService->deleteActividad($idActividad);
+        return $this->actividadService->deleteActividad($idActividad);
     }
 
 }

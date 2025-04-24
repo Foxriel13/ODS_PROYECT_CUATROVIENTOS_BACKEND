@@ -76,7 +76,7 @@ class Iniciativa
     /**
      * @var Collection<int, IniciativaRedesSociales>
      */
-    #[ORM\OneToMany(targetEntity: IniciativaRedesSociales::class, mappedBy: 'iniciativa')]
+    #[ORM\OneToMany(targetEntity: IniciativaRedSocial::class, mappedBy: 'iniciativa')]
     private Collection $iniciativaRedesSociales;
 
     /**
@@ -357,23 +357,23 @@ class Iniciativa
         return $this->iniciativaRedesSociales;
     }
 
-    public function addIniciativaRedesSociale(IniciativaRedesSociales $iniciativaRedesSociale): static
+    public function addIniciativaRedSocial(IniciativaRedSocial $iniciativaRedSocial): static
     {
-        if (!$this->iniciativaRedesSociales->contains($iniciativaRedesSociale)) {
-            $this->iniciativaRedesSociales->add($iniciativaRedesSociale);
-            $iniciativaRedesSociale->setIniciativa($this);
+        if (!$this->iniciativaRedesSociales->contains($iniciativaRedSocial)) {
+            $this->iniciativaRedesSociales->add($iniciativaRedSocial);
+            $iniciativaRedSocial->setIniciativa($this);
         }
 
         return $this;
         
     }
 
-    public function removeIniciativaRedesSociale(IniciativaRedesSociales $iniciativaRedesSociale): static
+    public function removeIniciativaRedesSociale(IniciativaRedSocial $iniciativaRedSocial): static
     {
-        if ($this->iniciativaRedesSociales->removeElement($iniciativaRedesSociale)) {
+        if ($this->iniciativaRedesSociales->removeElement($iniciativaRedSocial)) {
             // set the owning side to null (unless already changed)
-            if ($iniciativaRedesSociale->getIniciativa() === $this) {
-                $iniciativaRedesSociale->setIniciativa(null);
+            if ($iniciativaRedSocial->getIniciativa() === $this) {
+                $iniciativaRedSocial->setIniciativa(null);
             }
         }
 

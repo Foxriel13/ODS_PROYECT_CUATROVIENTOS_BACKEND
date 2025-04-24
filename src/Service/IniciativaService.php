@@ -7,16 +7,16 @@ use App\Entity\EntidadExterna;
 use App\Entity\EntidadExternaIniciativa;
 use App\Entity\Iniciativa;
 use App\Entity\IniciativaModulo;
-use App\Entity\IniciativaRedesSociales;
 use App\Entity\Meta;
 use App\Entity\MetaIniciativa;
 use App\Entity\Modulo;
 use App\Entity\ModuloClase;
 use App\Entity\Profesor;
 use App\Entity\ProfesorIniciativa;
-use App\Entity\RedesSociales;
 use App\Entity\Actividad;
 use App\Entity\IniciativaActividad;
+use App\Entity\IniciativaRedSocial;
+use App\Entity\RedSocial;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -204,12 +204,12 @@ class IniciativaService
 
         // Procesamos redes sociales
         if (!empty($data['redes_sociales']) && is_array($data['redes_sociales'])) {
-            $redesSocialesRepo = $this->entityManager->getRepository(RedesSociales::class);
+            $redesSocialesRepo = $this->entityManager->getRepository(RedSocial::class);
             foreach ($data['redes_sociales'] as $redesSocialesId) {
                 $redSocial = $redesSocialesRepo->find($redesSocialesId);
                 if ($redSocial) {
-                    $iniciativaRedSocial = new IniciativaRedesSociales($iniciativa, $redSocial);
-                    $iniciativa->addIniciativaRedesSociale($iniciativaRedSocial);
+                    $iniciativaRedSocial = new IniciativaRedSocial($iniciativa, $redSocial);
+                    $iniciativa->addIniciativaRedSocial($iniciativaRedSocial);
                     $this->entityManager->persist($iniciativaRedSocial);
                 }
             }
@@ -389,7 +389,7 @@ class IniciativaService
 
         // Relacionar Redes Sociales
         if (!empty($data['redes_sociales']) && is_array($data['redes_sociales'])) {
-            $redesSocialesRepo = $this->entityManager->getRepository(RedesSociales::class);
+            $redesSocialesRepo = $this->entityManager->getRepository(RedSocial::class);
             
             foreach ($iniciativa->getIniciativaRedesSociales() as $redSocial) {
                 $this->entityManager->remove($redSocial);
@@ -399,7 +399,7 @@ class IniciativaService
             foreach ($data['redes_sociales'] as $redSocialId) {
                 $redSocial = $redesSocialesRepo->find($redSocialId);
                 if ($redSocial) {
-                    $redSocialIniciativa = new IniciativaRedesSociales($iniciativa, $redSocial);
+                    $redSocialIniciativa = new IniciativaRedSocial($iniciativa, $redSocial);
                     $iniciativa->addIniciativaRedesSociale($redSocialIniciativa);
                     $this->entityManager->persist($redSocialIniciativa);
                 }

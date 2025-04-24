@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Attribute\Route;
 final class IndicadoresController extends AbstractController
 {
 
-    // Constructor con el servicio de la entidad Iniciativa
+    // Constructor con el servicio de la entidad Indicador
     public function __construct(private IndicadoresService $indicadoresService)
     {
         $this->indicadoresService = $indicadoresService;

@@ -2,27 +2,27 @@
 
 namespace App\Controller;
 
-use App\Service\ClasesService;
+use App\Service\ClaseService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class ClasesController extends AbstractController
+class ClaseController extends AbstractController
 {
 
     // Constructor con el servicio de la entidad Clase
-    public function __construct(private ClasesService $clasesService)
+    public function __construct(private ClaseService $claseService)
     {
-        $this->clasesService = $clasesService;
+        $this->claseService = $claseService;
     }
 
     // Obtener todas las clases
     #[Route('/clases', name: 'get_clases', methods: ['GET'])]
     public function getClases(): JsonResponse
     {
-        $clases = $this->clasesService->getAllClases();
+        $clases = $this->claseService->getAllClases();
 
         if (empty($clases)) {
             return new JsonResponse(
@@ -47,7 +47,7 @@ class ClasesController extends AbstractController
             );
         }
  
-        return $this->clasesService->createClase($data);
+        return $this->claseService->createClase($data);
     }
 
     // Actualizar Clase
@@ -60,14 +60,14 @@ class ClasesController extends AbstractController
             return new JsonResponse(['message' => 'Datos inválidos'], Response::HTTP_BAD_REQUEST);
         }
     
-        return $this->clasesService->updateClase($idClase, $data);
+        return $this->claseService->updateClase($idClase, $data);
     }
 
     // Eliminar Clase
     #[Route('/clases/{idClase}', name: 'delete_clase', methods: ['DELETE'])]
     public function deleteClase(int $idClase): JsonResponse
     {
-        return $this->clasesService->deleteClase($idClase);
+        return $this->claseService->deleteClase($idClase);
     }
 
 }

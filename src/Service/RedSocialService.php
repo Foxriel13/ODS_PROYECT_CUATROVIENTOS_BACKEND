@@ -3,12 +3,12 @@
 namespace App\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
-use App\Entity\RedesSociales;
+use App\Entity\RedSocial;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-class RedesSocialesService{
+class RedSocialService{
 
     // Constructor con el manejador de entidades y el serializador
     public function __construct(private EntityManagerInterface $entityManager, private SerializerInterface $serializer)
@@ -20,7 +20,7 @@ class RedesSocialesService{
     // Función para obtener todas las redes sociales
     public function getAllRedes(): JsonResponse
     {
-        $redes = $this->entityManager->getRepository(RedesSociales::class)->findAll();
+        $redes = $this->entityManager->getRepository(RedSocial::class)->findAll();
 
         if (empty($redes)) {
             return new JsonResponse(['message' => 'No se han encontrado redes sociales'], Response::HTTP_NOT_FOUND);
@@ -40,7 +40,7 @@ class RedesSocialesService{
             return new JsonResponse(['message' => 'El campo "enlace" es obligatorio'], Response::HTTP_BAD_REQUEST);
         }
 
-        $redSocial = new RedesSociales();
+        $redSocial = new RedSocial();
         $redSocial->setNombre($data['nombre'] ?? null);
         $redSocial->setEnlace($data['enlace'] ?? null);
         $this->entityManager->persist($redSocial);
@@ -54,7 +54,7 @@ class RedesSocialesService{
     // Función para actualizar una red social
     public function updateRedSocial(int $idRedSocial, array $data): JsonResponse
     {
-        $redSocial = $this->entityManager->getRepository(RedesSociales::class)->find($idRedSocial);
+        $redSocial = $this->entityManager->getRepository(RedSocial::class)->find($idRedSocial);
 
         if (!$redSocial) {
             return new JsonResponse([
@@ -79,7 +79,7 @@ class RedesSocialesService{
     // Función para eliminar una red social
     public function deleteRedSocial(int $idRedSocial): JsonResponse
     {
-        $redSocial = $this->entityManager->getRepository(RedesSociales::class)->find($idRedSocial);
+        $redSocial = $this->entityManager->getRepository(RedSocial::class)->find($idRedSocial);
 
         if (!$redSocial) {
             return new JsonResponse([

@@ -1474,11 +1474,6 @@ components:
         nombre:
           type: string
           example: "Energías Renovables"
-        clases:
-          type: array
-          items:
-            type: integer
-          example: [1, 2]
           
     NewModulo2:
       type: object

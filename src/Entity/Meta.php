@@ -30,6 +30,9 @@ class Meta
     #[IGNORE]
     private Collection $metasIniciativasIdMetas;
 
+    #[ORM\Column]
+    private ?bool $eliminado = null;
+
 
     public function __construct()
     {
@@ -91,6 +94,18 @@ class Meta
                 $metasIniciativasIdMeta->setIdMetas(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isEliminado(): ?bool
+    {
+        return $this->eliminado;
+    }
+
+    public function setEliminado(bool $eliminado): static
+    {
+        $this->eliminado = $eliminado;
 
         return $this;
     }

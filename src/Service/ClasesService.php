@@ -78,5 +78,17 @@ class ClasesService{
 
         return new JsonResponse(['message' => 'Clase eliminada correctamente'], Response::HTTP_OK);
     }
+
+    private function formatClase($clase): array
+    {
+        return array_map(fn($iniciativaModulo) => [
+            'idClase' => $iniciativaModulo->getClase()->getId(),
+            'nombre' => $iniciativaModulo->getClase()->getNombre(),
+            'clases' => array_map(fn($modulosClase) => [
+                'idClase' => $modulosClase->getClase()->getId(),
+                'nombre' => $modulosClase->getClase()->getNombre(),
+            ], $iniciativaModulo->getModulo()->getModuloClases()->toArray()),
+        ], $clase->getModuloClases()->toArray());
+    }
  
 }

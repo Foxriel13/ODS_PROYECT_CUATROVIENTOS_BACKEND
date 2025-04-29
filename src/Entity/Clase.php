@@ -33,6 +33,9 @@ class Clase
     #[IGNORE]
     private Collection $moduloClases;
 
+    #[ORM\Column]
+    private ?bool $eliminado = null;
+
     public function __construct()
     {
         $this->modulos = new ArrayCollection();
@@ -89,6 +92,18 @@ class Clase
                 $moduloClase->setClase(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isEliminado(): ?bool
+    {
+        return $this->eliminado;
+    }
+
+    public function setEliminado(bool $eliminado): static
+    {
+        $this->eliminado = $eliminado;
 
         return $this;
     }

@@ -30,6 +30,9 @@ class RedesSociales
     #[Ignore]
     private Collection $iniciativaRedesSociales;
 
+    #[ORM\Column]
+    private ?bool $eliminado = null;
+
     public function __construct()
     {
         $this->iniciativaRedesSociales = new ArrayCollection();
@@ -89,6 +92,18 @@ class RedesSociales
                 $iniciativaRedesSociale->setRedesSociales(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isEliminado(): ?bool
+    {
+        return $this->eliminado;
+    }
+
+    public function setEliminado(bool $eliminado): static
+    {
+        $this->eliminado = $eliminado;
 
         return $this;
     }

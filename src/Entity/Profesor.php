@@ -24,6 +24,12 @@ class Profesor
     #[ORM\OneToMany(targetEntity: ProfesorIniciativa::class, mappedBy: 'profesor')]
     private \Doctrine\Common\Collections\Collection $profesorIniciativas;
 
+    #[ORM\Column(length: 255)]
+    private ?string $rol = null;
+
+    #[ORM\Column]
+    private ?bool $eliminado = null;
+
     public function __construct()
     {
         $this->profesorIniciativas = new ArrayCollection();
@@ -72,6 +78,30 @@ class Profesor
                 $profesorIniciativa->setProfesor(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getRol(): ?string
+    {
+        return $this->rol;
+    }
+
+    public function setRol(string $rol): static
+    {
+        $this->rol = $rol;
+
+        return $this;
+    }
+
+    public function isEliminado(): ?bool
+    {
+        return $this->eliminado;
+    }
+
+    public function setEliminado(bool $eliminado): static
+    {
+        $this->eliminado = $eliminado;
 
         return $this;
     }

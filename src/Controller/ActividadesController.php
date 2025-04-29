@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class ActividadesController extends AbstractController
 {
@@ -36,6 +37,7 @@ class ActividadesController extends AbstractController
 
     // Crear actividades
     #[Route('/actividades', name: 'create_actividad', methods: ['POST'])]
+    #[IsGranted("EDIT", subject:"actividad")]
     public function createActividad(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);

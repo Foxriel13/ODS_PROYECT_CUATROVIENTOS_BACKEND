@@ -27,6 +27,9 @@ class Profesor
     #[ORM\Column(length: 255)]
     private ?string $rol = null;
 
+    #[ORM\Column]
+    private ?bool $eliminado = null;
+
     public function __construct()
     {
         $this->profesorIniciativas = new ArrayCollection();
@@ -87,6 +90,18 @@ class Profesor
     public function setRol(string $rol): static
     {
         $this->rol = $rol;
+
+        return $this;
+    }
+
+    public function isEliminado(): ?bool
+    {
+        return $this->eliminado;
+    }
+
+    public function setEliminado(bool $eliminado): static
+    {
+        $this->eliminado = $eliminado;
 
         return $this;
     }

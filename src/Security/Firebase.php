@@ -1,8 +1,8 @@
 <?php
 namespace App\Service;
 
-use Kreait\Firebase\Auth;
-use Lcobucci\JWT\UnencryptedToken;
+use Kreait\Firebase\Factory;
+
 
 class Firebase
 {

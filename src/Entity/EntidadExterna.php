@@ -26,6 +26,9 @@ class EntidadExterna
     #[IGNORE]
     private Collection $iniciativa;
 
+    #[ORM\Column]
+    private ?bool $eliminado = null;
+
     public function __construct()
     {
         $this->iniciativa = new ArrayCollection();
@@ -73,6 +76,18 @@ class EntidadExterna
                 $iniciativa->setEntidad(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isEliminado(): ?bool
+    {
+        return $this->eliminado;
+    }
+
+    public function setEliminado(bool $eliminado): static
+    {
+        $this->eliminado = $eliminado;
 
         return $this;
     }

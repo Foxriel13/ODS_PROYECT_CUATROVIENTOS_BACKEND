@@ -84,15 +84,16 @@ class ProfesoresService{
         $profesor = $this->entityManager->getRepository(Profesor::class)->find($idProfesor);
 
         if (!$profesor) {
-            return new JsonResponse([
-                'message' => 'Profesor no encontrado',
-            ], Response::HTTP_NOT_FOUND);
+            return new JsonResponse(['message' => 'El Profesor no ha sido encontrado'], Response::HTTP_NOT_FOUND);
         }
 
-        $this->entityManager->remove($profesor);
-        $this->entityManager->flush();
+        if ($profesor->isEliminado() == true) {
+            return new JsonResponse(['message' => 'El Profesor ya se encontraba eliminado'], Response::HTTP_BAD_REQUEST);
+        }
 
-        return new JsonResponse(['message' => 'Profesor eliminado correctamente'], Response::HTTP_OK);
+        $profesor->setEliminado(true);
+        $this->entityManager->flush();
+        return new JsonResponse(['message' => 'El Profesor ha sido eliminado exitosamente'], Response::HTTP_OK);
     }
 
 }

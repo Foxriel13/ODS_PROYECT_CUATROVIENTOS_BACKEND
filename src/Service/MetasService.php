@@ -95,16 +95,19 @@ class MetasService{
     // Función para eliminar una Meta
     public function deleteMeta(int $idMeta): JsonResponse
     {
-        $meta = $this->getMetaById($idMeta);
+        $meta = $this->entityManager->getRepository(Meta::class)->find($idMeta);
 
         if (!$meta) {
-            return new JsonResponse(['message' => 'Meta no encontrada'], Response::HTTP_NOT_FOUND);
+            return new JsonResponse(['message' => 'La meta no ha sido encontrada'], Response::HTTP_NOT_FOUND);
         }
 
-        $this->entityManager->remove($meta);
-        $this->entityManager->flush();
+        if ($meta->isEliminado() == true) {
+            return new JsonResponse(['message' => 'La meta ya se encontraba eliminada'], Response::HTTP_BAD_REQUEST);
+        }
 
-        return new JsonResponse(['message' => 'Meta eliminada correctamente'], Response::HTTP_OK);
+        $meta->setEliminado(true);
+        $this->entityManager->flush();
+        return new JsonResponse(['message' => 'La meta ha sido eliminado exitosamente'], Response::HTTP_OK);
     }
 
 }

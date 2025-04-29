@@ -8,7 +8,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-class ActividadesService{
+class ActividadesService
+{
 
     // Constructor con el manejador de entidades y el serializador
     public function __construct(private EntityManagerInterface $entityManager, private SerializerInterface $serializer)
@@ -19,23 +20,22 @@ class ActividadesService{
 
     // Obtener todas las Actividades
     public function getAllActividades(): JsonResponse
-{
-    $actividades = $this->entityManager->getRepository(Actividad::class)->findAll();
+    {
+        $actividades = $this->entityManager->getRepository(Actividad::class)->findAll();
 
-    if (empty($actividades)) {
-        return new JsonResponse(['message' => 'No se han encontrado actividades'], Response::HTTP_NO_CONTENT);
+        if (empty($actividades)) {
+            return new JsonResponse(['message' => 'No se han encontrado actividades'], Response::HTTP_NO_CONTENT);
+        }
+
+        $data = array_map(function ($actividad) {
+            return [
+                'id' => $actividad->getId(),
+                'nombre' => $actividad->getNombre()
+            ];
+        }, $actividades);
+
+        return new JsonResponse($data, Response::HTTP_OK);
     }
-
-    $data = array_map(function ($actividad) {
-        return [
-            'id' => $actividad->getId(),
-            'nombre' => $actividad->getNombre()
-        ];
-    }, $actividades);
-
-    return new JsonResponse($data, Response::HTTP_OK);
-}
-
 
     // Crear una nueva Actividad
     public function createActividad(array $data): JsonResponse
@@ -77,13 +77,15 @@ class ActividadesService{
         $actividad = $this->entityManager->getRepository(Actividad::class)->find($idActividad);
 
         if (!$actividad) {
-            return new JsonResponse(['message' => 'Actividad no encontrada'], Response::HTTP_NOT_FOUND);
+            return new JsonResponse(['message' => 'La Actividad no ha sido encontrada'], Response::HTTP_NOT_FOUND);
         }
 
-        $this->entityManager->remove($actividad);
-        $this->entityManager->flush();
+        if ($actividad->isEliminado() == true) {
+            return new JsonResponse(['message' => 'La Actividad ya se encontraba eliminada'], Response::HTTP_BAD_REQUEST);
+        }
 
-        return new JsonResponse(['message' => 'Actividad eliminada correctamente'], Response::HTTP_OK);
+        $actividad->setEliminado(true);
+        $this->entityManager->flush();
+        return new JsonResponse(['message' => 'La Actividad ha sido eliminado exitosamente'], Response::HTTP_OK);
     }
- 
 }

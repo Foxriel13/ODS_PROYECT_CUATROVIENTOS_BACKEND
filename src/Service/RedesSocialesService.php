@@ -82,15 +82,16 @@ class RedesSocialesService{
         $redSocial = $this->entityManager->getRepository(RedesSociales::class)->find($idRedSocial);
 
         if (!$redSocial) {
-            return new JsonResponse([
-                'message' => 'Red Social no encontrada',
-            ], Response::HTTP_NOT_FOUND);
+            return new JsonResponse(['message' => 'La Red Social no ha sido encontrada'], Response::HTTP_NOT_FOUND);
         }
 
-        $this->entityManager->remove($redSocial);
-        $this->entityManager->flush();
+        if ($redSocial->isEliminado() == true) {
+            return new JsonResponse(['message' => 'La Red Social ya se encontraba eliminada'], Response::HTTP_BAD_REQUEST);
+        }
 
-        return new JsonResponse(['message' => 'Red Social eliminada correctamente'], Response::HTTP_OK);
+        $redSocial->setEliminado(true);
+        $this->entityManager->flush();
+        return new JsonResponse(['message' => 'La Red Social ha sido eliminado exitosamente'], Response::HTTP_OK);
     }
 
 }

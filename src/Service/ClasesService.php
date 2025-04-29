@@ -26,8 +26,21 @@ class ClasesService{
             return new JsonResponse(['message' => 'No se han encontrado clases'], Response::HTTP_NO_CONTENT);
         }
 
-        $json = $this->serializer->serialize($clases, 'json');
-        return new JsonResponse($json, Response::HTTP_OK, [], true);
+        $data = array_map(function ($clase) {
+            return [
+                'id' => $clase->getId(),
+                'nombre' => $clase->getNombre(),
+                'eliminado' => $clase->isEliminado(),
+                'modulos' => array_map(function ($moduloClase) {
+                    return[
+                        'id' => $moduloClase->getModulo()->getId(),
+                        'nombre' => $moduloClase->getModulo()->getNombre(),
+                    ];
+                }, $clase->getModuloClases()->toArray()),
+            ];
+        }, $clases);
+
+        return new JsonResponse($data, Response::HTTP_OK, []);
     }
 
     // Crear una nueva clase
@@ -70,25 +83,16 @@ class ClasesService{
         $clase = $this->entityManager->getRepository(Clase::class)->find($idClase);
 
         if (!$clase) {
-            return new JsonResponse(['message' => 'Clase no encontrada'], Response::HTTP_NOT_FOUND);
+            return new JsonResponse(['message' => 'La Clase no ha sido encontrada'], Response::HTTP_NOT_FOUND);
         }
 
-        $this->entityManager->remove($clase);
+        if ($clase->isEliminado() == true) {
+            return new JsonResponse(['message' => 'La Clase ya se encontraba eliminada'], Response::HTTP_BAD_REQUEST);
+        }
+
+        $clase->setEliminado(true);
         $this->entityManager->flush();
-
-        return new JsonResponse(['message' => 'Clase eliminada correctamente'], Response::HTTP_OK);
-    }
-
-    private function formatClase($clase): array
-    {
-        return array_map(fn($iniciativaModulo) => [
-            'idClase' => $iniciativaModulo->getClase()->getId(),
-            'nombre' => $iniciativaModulo->getClase()->getNombre(),
-            'clases' => array_map(fn($modulosClase) => [
-                'idClase' => $modulosClase->getClase()->getId(),
-                'nombre' => $modulosClase->getClase()->getNombre(),
-            ], $iniciativaModulo->getModulo()->getModuloClases()->toArray()),
-        ], $clase->getModuloClases()->toArray());
+        return new JsonResponse(['message' => 'La Clase ha sido eliminado exitosamente'], Response::HTTP_OK);
     }
  
 }

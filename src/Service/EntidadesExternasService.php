@@ -74,15 +74,18 @@ class EntidadesExternasService{
     // Eliminar una entidad externa
     public function deleteEntidadExterna(int $idEntidadExterna): JsonResponse
     {
-        $entidadExterna = $this->getEntidadExternaById($idEntidadExterna);
+        $entidadExterna = $this->entityManager->getRepository(EntidadExterna::class)->find($idEntidadExterna);
 
         if (!$entidadExterna) {
-            return new JsonResponse(['message' => 'Entidad Externa no encontrada'], Response::HTTP_NOT_FOUND);
+            return new JsonResponse(['message' => 'La Entidad Externa no ha sido encontrada'], Response::HTTP_NOT_FOUND);
         }
 
-        $this->entityManager->remove($entidadExterna);
-        $this->entityManager->flush();
+        if ($entidadExterna->isEliminado() == true) {
+            return new JsonResponse(['message' => 'La Entidad Externa ya se encontraba eliminada'], Response::HTTP_BAD_REQUEST);
+        }
 
-        return new JsonResponse(['message' => 'Entidad Externa eliminada correctamente'], Response::HTTP_OK);
+        $entidadExterna->setEliminado(true);
+        $this->entityManager->flush();
+        return new JsonResponse(['message' => 'La Entidad Externa ha sido eliminado exitosamente'], Response::HTTP_OK);
     }
 }

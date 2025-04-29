@@ -31,6 +31,8 @@ class ProfesoresService{
         return [
             'id' => $profesor->getId(),
             'nombre' => $profesor->getNombre(),
+            'rol' => $profesor->getRol(),
+            'eliminado' => $profesor->isEliminado(),
         ];
     }, $profesores);
 
@@ -45,8 +47,14 @@ class ProfesoresService{
             return new JsonResponse(['message' => 'El campo "nombre" es obligatorio'], Response::HTTP_BAD_REQUEST);
         }
 
+        if (!isset($data['rol'])) {
+            return new JsonResponse(['message' => 'El campo "rol" es obligatorio'], Response::HTTP_BAD_REQUEST);
+        }
+
         $profesor = new Profesor();
         $profesor->setNombre($data['nombre'] ?? null);
+        $profesor->setRol($data['rol'] ?? null);
+        $profesor->setEliminado(false);
 
         $this->entityManager->persist($profesor);
         $this->entityManager->flush();
@@ -69,6 +77,10 @@ class ProfesoresService{
 
         if (isset($data['nombre'])) {
             $profesor->setNombre($data['nombre']);
+        }
+
+        if (isset($data['rol'])) {
+            $profesor->setRol($data['rol']);
         }
 
         $this->entityManager->flush();

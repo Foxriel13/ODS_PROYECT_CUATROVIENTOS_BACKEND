@@ -46,6 +46,7 @@ class EntidadesExternasService{
 
         $entidadExterna = new EntidadExterna();
         $entidadExterna->setNombre($data['nombre']);
+        $entidadExterna->setEliminado(false);
 
         $this->entityManager->persist($entidadExterna);
         $this->entityManager->flush();

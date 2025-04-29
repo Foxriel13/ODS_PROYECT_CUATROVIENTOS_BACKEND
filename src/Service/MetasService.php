@@ -49,7 +49,6 @@ class MetasService{
         }
 
         $meta = new Meta();
-        $meta->setDescripcion($data['descripcion']);
 
         $ods = $this->entityManager->getRepository(ODS::class)->find($data['ods']);
         if ($ods !== null) {
@@ -57,6 +56,10 @@ class MetasService{
         }else{
             return new JsonResponse(['message' => 'Debes de introducir un ODS válido'], Response::HTTP_BAD_REQUEST);
         }
+
+        $meta->setDescripcion($data['descripcion']);
+
+        $meta->setEliminado(false);
 
         $this->entityManager->persist($meta);
         $this->entityManager->flush();

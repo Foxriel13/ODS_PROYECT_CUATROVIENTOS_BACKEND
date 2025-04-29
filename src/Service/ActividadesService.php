@@ -30,7 +30,8 @@ class ActividadesService
         $data = array_map(function ($actividad) {
             return [
                 'id' => $actividad->getId(),
-                'nombre' => $actividad->getNombre()
+                'nombre' => $actividad->getNombre(),
+                'eliminado' => $actividad->isEliminado()
             ];
         }, $actividades);
 
@@ -46,6 +47,7 @@ class ActividadesService
 
         $actividad = new Actividad();
         $actividad->setNombre($data['nombre']);
+        $actividad->setEliminado(false);
 
         $this->entityManager->persist($actividad);
         $this->entityManager->flush();

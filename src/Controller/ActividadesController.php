@@ -37,7 +37,6 @@ class ActividadesController extends AbstractController
 
     // Crear actividades
     #[Route('/actividades', name: 'create_actividad', methods: ['POST'])]
-    #[IsGranted("EDIT", subject:"actividad")]
     public function createActividad(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);

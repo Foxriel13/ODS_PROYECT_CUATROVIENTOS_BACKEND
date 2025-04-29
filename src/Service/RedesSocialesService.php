@@ -43,6 +43,8 @@ class RedesSocialesService{
         $redSocial = new RedesSociales();
         $redSocial->setNombre($data['nombre'] ?? null);
         $redSocial->setEnlace($data['enlace'] ?? null);
+        $redSocial->setEliminado(false);
+        
         $this->entityManager->persist($redSocial);
         $this->entityManager->flush();
     

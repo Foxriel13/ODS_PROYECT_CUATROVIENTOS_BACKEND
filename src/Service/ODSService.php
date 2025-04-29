@@ -45,9 +45,8 @@ class ODSService{
         }
 
         $ods->setNombre($data['nombre']);
-
         $ods->setDimension($data['dimension']);
-
+        $ods->setEliminado(false);
 
         $this->entityManager->persist($ods);
         $this->entityManager->flush();

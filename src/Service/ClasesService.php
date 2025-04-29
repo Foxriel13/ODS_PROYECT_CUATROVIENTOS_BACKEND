@@ -3,6 +3,8 @@
 namespace App\Service;
 
 use App\Entity\Clase;
+use App\Entity\Modulo;
+use App\Entity\ModuloClase;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -53,6 +55,22 @@ class ClasesService{
         $clase = new Clase();
         $clase->setNombre($data['nombre']);
 
+        if (!empty($data['modulos']) && is_array($data['modulos'])) {
+            $modulosRepo = $this->entityManager->getRepository(Modulo::class);
+            foreach ($data['modulos'] as $moduloId) {
+                $modulo = $modulosRepo->find($moduloId);
+                if ($modulo) {
+                    $moduloClase = new ModuloClase($modulo, $clase);
+                    $clase->addModuloClase($moduloClase);
+                    $this->entityManager->persist($moduloClase);
+                }
+            }
+        } else {
+            return new JsonResponse(['message' => 'Debes de introducir al menos un módulo'], Response::HTTP_NOT_FOUND);
+        }
+
+        $clase->setEliminado(false);
+
         $this->entityManager->persist($clase);
         $this->entityManager->flush();
 
@@ -70,6 +88,26 @@ class ClasesService{
 
         if (!empty($data['nombre'])) {
             $clase->setNombre($data['nombre']);
+        }
+
+        if (!empty($data['modulos']) && is_array($data['modulos'])) {
+            $modulosRepo = $this->entityManager->getRepository(Modulo::class);
+
+            foreach ($clase->getModuloClases() as $moduloClases) {
+                $this->entityManager->remove($moduloClases);
+            }
+            $this->entityManager->flush();
+
+            foreach ($data['modulos'] as $moduloId) {
+                $modulo = $modulosRepo->find($moduloId);
+                if ($modulo) {
+                    $moduloClase = new ModuloClase($modulo, $clase);
+                    $clase->addModuloClase($moduloClase);
+                    $this->entityManager->persist($moduloClase);
+                }
+            }
+        } else {
+            return new JsonResponse(['message' => 'Debes de introducir al menos una clase'], Response::HTTP_NOT_FOUND);
         }
 
         $this->entityManager->flush();

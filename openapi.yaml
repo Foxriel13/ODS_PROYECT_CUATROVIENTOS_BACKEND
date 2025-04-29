@@ -1057,6 +1057,9 @@ components:
         nombre:
           type: string
           example: Clase de Matemáticas
+        eliminado: 
+          type: boolean
+          example: false
           
     Redes_sociales:
       type: object
@@ -1070,6 +1073,9 @@ components:
         enlace:
           type: string
           example: enlace1
+        eliminado: 
+          type: boolean
+          example: false
     Modulo:
       type: object
       properties:
@@ -1083,6 +1089,9 @@ components:
           type: array
           items: 
             $ref: '#/components/schemas/Clase'
+        eliminado: 
+          type: boolean
+          example: false
     Profesor:
       type: object
       properties:
@@ -1110,6 +1119,9 @@ components:
         nombre:
           type: string
           example: Charla
+        eliminado: 
+          type: boolean
+          example: false
     Iniciativa:
       type: object
       properties:
@@ -1450,6 +1462,9 @@ components:
         dimension:
           type: string
           example: social
+        eliminado: 
+          type: boolean
+          example: false
     
     NewMeta:
       type: object
@@ -1460,6 +1475,9 @@ components:
         ods:
           type: integer
           example: 7
+        eliminado: 
+          type: boolean
+          example: false
     
     NewClase:
       type: object
@@ -1467,6 +1485,9 @@ components:
         nombre:
           type: string
           example: "Cambio Climático y Sostenibilidad"
+        eliminado: 
+          type: boolean
+          example: false
     
     NewModulo:
       type: object
@@ -1474,6 +1495,9 @@ components:
         nombre:
           type: string
           example: "Energías Renovables"
+        eliminado: 
+          type: boolean
+          example: false
           
     NewModulo2:
       type: object
@@ -1493,6 +1517,9 @@ components:
         nombre:
           type: string
           example: "Dr. Juan Pérez"
+        eliminado: 
+          type: boolean
+          example: false
           
     NewRedSocial:
       type: object
@@ -1503,6 +1530,9 @@ components:
         enlace:
           type: string
           example: enlace1
+        eliminado: 
+          type: boolean
+          example: false
     
     NewEntidadExterna:
       type: object
@@ -1510,6 +1540,9 @@ components:
         nombre:
           type: string
           example: "GreenTech International"
+        eliminado: 
+          type: boolean
+          example: false
           
     NewActividades:
       type: object
@@ -1517,3 +1550,6 @@ components:
         nombre:
           type: string
           example: "Salida al museo"
+        eliminado:
+          type: boolean
+          example: false

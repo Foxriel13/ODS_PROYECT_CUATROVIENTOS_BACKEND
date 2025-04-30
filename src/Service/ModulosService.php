@@ -91,10 +91,23 @@ class ModulosService
 
     private function formatModulo($modulo): array
     {
-        return array_map(fn($iniciativaModulo) => [
+        $modulos = array_map(fn($iniciativaModulo) => [
             'idModulo' => $iniciativaModulo->getModulo()->getId(),
             'nombre' => $iniciativaModulo->getModulo()->getNombre(),
         ], $modulo->getModuloClases()->toArray());
+    
+        // Eliminar duplicados por 'idModulo'
+        $unicos = [];
+        $ids = [];
+    
+        foreach ($modulos as $modulo) {
+            if (!in_array($modulo['idModulo'], $ids)) {
+                $ids[] = $modulo['idModulo'];
+                $unicos[] = $modulo;
+            }
+        }
+    
+        return $unicos;
     }
-
+    
 }

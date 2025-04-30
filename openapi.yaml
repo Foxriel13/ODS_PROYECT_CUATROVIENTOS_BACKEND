@@ -1066,6 +1066,10 @@ components:
         eliminado: 
           type: boolean
           example: false
+        modulos:
+          type: array
+          items: 
+            $ref: "#/components/schemas/Modulo"
           
     Redes_sociales:
       type: object

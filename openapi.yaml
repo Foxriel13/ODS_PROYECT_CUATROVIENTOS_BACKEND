@@ -1037,6 +1037,9 @@ components:
         dimension:
           type: string
           example: Social
+        eliminado:
+          type: boolean
+          example: false
     Meta:
       type: object
       properties:
@@ -1048,6 +1051,9 @@ components:
           example: Fomentar la educación digital
         ods:
             $ref: '#/components/schemas/Ods'
+        eliminado:
+          type: boolean
+          example: false
     Clase:
       type: object
       properties:
@@ -1085,13 +1091,7 @@ components:
         nombre:
           type: string
           example: Álgebra
-        clases:
-          type: array
-          items: 
-            $ref: '#/components/schemas/Clase'
-        eliminado: 
-          type: boolean
-          example: false
+
     Profesor:
       type: object
       properties:
@@ -1101,6 +1101,9 @@ components:
         nombre:
           type: string
           example: Juan Pérez
+        eliminado:
+          type: boolean
+          example: false
     EntidadExterna:
       type: object
       properties:
@@ -1110,6 +1113,9 @@ components:
         nombre:
           type: string
           example: Universidad Nacional
+        eliminado:
+          type: boolean
+          example: false
     Actividades:
       type: object
       properties:
@@ -1407,9 +1413,6 @@ components:
           type: string
           format: date
           example: "2025-06-30"
-        eliminado:
-          type: boolean
-          example: false
         innovador:
           type: boolean
           example: true
@@ -1462,9 +1465,6 @@ components:
         dimension:
           type: string
           example: social
-        eliminado: 
-          type: boolean
-          example: false
     
     NewMeta:
       type: object
@@ -1475,9 +1475,6 @@ components:
         ods:
           type: integer
           example: 7
-        eliminado: 
-          type: boolean
-          example: false
     
     NewClase:
       type: object
@@ -1485,9 +1482,10 @@ components:
         nombre:
           type: string
           example: "Cambio Climático y Sostenibilidad"
-        eliminado: 
-          type: boolean
-          example: false
+        modulos:
+          type: array
+          items: 
+            $ref: "#/components/schemas/ModuloNombre"
     
     NewModulo:
       type: object
@@ -1495,9 +1493,14 @@ components:
         nombre:
           type: string
           example: "Energías Renovables"
-        eliminado: 
-          type: boolean
-          example: false
+
+          
+    ModuloNombre:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
           
     NewModulo2:
       type: object
@@ -1517,9 +1520,6 @@ components:
         nombre:
           type: string
           example: "Dr. Juan Pérez"
-        eliminado: 
-          type: boolean
-          example: false
           
     NewRedSocial:
       type: object
@@ -1530,9 +1530,6 @@ components:
         enlace:
           type: string
           example: enlace1
-        eliminado: 
-          type: boolean
-          example: false
     
     NewEntidadExterna:
       type: object
@@ -1540,9 +1537,6 @@ components:
         nombre:
           type: string
           example: "GreenTech International"
-        eliminado: 
-          type: boolean
-          example: false
           
     NewActividades:
       type: object
@@ -1550,6 +1544,3 @@ components:
         nombre:
           type: string
           example: "Salida al museo"
-        eliminado:
-          type: boolean
-          example: false

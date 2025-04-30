@@ -99,28 +99,28 @@
     (45, 'Gestión de bases de datos', false),
     (46, 'Aplicaciones web', false);
 
-    INSERT INTO profesor (id, nombre, eliminado) VALUES
-    (1, 'Maria Martin', false),
-    (2, 'Miguel Goyena', false),
-    (3, 'David Noya', false),
-    (4, 'Iban Sarria', false),
-    (5, 'Merche Arozarena', false),
-    (6, 'Arantxa Artuch', false),
-    (7, 'Abilio Diaz', false),
-    (8, 'Ana Ramos', false),
-    (9, 'Silvia Sanz', false),
-    (10, 'Amaia Ayucar', false),
-    (11, 'Luis Aguero', false),
-    (12, 'Kike Arizuren', false),
-    (13, 'Itziar Ecenarro', false),
-    (14, 'Elena Huarte', false),
-    (15, 'Igor Iturralde', false),
-    (16, 'Juan Carlos Lana', false),
-    (17, 'Fernando Oscoz', false),
-    (19, 'Juan Pelaez', false),
-    (20, 'Iban Zabalza', false),
-    (21, 'Alberto Aguinaga', false),
-    (22, 'Daniel Duran', false);
+    INSERT INTO profesor (id, nombre, eliminado, rol) VALUES
+    (1, 'Maria Martin', false, 'administrador'),
+    (2, 'Miguel Goyena', false, 'administrador'),
+    (3, 'David Noya', false, 'administrador'),
+    (4, 'Iban Sarria', false, 'administrador'),
+    (5, 'Merche Arozarena', false, 'administrador'),
+    (6, 'Arantxa Artuch', false, 'administrador'),
+    (7, 'Abilio Diaz', false, 'administrador'),
+    (8, 'Ana Ramos', false, 'administrador'),
+    (9, 'Silvia Sanz', false, 'administrador'),
+    (10, 'Amaia Ayucar', false, 'administrador'),
+    (11, 'Luis Aguero', false, 'administrador'),
+    (12, 'Kike Arizuren', false, 'administrador'),
+    (13, 'Itziar Ecenarro', false, 'administrador'),
+    (14, 'Elena Huarte', false, 'administrador'),
+    (15, 'Igor Iturralde', false, 'administrador'),
+    (16, 'Juan Carlos Lana', false, 'administrador'),
+    (17, 'Fernando Oscoz', false, 'administrador'),
+    (19, 'Juan Pelaez', false, 'administrador'),
+    (20, 'Iban Zabalza', false, 'administrador'),
+    (21, 'Alberto Aguinaga', false, 'administrador'),
+    (22, 'Daniel Duran', false, 'administrador');
 
     INSERT INTO entidad_externa (id, nombre, eliminado) VALUES
     (1, 'Universidad Nacional', false),
@@ -132,11 +132,11 @@
     (2, 60, 'Plataforma educativa', 'Prototipo funcional', '2025-02-01', '2025-07-01', 0, 'https://www.theflippedclassroom.es/wp-content/uploads/2016/08/Plataforma_Educativa.jpg', DATE_FORMAT(CURRENT_DATE, '%Y-%m-%d'), 1, '2024-2025', 'comentario'),
     (3, 34, 'Taller para futuros inversionistas', 'Clases y charlas para enseñar sobre el mercado de inversiones', '2025-10-21', '2025-11-07', 0, 'https://www.roboadvisors.es/wp-content/uploads/2021/11/Inversiones-rentables.jpeg', DATE_FORMAT(CURRENT_DATE, '%Y-%m-%d'), 1, '2025-2026', 'comentario'),
     (4, 3, 'Charla sobre emprendimiento ', 'Un grupo de emprendedores darán una charla en 4V', '2026-02-12', '2026-02-13', 0, 'https://economia3.com/wp-content/uploads/2021/02/conferencias.jpg', DATE_FORMAT(CURRENT_DATE, '%Y-%m-%d'), 1, '2025-2026', 'comentario'),
-    (5, 42, 'Seminario de Ciberseguridad', 'Taller práctico sobre ciberseguridad en el entorno digital', '2025-04-15', '2025-04-17', 0, 'https://www.incibe.es/sites/default/files/images/noticias/ciberseguridad.jpg', DATE_FORMAT(CURRENT_DATE, '%Y-%m-%d'), 1, '2024-2025', 'comentario'),
-    (6, 18, 'Competencia de robótica escolar', 'Competencia regional entre colegios sobre robótica', '2025-05-10', '2025-05-12', 0, 'https://media.istockphoto.com/id/1154768743/es/foto/robot-ni%C3%B1os-rob%C3%B3tica-ni%C3%B1os-estudiantes-rob%C3%B3tica-juego-de-ni%C3%B1os-tecnolog%C3%ADa-ni%C3%B1os-y.jpg?s=612x612&w=0&k=20&c=OlKHl1uInG6DRT5C7Qsf6U_EHndWHpBS6jPbY5qZKZQ=', DATE_FORMAT(CURRENT_DATE, '%Y-%m-%d'), 1, '2024-2025', 'comentario'),
-    (7, 27, 'Bootcamp de programación', 'Entrenamiento intensivo para aprender desarrollo web y móvil', '2025-06-01', '2025-06-30', 0, 'https://camo.githubusercontent.com/ed4e5b1e729b13b790e56753677700e44bb3c69cf7b35e5b2092090192b0e738/68747470733a2f2f7777772e6c657761676173746f2e636f6d2f77702d636f6e74656e742f75706c6f6164732f323032312f30342f626f6f7463616d702d70726f6772616d6d696e672e6a7067', DATE_FORMAT(CURRENT_DATE, '%Y-%m-%d'), 1, '2024-2025', 'comentario'),
-    (8, 9, 'Exposición de proyectos escolares', 'Los alumnos presentarán sus proyectos finales del año', '2025-11-20', '2025-11-21', 0, 'https://www.educaciontrespuntocero.com/wp-content/uploads/2022/03/proyectos-escolares.jpg', DATE_FORMAT(CURRENT_DATE, '%Y-%m-%d'), 1, '2025-2026', 'comentario'),
-    (9, 51, 'Curso de inteligencia emocional', 'Sesiones teóricas y prácticas sobre manejo de emociones en el aula', '2026-01-15', '2026-01-30', 0, 'https://www.psicoactiva.com/blog/wp-content/uploads/2016/04/inteligencia-emocional-escuela.jpg', DATE_FORMAT(CURRENT_DATE, '%Y-%m-%d'), 1, '2025-2026', 'comentario');
+    (5, 42, 'Seminario de Ciberseguridad', 'Taller práctico sobre ciberseguridad en el entorno digital', '2025-04-15', '2025-04-17', 0, 'https://i.ytimg.com/vi/bP2XDxz0YLA/hq720.jpg?sqp=-oaymwEXCK4FEIIDSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLB93eLbXrFMYgKlCZky0t-6tLBxbA', DATE_FORMAT(CURRENT_DATE, '%Y-%m-%d'), 1, '2024-2025', 'comentario'),
+    (6, 18, 'Competencia de robótica escolar', 'Competencia regional entre colegios sobre robótica', '2025-05-10', '2025-05-12', 0, 'https://elucabista.com/wp-content/uploads/2023/07/Olimpiada-Robotica-UCAB-Christian-Lazo-31-1200x640.jpg', DATE_FORMAT(CURRENT_DATE, '%Y-%m-%d'), 1, '2024-2025', 'comentario'),
+    (7, 27, 'Bootcamp de programación', 'Entrenamiento intensivo para aprender desarrollo web y móvil', '2025-06-01', '2025-06-30', 0, 'https://www.hostinger.es/tutoriales/wp-content/uploads/sites/7/2018/07/aprender-programar-gratis.png', DATE_FORMAT(CURRENT_DATE, '%Y-%m-%d'), 1, '2024-2025', 'comentario'),
+    (8, 9, 'Exposición de proyectos escolares', 'Los alumnos presentarán sus proyectos finales del año', '2025-11-20', '2025-11-21', 0, 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEitXwyHNpmck8MxthC-zGQcUoIWrjGhzKN725Aj2a9wiqaCAd34lvRdrdwWor9wcBbZRxAopPovTQlxgcTaV2Wbr9k_SGQGNcHLxh_d4j0zJ4_yDR-nDJUH7f3X9e05wqNr2uE-qrJ7QoEg/s1600/IMG-20160517-WA0006.jpg', DATE_FORMAT(CURRENT_DATE, '%Y-%m-%d'), 1, '2025-2026', 'comentario'),
+    (9, 51, 'Curso de inteligencia emocional', 'Sesiones teóricas y prácticas sobre manejo de emociones en el aula', '2026-01-15', '2026-01-30', 0, 'https://cdn.openwebinars.net/media/fbads-inteligencia-emocional.jpg', DATE_FORMAT(CURRENT_DATE, '%Y-%m-%d'), 1, '2025-2026', 'comentario');
 
     INSERT INTO modulo_clase (modulo_id, clase_id) VALUES
     (1, 1),
@@ -197,9 +197,9 @@
     (42, 8),
     (37, 8);
 
-    INSERT INTO redes_sociales (id, nombre, enlace) VALUES
-    (1, 'twitter', 'enlace1'),
-    (2, 'facebook', 'enlace2');
+    INSERT INTO redes_sociales (id, nombre, enlace, eliminado) VALUES
+    (1, 'twitter', 'enlace1', false),
+    (2, 'facebook', 'enlace2', false);
 
     INSERT INTO iniciativa_redes_sociales (id, iniciativa_id, redes_sociales_id) VALUES
     (1, 1, 1),
@@ -209,7 +209,6 @@
     (1, 1, 4),
     (2, 1, 7),
     (3, 1, 2);
-
 
     INSERT INTO iniciativa_modulo (id, iniciativa_id, modulo_id) VALUES
     (1, 1, 3),

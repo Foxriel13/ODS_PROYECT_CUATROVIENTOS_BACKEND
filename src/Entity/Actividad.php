@@ -24,6 +24,9 @@ class Actividad
     #[ORM\OneToMany(targetEntity: IniciativaActividad::class, mappedBy: 'actividad')]
     private Collection $iniciativaActividads;
 
+    #[ORM\Column]
+    private ?bool $eliminado = null;
+
     public function __construct()
     {
         $this->iniciativaActividads = new ArrayCollection();
@@ -72,6 +75,18 @@ class Actividad
                 $iniciativaActividad->setActividad(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isEliminado(): ?bool
+    {
+        return $this->eliminado;
+    }
+
+    public function setEliminado(bool $eliminado): static
+    {
+        $this->eliminado = $eliminado;
 
         return $this;
     }

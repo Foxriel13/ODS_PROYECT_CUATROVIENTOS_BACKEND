@@ -31,6 +31,8 @@ class ProfesoresService{
         return [
             'id' => $profesor->getId(),
             'nombre' => $profesor->getNombre(),
+            'rol' => $profesor->getRol(),
+            'eliminado' => $profesor->isEliminado(),
         ];
     }, $profesores);
 
@@ -45,8 +47,14 @@ class ProfesoresService{
             return new JsonResponse(['message' => 'El campo "nombre" es obligatorio'], Response::HTTP_BAD_REQUEST);
         }
 
+        if (!isset($data['rol'])) {
+            return new JsonResponse(['message' => 'El campo "rol" es obligatorio'], Response::HTTP_BAD_REQUEST);
+        }
+
         $profesor = new Profesor();
         $profesor->setNombre($data['nombre'] ?? null);
+        $profesor->setRol($data['rol'] ?? null);
+        $profesor->setEliminado(false);
 
         $this->entityManager->persist($profesor);
         $this->entityManager->flush();
@@ -71,6 +79,10 @@ class ProfesoresService{
             $profesor->setNombre($data['nombre']);
         }
 
+        if (isset($data['rol'])) {
+            $profesor->setRol($data['rol']);
+        }
+
         $this->entityManager->flush();
 
         return new JsonResponse([
@@ -84,15 +96,16 @@ class ProfesoresService{
         $profesor = $this->entityManager->getRepository(Profesor::class)->find($idProfesor);
 
         if (!$profesor) {
-            return new JsonResponse([
-                'message' => 'Profesor no encontrado',
-            ], Response::HTTP_NOT_FOUND);
+            return new JsonResponse(['message' => 'El Profesor no ha sido encontrado'], Response::HTTP_NOT_FOUND);
         }
 
-        $this->entityManager->remove($profesor);
-        $this->entityManager->flush();
+        if ($profesor->isEliminado() == true) {
+            return new JsonResponse(['message' => 'El Profesor ya se encontraba eliminado'], Response::HTTP_BAD_REQUEST);
+        }
 
-        return new JsonResponse(['message' => 'Profesor eliminado correctamente'], Response::HTTP_OK);
+        $profesor->setEliminado(true);
+        $this->entityManager->flush();
+        return new JsonResponse(['message' => 'El Profesor ha sido eliminado exitosamente'], Response::HTTP_OK);
     }
 
 }

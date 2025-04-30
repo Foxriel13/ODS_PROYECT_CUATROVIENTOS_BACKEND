@@ -91,9 +91,7 @@ class IniciativaService
         }
 
         $iniciativa->setEliminado(true);
-
         $this->entityManager->flush();
-
         return new JsonResponse(['message' => 'La Iniciativa eliminada exitosamente'], Response::HTTP_OK);
     }
 
@@ -199,8 +197,6 @@ class IniciativaService
         } else {
             return new JsonResponse(['message' => 'Debes de introducir al menos un módulo con clases'], Response::HTTP_NOT_FOUND);
         }
-        
-        
 
         // Procesamos redes sociales
         if (!empty($data['redes_sociales']) && is_array($data['redes_sociales'])) {

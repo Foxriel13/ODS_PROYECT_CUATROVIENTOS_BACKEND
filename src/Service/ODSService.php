@@ -45,9 +45,8 @@ class ODSService{
         }
 
         $ods->setNombre($data['nombre']);
-
         $ods->setDimension($data['dimension']);
-
+        $ods->setEliminado(false);
 
         $this->entityManager->persist($ods);
         $this->entityManager->flush();
@@ -84,23 +83,21 @@ class ODSService{
     }
 
     // Función para eliminar un ODS
-    public function deleteOds(int $id): JsonResponse
+    public function deleteOds(int $idOds): JsonResponse
     {
-        $ods = $this->entityManager->getRepository(ODS::class)->find($id);
+        $ods = $this->entityManager->getRepository(ODS::class)->find($idOds);
 
         if (!$ods) {
-            return new JsonResponse([
-                'message' => 'ODS no encontrado',
-            ], Response::HTTP_NOT_FOUND);
+            return new JsonResponse(['message' => 'El ODS no ha sido encontrado'], Response::HTTP_NOT_FOUND);
         }
 
-        $this->entityManager->remove($ods);
-        $this->entityManager->flush();
+        if ($ods->isEliminado() == true) {
+            return new JsonResponse(['message' => 'El ODS ya se encontraba eliminado'], Response::HTTP_BAD_REQUEST);
+        }
 
-        return new JsonResponse([
-            'message' => 'ODS eliminado correctamente',
-        ], Response::HTTP_OK);
-        
+        $ods->setEliminado(true);
+        $this->entityManager->flush();
+        return new JsonResponse(['message' => 'El ODS ha sido eliminado exitosamente'], Response::HTTP_OK);
     }
 
 }
